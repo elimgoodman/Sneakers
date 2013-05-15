@@ -6,15 +6,28 @@ grammar Sneakers;
 prog 	:	stat+;
 
 stat	:	ID '=' expr NEWLINE
-	|	fncall NEWLINE;
+	|	fncall NEWLINE
+	|	NEWLINE
+	;
 
-fncall	:	ID (expr)+
-	|	'(' ID ')';
+fncall	:	ID param+
+	|	'(' ID ')'
+	;
 
-expr	:	INT;	
+param	:	expr
+	|	ID
+	|	ID ':' TYPEID
+	;
 
-ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+expr	:	INT
+	|	fncall
+	;
+
+ID  :	('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'| '_'|'-')*
     ;
+
+TYPEID	:	('A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9')*
+	;
 
 INT :	'0'..'9'+
     ;
