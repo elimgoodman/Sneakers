@@ -5,22 +5,51 @@ grammar Sneakers;
 
 prog 	:	stat+;
 
-stat	:	ID '=' expr NEWLINE
+stat	:	ID '=' fncall NEWLINE
+	|	ID '=' expr NEWLINE
+	|	TYPEID '=' objdef
 	|	fncall NEWLINE
 	|	NEWLINE
 	;
 
-fncall	:	ID param+
-	|	'(' ID ')'
+objdef	:	'object' '{' NEWLINE? (defdecl NEWLINE?)* '}'
 	;
 
-param	:	expr
-	|	ID
-	|	ID ':' TYPEID
+defdecl	:	keyword '=>' TYPEID
+	;
+	
+nested_id	:	ID ('.' ID)*
+		;
+
+fnname	:	nested_id
+	|	keyword
 	;
 
-expr	:	INT
-	|	fncall
+fncall	:	fnname param+
+	;
+
+param	:	ID ':' expr
+	|	expr
+	;
+
+fnparam	:	ID (':' TYPEID)?
+	;
+
+fndecl	:	'(' fnparam* ')' (':' TYPEID)? '->'
+	;
+
+expr	:	fndecl
+	|	'(' fncall ')'
+	|	nested_id
+	|	array
+	|	keyword
+	|	INT
+	;
+
+array	:	'[' expr* ']'
+	;
+
+keyword	:	':' ID
 	;
 
 ID  :	('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'| '_'|'-')*
@@ -34,5 +63,10 @@ INT :	'0'..'9'+
 
 NEWLINE	:	'\n';
 
-WS	:	' ' {skip();};
+WS	:	(' ' | ',') {skip();};
 
+/*TODO:
+- expressions that yield function symbols ie ((fn...) 1 2)
+- ending with newlines...?
+- param is still fucked up...
+*/
