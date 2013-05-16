@@ -5,24 +5,31 @@ grammar Sneakers;
 
 prog 	:	stat+;
 
-stat	:	ID '=' fncall NEWLINE
-	|	ID '=' expr NEWLINE
+stat	:	assignment ENDCAP
+	|	fncall ENDCAP
+	;
+
+assignment
+	:	ID '=' fncall
+	|	ID '=' expr
 	|	TYPEID '=' objdef
-	|	fncall NEWLINE
-	|	NEWLINE
 	;
 
 objdef	:	'object' '{' NEWLINE? (defdecl NEWLINE?)* '}'
 	;
 
-defdecl	:	keyword '=>' TYPEID
+defable	:	TYPEID
+	|	fndecl NEWLINE? stat+
+	;
+
+defdecl	:	KEYWORD '=>' defable
 	;
 	
 nested_id	:	ID ('.' ID)*
 		;
 
 fnname	:	nested_id
-	|	keyword
+	|	KEYWORD
 	;
 
 fncall	:	fnname param+
@@ -41,15 +48,16 @@ fndecl	:	'(' fnparam* ')' (':' TYPEID)? '->'
 expr	:	fndecl
 	|	'(' fncall ')'
 	|	nested_id
-	|	array
-	|	keyword
+//	|	ARRAY
+	|	KEYWORD
 	|	INT
+	|	STRING
 	;
 
-array	:	'[' expr* ']'
-	;
+/*ARRAY	:	'[' expr* ']'
+	;*/
 
-keyword	:	':' ID
+KEYWORD	:	':' ID
 	;
 
 ID  :	('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'| '_'|'-')*
@@ -63,7 +71,36 @@ INT :	'0'..'9'+
 
 NEWLINE	:	'\n';
 
+ENDCAP	:	(NEWLINE | ';')
+	;
+
 WS	:	(' ' | ',') {skip();};
+
+STRING
+    :  '"' ( ESC_SEQ | ~('\\'|'"') )* '"'
+    ;
+
+fragment
+HEX_DIGIT : ('0'..'9'|'a'..'f'|'A'..'F') ;
+
+fragment
+ESC_SEQ
+    :   '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
+    |   UNICODE_ESC
+    |   OCTAL_ESC
+    ;
+
+fragment
+OCTAL_ESC
+    :   '\\' ('0'..'3') ('0'..'7') ('0'..'7')
+    |   '\\' ('0'..'7') ('0'..'7')
+    |   '\\' ('0'..'7')
+    ;
+
+fragment
+UNICODE_ESC
+    :   '\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+    ;
 
 /*TODO:
 - expressions that yield function symbols ie ((fn...) 1 2)
