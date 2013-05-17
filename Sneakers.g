@@ -3,16 +3,20 @@ grammar Sneakers;
 @parser::header { package sneakers; }
 @lexer::header { package sneakers; }
 
-prog 	:	stat+;
+prog 	:	(stat | NEWLINE)+;
 
-stat	:	assignment ENDCAP
-	|	fncall ENDCAP
+endcap	:	(NEWLINE | ';')
+	;
+
+stat	:	assignment endcap
+	|	fncall endcap
 	;
 
 assignment
 	:	ID '=' fncall
 	|	ID '=' expr
 	|	TYPEID '=' objdef
+	|	TYPEID '=' fncall
 	;
 
 objdef	:	'object' '{' NEWLINE? (defdecl NEWLINE?)* '}'
@@ -24,8 +28,13 @@ defable	:	TYPEID
 
 defdecl	:	KEYWORD '=>' defable
 	;
-	
-nested_id	:	ID ('.' ID)*
+
+indexable
+	:	(ID | TYPEID)
+	;
+
+nested_id	
+	:	indexable ('.' indexable)*
 		;
 
 fnname	:	nested_id
@@ -46,13 +55,28 @@ fndecl	:	'(' fnparam* ')' (':' TYPEID)? '->'
 	;
 
 expr	:	fndecl
-	|	'(' fncall ')'
+	|	standalone_fncall
+	|	STRING
 	|	nested_id
 //	|	ARRAY
 	|	KEYWORD
 	|	INT
-	|	STRING
+	|	dict
 	;
+
+standalone_fncall
+	:	'(' fncall ')'
+	;
+
+index_expr	:	KEYWORD
+	|	INT
+	|	STRING
+	|	nested_id
+	|	standalone_fncall
+	;
+
+dict	:	'{' NEWLINE* (index_expr '=>' expr NEWLINE*)* NEWLINE* '}'
+	;  
 
 /*ARRAY	:	'[' expr* ']'
 	;*/
@@ -71,10 +95,12 @@ INT :	'0'..'9'+
 
 NEWLINE	:	'\n';
 
-ENDCAP	:	(NEWLINE | ';')
+/*ENDCAP	:	(NEWLINE | ';' )
 	;
+^^^WTF doesn't this work */
 
-WS	:	(' ' | ',') {skip();};
+
+WS	:	(' ' | ',' | '\t' ) {skip();};
 
 STRING
     :  '"' ( ESC_SEQ | ~('\\'|'"') )* '"'
