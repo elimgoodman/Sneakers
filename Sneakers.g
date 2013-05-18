@@ -1,40 +1,32 @@
 grammar Sneakers;
 
+options {output=AST;}
+//tokens {STAT;}
+
 @parser::header { package sneakers; }
 @lexer::header { package sneakers; }
 
-prog 	:	(stat | NEWLINE)+;
+prog 	:	stat+;
 
-endcap	:	(NEWLINE | ';')
-	;
-
-stat	:	assignment endcap
-	|	fncall endcap
+stat	:	assignment ';'
 	;
 
 assignment
-	:	ID '=' fncall
-	|	ID '=' expr
-	|	TYPEID '=' objdef
-	|	TYPEID '=' fncall
+	:	any_id '=' expr
+	|	any_id '=' fncall
 	;
 
-objdef	:	'object' '{' NEWLINE? (defdecl NEWLINE?)* '}'
-	;
 
 defable	:	TYPEID
-	|	fndecl NEWLINE? stat+
+	|	fndecl stat+
 	;
 
 defdecl	:	KEYWORD '=>' defable
 	;
 
-indexable
-	:	(ID | TYPEID)
-	;
 
 nested_id	
-	:	indexable ('.' indexable)*
+	:	any_id ('.' any_id)*
 		;
 
 fnname	:	nested_id
@@ -54,28 +46,33 @@ fnparam	:	ID (':' TYPEID)?
 fndecl	:	'(' fnparam* ')' (':' TYPEID)? '->'
 	;
 
-expr	:	fndecl
-	|	standalone_fncall
-	|	STRING
-	|	nested_id
-//	|	ARRAY
+expr	:	INT
 	|	KEYWORD
-	|	INT
+	|	STRING
 	|	dict
+	|	nested_id
+	|	fndecl
+	|	standalone_fncall
+//	|	ARRAY
 	;
 
 standalone_fncall
 	:	'(' fncall ')'
 	;
 
-index_expr	:	KEYWORD
+index_expr	
+	:	KEYWORD
 	|	INT
 	|	STRING
 	|	nested_id
 	|	standalone_fncall
 	;
 
-dict	:	'{' NEWLINE* (index_expr '=>' expr NEWLINE*)* NEWLINE* '}'
+dict_pair 
+	:	index_expr '=>' expr
+	;
+
+dict	:	'{' (dict_pair)? (',' dict_pair)* '}'
 	;  
 
 /*ARRAY	:	'[' expr* ']'
@@ -90,42 +87,20 @@ ID  :	('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'| '_'|'-')*
 TYPEID	:	('A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9')*
 	;
 
+any_id
+	:	ID
+	|	TYPEID
+	;
+
 INT :	'0'..'9'+
     ;
 
-NEWLINE	:	'\n';
 
-/*ENDCAP	:	(NEWLINE | ';' )
+WS	:	(' ' | '\t' | '\n') {skip();}
 	;
-^^^WTF doesn't this work */
-
-
-WS	:	(' ' | ',' | '\t' ) {skip();};
 
 STRING
-    :  '"' ( ESC_SEQ | ~('\\'|'"') )* '"'
-    ;
-
-fragment
-HEX_DIGIT : ('0'..'9'|'a'..'f'|'A'..'F') ;
-
-fragment
-ESC_SEQ
-    :   '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
-    |   UNICODE_ESC
-    |   OCTAL_ESC
-    ;
-
-fragment
-OCTAL_ESC
-    :   '\\' ('0'..'3') ('0'..'7') ('0'..'7')
-    |   '\\' ('0'..'7') ('0'..'7')
-    |   '\\' ('0'..'7')
-    ;
-
-fragment
-UNICODE_ESC
-    :   '\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+    :  '"' ~('"')* '"'
     ;
 
 /*TODO:
