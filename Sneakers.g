@@ -1,14 +1,14 @@
 grammar Sneakers;
 
-options {output=AST;}
-//tokens {STAT;}
-
 @parser::header { package sneakers; }
 @lexer::header { package sneakers; }
 
-prog 	:	stat+;
+prog	:	block;
 
-stat	:	assignment ';'
+block 	:	(stat ';')+;
+
+stat	:	assignment
+	|	'return' expr
 	;
 
 assignment
@@ -27,33 +27,34 @@ defdecl	:	KEYWORD '=>' defable
 
 nested_id	
 	:	any_id ('.' any_id)*
-		;
-
-fnname	:	nested_id
-	|	KEYWORD
 	;
 
-fncall	:	fnname param+
+fncall	:	nested_id param (','? param)*
 	;
 
 param	:	ID ':' expr
 	|	expr
 	;
 
-fnparam	:	ID (':' TYPEID)?
+paramtype : 	TYPEID
+	|	'(' TYPEID* ')' ':' TYPEID
+	;	
+
+fnparam	:	ID ':' paramtype
 	;
 
-fndecl	:	'(' fnparam* ')' (':' TYPEID)? '->'
+anonfn	:	'#' '[' fncall ']'
 	;
 
-expr	:	INT
-	|	KEYWORD
-	|	STRING
+fndecl	:	'#' '(' ')' ':' TYPEID array //how can I avoid having to do this?
+	|	'#' '(' fnparam (','? fnparam)* ')' ':' TYPEID array
+	;
+
+expr	:	index_expr
 	|	dict
-	|	nested_id
 	|	fndecl
-	|	standalone_fncall
-//	|	ARRAY
+	|	anonfn
+	|	array
 	;
 
 standalone_fncall
@@ -64,6 +65,7 @@ index_expr
 	:	KEYWORD
 	|	INT
 	|	STRING
+	|	ANONVAR
 	|	nested_id
 	|	standalone_fncall
 	;
@@ -75,8 +77,13 @@ dict_pair
 dict	:	'{' (dict_pair)? (',' dict_pair)* '}'
 	;  
 
-/*ARRAY	:	'[' expr* ']'
-	;*/
+array	:	'[' expr? (',' expr)* ']'
+	|	'[' block ']'
+	;
+
+
+ANONVAR	:	'$' INT?
+	;
 
 KEYWORD	:	':' ID
 	;
@@ -105,6 +112,4 @@ STRING
 
 /*TODO:
 - expressions that yield function symbols ie ((fn...) 1 2)
-- ending with newlines...?
-- param is still fucked up...
 */
