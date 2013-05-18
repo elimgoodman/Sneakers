@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Sneakers.g 2013-05-18 17:07:20
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Sneakers.g 2013-05-18 18:12:06
  package sneakers; 
 
 import org.antlr.runtime.*;
@@ -11,13 +11,12 @@ import java.io.IOException;
 @SuppressWarnings("all")
 public class SneakersParser extends DebugParser {
 	public static final String[] tokenNames = new String[] {
-		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ID", "INT", "KEYWORD", "STRING", 
-		"TYPEID", "WS", "'#'", "'('", "')'", "','", "'.'", "':'", "';'", "'='", 
-		"'=>'", "'['", "']'", "'return'", "'{'", "'}'"
+		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ANONVAR", "ID", "INT", "KEYWORD", 
+		"MUTID", "STRING", "TYPEID", "WS", "'#'", "'('", "')'", "','", "'.'", 
+		"':'", "';'", "'<'", "'='", "'=>'", "'>'", "'@'", "'['", "']'", "'else'", 
+		"'elseif'", "'if'", "'pass'", "'return'", "'{'", "'}'"
 	};
 	public static final int EOF=-1;
-	public static final int T__10=10;
-	public static final int T__11=11;
 	public static final int T__12=12;
 	public static final int T__13=13;
 	public static final int T__14=14;
@@ -30,12 +29,23 @@ public class SneakersParser extends DebugParser {
 	public static final int T__21=21;
 	public static final int T__22=22;
 	public static final int T__23=23;
-	public static final int ID=4;
-	public static final int INT=5;
-	public static final int KEYWORD=6;
-	public static final int STRING=7;
-	public static final int TYPEID=8;
-	public static final int WS=9;
+	public static final int T__24=24;
+	public static final int T__25=25;
+	public static final int T__26=26;
+	public static final int T__27=27;
+	public static final int T__28=28;
+	public static final int T__29=29;
+	public static final int T__30=30;
+	public static final int T__31=31;
+	public static final int T__32=32;
+	public static final int ANONVAR=4;
+	public static final int ID=5;
+	public static final int INT=6;
+	public static final int KEYWORD=7;
+	public static final int MUTID=8;
+	public static final int STRING=9;
+	public static final int TYPEID=10;
+	public static final int WS=11;
 
 	// delegates
 	public Parser[] getDelegates() {
@@ -46,16 +56,17 @@ public class SneakersParser extends DebugParser {
 
 
 	public static final String[] ruleNames = new String[] {
-		"invalidRule", "defdecl", "prog", "defable", "expr", "dict_pair", "assignment", 
-		"fndecl", "fncall", "paramtype", "nested_id", "array", "standalone_fncall", 
-		"any_id", "param", "fnparam", "stat", "dict", "index_expr"
+		"invalidRule", "dict_pair", "dict", "paramtype", "stat", "mutcall", "block", 
+		"expr", "contained_block", "assignment", "blockdecl", "array", "fndecl", 
+		"anonfn", "any_id", "mutdecl", "defable", "param", "defdecl", "fnparam", 
+		"nested_id", "standalone_fncall", "index_expr", "fncall", "prog", "ifstat"
 	};
 
 	public static final boolean[] decisionCanBacktrack = new boolean[] {
 		false, // invalid decision
 		false, false, false, false, false, false, false, false, false, false, 
 		    false, false, false, false, false, false, false, false, false, false, 
-		    false, false
+		    false, false, false, false, false, false, false
 	};
 
  
@@ -95,7 +106,7 @@ public class SneakersParser extends DebugParser {
 
 
 	// $ANTLR start "prog"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:1: prog : ( stat ';' )+ ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:1: prog : block ;
 	public final void prog() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "prog");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
@@ -103,13 +114,56 @@ public class SneakersParser extends DebugParser {
 		dbg.location(6, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:7: ( ( stat ';' )+ )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:6: ( block )
 			dbg.enterAlt(1);
 
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:9: ( stat ';' )+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:8: block
 			{
-			dbg.location(6,9);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:9: ( stat ';' )+
+			dbg.location(6,8);
+			pushFollow(FOLLOW_block_in_prog27);
+			block();
+			state._fsp--;
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(6, 12);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "prog");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "prog"
+
+
+
+	// $ANTLR start "block"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:1: block : ( stat ';' )+ ;
+	public final void block() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "block");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(8, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:8: ( ( stat ';' )+ )
+			dbg.enterAlt(1);
+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:10: ( stat ';' )+
+			{
+			dbg.location(8,10);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:10: ( stat ';' )+
 			int cnt1=0;
 			try { dbg.enterSubRule(1);
 
@@ -119,7 +173,7 @@ public class SneakersParser extends DebugParser {
 				try { dbg.enterDecision(1, decisionCanBacktrack[1]);
 
 				int LA1_0 = input.LA(1);
-				if ( (LA1_0==ID||LA1_0==TYPEID||LA1_0==21) ) {
+				if ( (LA1_0==ID||LA1_0==MUTID||LA1_0==TYPEID||LA1_0==19||(LA1_0 >= 28 && LA1_0 <= 30)) ) {
 					alt1=1;
 				}
 
@@ -129,14 +183,14 @@ public class SneakersParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:10: stat ';'
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:11: stat ';'
 					{
-					dbg.location(6,10);
-					pushFollow(FOLLOW_stat_in_prog29);
+					dbg.location(8,11);
+					pushFollow(FOLLOW_stat_in_block37);
 					stat();
 					state._fsp--;
-					dbg.location(6,15);
-					match(input,16,FOLLOW_16_in_prog31); 
+					dbg.location(8,16);
+					match(input,18,FOLLOW_18_in_block39); 
 					}
 					break;
 
@@ -161,58 +215,51 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(6, 19);
+		dbg.location(8, 20);
 
 		}
 		finally {
-			dbg.exitRule(getGrammarFileName(), "prog");
+			dbg.exitRule(getGrammarFileName(), "block");
 			decRuleLevel();
 			if ( getRuleLevel()==0 ) {dbg.terminate();}
 		}
 
 	}
-	// $ANTLR end "prog"
+	// $ANTLR end "block"
 
 
 
 	// $ANTLR start "stat"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:1: stat : ( assignment | 'return' expr );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:10:1: stat : ( assignment | ifstat | 'return' fncall | 'return' expr | mutcall | 'pass' );
 	public final void stat() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "stat");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(8, 0);
+		dbg.location(10, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:6: ( assignment | 'return' expr )
-			int alt2=2;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:10:6: ( assignment | ifstat | 'return' fncall | 'return' expr | mutcall | 'pass' )
+			int alt2=6;
 			try { dbg.enterDecision(2, decisionCanBacktrack[2]);
 
-			int LA2_0 = input.LA(1);
-			if ( (LA2_0==ID||LA2_0==TYPEID) ) {
-				alt2=1;
+			try {
+				isCyclicDecision = true;
+				alt2 = dfa2.predict(input);
 			}
-			else if ( (LA2_0==21) ) {
-				alt2=2;
-			}
-
-			else {
-				NoViableAltException nvae =
-					new NoViableAltException("", 2, 0, input);
+			catch (NoViableAltException nvae) {
 				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-
 			} finally {dbg.exitDecision(2);}
 
 			switch (alt2) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:8: assignment
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:10:8: assignment
 					{
-					dbg.location(8,8);
-					pushFollow(FOLLOW_assignment_in_stat41);
+					dbg.location(10,8);
+					pushFollow(FOLLOW_assignment_in_stat49);
 					assignment();
 					state._fsp--;
 
@@ -221,14 +268,60 @@ public class SneakersParser extends DebugParser {
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:9:4: 'return' expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:11:4: ifstat
 					{
-					dbg.location(9,4);
-					match(input,21,FOLLOW_21_in_stat46); dbg.location(9,13);
-					pushFollow(FOLLOW_expr_in_stat48);
+					dbg.location(11,4);
+					pushFollow(FOLLOW_ifstat_in_stat54);
+					ifstat();
+					state._fsp--;
+
+					}
+					break;
+				case 3 :
+					dbg.enterAlt(3);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:12:4: 'return' fncall
+					{
+					dbg.location(12,4);
+					match(input,30,FOLLOW_30_in_stat59); dbg.location(12,13);
+					pushFollow(FOLLOW_fncall_in_stat61);
+					fncall();
+					state._fsp--;
+
+					}
+					break;
+				case 4 :
+					dbg.enterAlt(4);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:13:4: 'return' expr
+					{
+					dbg.location(13,4);
+					match(input,30,FOLLOW_30_in_stat66); dbg.location(13,13);
+					pushFollow(FOLLOW_expr_in_stat68);
 					expr();
 					state._fsp--;
 
+					}
+					break;
+				case 5 :
+					dbg.enterAlt(5);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:14:4: mutcall
+					{
+					dbg.location(14,4);
+					pushFollow(FOLLOW_mutcall_in_stat73);
+					mutcall();
+					state._fsp--;
+
+					}
+					break;
+				case 6 :
+					dbg.enterAlt(6);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:15:4: 'pass'
+					{
+					dbg.location(15,4);
+					match(input,29,FOLLOW_29_in_stat78); 
 					}
 					break;
 
@@ -241,7 +334,7 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(10, 1);
+		dbg.location(16, 1);
 
 		}
 		finally {
@@ -255,42 +348,159 @@ public class SneakersParser extends DebugParser {
 
 
 
+	// $ANTLR start "ifstat"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:1: ifstat : 'if' expr contained_block ( 'elseif' expr contained_block )* ( 'else' contained_block )? ;
+	public final void ifstat() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "ifstat");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(18, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:8: ( 'if' expr contained_block ( 'elseif' expr contained_block )* ( 'else' contained_block )? )
+			dbg.enterAlt(1);
+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:10: 'if' expr contained_block ( 'elseif' expr contained_block )* ( 'else' contained_block )?
+			{
+			dbg.location(18,10);
+			match(input,28,FOLLOW_28_in_ifstat88); dbg.location(18,15);
+			pushFollow(FOLLOW_expr_in_ifstat90);
+			expr();
+			state._fsp--;
+			dbg.location(18,20);
+			pushFollow(FOLLOW_contained_block_in_ifstat92);
+			contained_block();
+			state._fsp--;
+			dbg.location(18,36);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:36: ( 'elseif' expr contained_block )*
+			try { dbg.enterSubRule(3);
+
+			loop3:
+			while (true) {
+				int alt3=2;
+				try { dbg.enterDecision(3, decisionCanBacktrack[3]);
+
+				int LA3_0 = input.LA(1);
+				if ( (LA3_0==27) ) {
+					alt3=1;
+				}
+
+				} finally {dbg.exitDecision(3);}
+
+				switch (alt3) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:37: 'elseif' expr contained_block
+					{
+					dbg.location(18,37);
+					match(input,27,FOLLOW_27_in_ifstat95); dbg.location(18,46);
+					pushFollow(FOLLOW_expr_in_ifstat97);
+					expr();
+					state._fsp--;
+					dbg.location(18,51);
+					pushFollow(FOLLOW_contained_block_in_ifstat99);
+					contained_block();
+					state._fsp--;
+
+					}
+					break;
+
+				default :
+					break loop3;
+				}
+			}
+			} finally {dbg.exitSubRule(3);}
+			dbg.location(18,69);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:69: ( 'else' contained_block )?
+			int alt4=2;
+			try { dbg.enterSubRule(4);
+			try { dbg.enterDecision(4, decisionCanBacktrack[4]);
+
+			int LA4_0 = input.LA(1);
+			if ( (LA4_0==26) ) {
+				alt4=1;
+			}
+			} finally {dbg.exitDecision(4);}
+
+			switch (alt4) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:70: 'else' contained_block
+					{
+					dbg.location(18,70);
+					match(input,26,FOLLOW_26_in_ifstat104); dbg.location(18,77);
+					pushFollow(FOLLOW_contained_block_in_ifstat106);
+					contained_block();
+					state._fsp--;
+
+					}
+					break;
+
+			}
+			} finally {dbg.exitSubRule(4);}
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(18, 93);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "ifstat");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "ifstat"
+
+
+
 	// $ANTLR start "assignment"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:12:1: assignment : ( any_id '=' expr | any_id '=' fncall );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:20:1: assignment : ( any_id '=' expr | any_id '=' fncall );
 	public final void assignment() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "assignment");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(12, 0);
+		dbg.location(20, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:13:2: ( any_id '=' expr | any_id '=' fncall )
-			int alt3=2;
-			try { dbg.enterDecision(3, decisionCanBacktrack[3]);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:21:2: ( any_id '=' expr | any_id '=' fncall )
+			int alt5=2;
+			try { dbg.enterDecision(5, decisionCanBacktrack[5]);
 
 			try {
 				isCyclicDecision = true;
-				alt3 = dfa3.predict(input);
+				alt5 = dfa5.predict(input);
 			}
 			catch (NoViableAltException nvae) {
 				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-			} finally {dbg.exitDecision(3);}
+			} finally {dbg.exitDecision(5);}
 
-			switch (alt3) {
+			switch (alt5) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:13:4: any_id '=' expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:21:4: any_id '=' expr
 					{
-					dbg.location(13,4);
-					pushFollow(FOLLOW_any_id_in_assignment59);
+					dbg.location(21,4);
+					pushFollow(FOLLOW_any_id_in_assignment117);
 					any_id();
 					state._fsp--;
-					dbg.location(13,11);
-					match(input,17,FOLLOW_17_in_assignment61); dbg.location(13,15);
-					pushFollow(FOLLOW_expr_in_assignment63);
+					dbg.location(21,11);
+					match(input,20,FOLLOW_20_in_assignment119); dbg.location(21,15);
+					pushFollow(FOLLOW_expr_in_assignment121);
 					expr();
 					state._fsp--;
 
@@ -299,15 +509,15 @@ public class SneakersParser extends DebugParser {
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:14:4: any_id '=' fncall
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:22:4: any_id '=' fncall
 					{
-					dbg.location(14,4);
-					pushFollow(FOLLOW_any_id_in_assignment68);
+					dbg.location(22,4);
+					pushFollow(FOLLOW_any_id_in_assignment126);
 					any_id();
 					state._fsp--;
-					dbg.location(14,11);
-					match(input,17,FOLLOW_17_in_assignment70); dbg.location(14,15);
-					pushFollow(FOLLOW_fncall_in_assignment72);
+					dbg.location(22,11);
+					match(input,20,FOLLOW_20_in_assignment128); dbg.location(22,15);
+					pushFollow(FOLLOW_fncall_in_assignment130);
 					fncall();
 					state._fsp--;
 
@@ -323,7 +533,7 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(15, 1);
+		dbg.location(23, 1);
 
 		}
 		finally {
@@ -338,79 +548,79 @@ public class SneakersParser extends DebugParser {
 
 
 	// $ANTLR start "defable"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:1: defable : ( TYPEID | fndecl ( stat )+ );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:26:1: defable : ( TYPEID | fndecl ( stat )+ );
 	public final void defable() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "defable");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(18, 0);
+		dbg.location(26, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:9: ( TYPEID | fndecl ( stat )+ )
-			int alt5=2;
-			try { dbg.enterDecision(5, decisionCanBacktrack[5]);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:26:9: ( TYPEID | fndecl ( stat )+ )
+			int alt7=2;
+			try { dbg.enterDecision(7, decisionCanBacktrack[7]);
 
-			int LA5_0 = input.LA(1);
-			if ( (LA5_0==TYPEID) ) {
-				alt5=1;
+			int LA7_0 = input.LA(1);
+			if ( (LA7_0==TYPEID) ) {
+				alt7=1;
 			}
-			else if ( (LA5_0==10) ) {
-				alt5=2;
+			else if ( (LA7_0==12) ) {
+				alt7=2;
 			}
 
 			else {
 				NoViableAltException nvae =
-					new NoViableAltException("", 5, 0, input);
+					new NoViableAltException("", 7, 0, input);
 				dbg.recognitionException(nvae);
 				throw nvae;
 			}
 
-			} finally {dbg.exitDecision(5);}
+			} finally {dbg.exitDecision(7);}
 
-			switch (alt5) {
+			switch (alt7) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:11: TYPEID
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:26:11: TYPEID
 					{
-					dbg.location(18,11);
-					match(input,TYPEID,FOLLOW_TYPEID_in_defable83); 
+					dbg.location(26,11);
+					match(input,TYPEID,FOLLOW_TYPEID_in_defable141); 
 					}
 					break;
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:19:4: fndecl ( stat )+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:27:4: fndecl ( stat )+
 					{
-					dbg.location(19,4);
-					pushFollow(FOLLOW_fndecl_in_defable88);
+					dbg.location(27,4);
+					pushFollow(FOLLOW_fndecl_in_defable146);
 					fndecl();
 					state._fsp--;
-					dbg.location(19,11);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:19:11: ( stat )+
-					int cnt4=0;
-					try { dbg.enterSubRule(4);
+					dbg.location(27,11);
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:27:11: ( stat )+
+					int cnt6=0;
+					try { dbg.enterSubRule(6);
 
-					loop4:
+					loop6:
 					while (true) {
-						int alt4=2;
-						try { dbg.enterDecision(4, decisionCanBacktrack[4]);
+						int alt6=2;
+						try { dbg.enterDecision(6, decisionCanBacktrack[6]);
 
-						int LA4_0 = input.LA(1);
-						if ( (LA4_0==ID||LA4_0==TYPEID||LA4_0==21) ) {
-							alt4=1;
+						int LA6_0 = input.LA(1);
+						if ( (LA6_0==ID||LA6_0==MUTID||LA6_0==TYPEID||LA6_0==19||(LA6_0 >= 28 && LA6_0 <= 30)) ) {
+							alt6=1;
 						}
 
-						} finally {dbg.exitDecision(4);}
+						} finally {dbg.exitDecision(6);}
 
-						switch (alt4) {
+						switch (alt6) {
 						case 1 :
 							dbg.enterAlt(1);
 
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:19:11: stat
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:27:11: stat
 							{
-							dbg.location(19,11);
-							pushFollow(FOLLOW_stat_in_defable90);
+							dbg.location(27,11);
+							pushFollow(FOLLOW_stat_in_defable148);
 							stat();
 							state._fsp--;
 
@@ -418,15 +628,15 @@ public class SneakersParser extends DebugParser {
 							break;
 
 						default :
-							if ( cnt4 >= 1 ) break loop4;
-							EarlyExitException eee = new EarlyExitException(4, input);
+							if ( cnt6 >= 1 ) break loop6;
+							EarlyExitException eee = new EarlyExitException(6, input);
 							dbg.recognitionException(eee);
 
 							throw eee;
 						}
-						cnt4++;
+						cnt6++;
 					}
-					} finally {dbg.exitSubRule(4);}
+					} finally {dbg.exitSubRule(6);}
 
 					}
 					break;
@@ -440,7 +650,7 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(20, 1);
+		dbg.location(28, 1);
 
 		}
 		finally {
@@ -455,238 +665,25 @@ public class SneakersParser extends DebugParser {
 
 
 	// $ANTLR start "defdecl"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:22:1: defdecl : KEYWORD '=>' defable ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:30:1: defdecl : KEYWORD '=>' defable ;
 	public final void defdecl() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "defdecl");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(22, 0);
-
-		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:22:9: ( KEYWORD '=>' defable )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:22:11: KEYWORD '=>' defable
-			{
-			dbg.location(22,11);
-			match(input,KEYWORD,FOLLOW_KEYWORD_in_defdecl101); dbg.location(22,19);
-			match(input,18,FOLLOW_18_in_defdecl103); dbg.location(22,24);
-			pushFollow(FOLLOW_defable_in_defdecl105);
-			defable();
-			state._fsp--;
-
-			}
-
-		}
-		catch (RecognitionException re) {
-			reportError(re);
-			recover(input,re);
-		}
-		finally {
-			// do for sure before leaving
-		}
-		dbg.location(23, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "defdecl");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
-	}
-	// $ANTLR end "defdecl"
-
-
-
-	// $ANTLR start "nested_id"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:26:1: nested_id : any_id ( '.' any_id )* ;
-	public final void nested_id() throws RecognitionException {
-		try { dbg.enterRule(getGrammarFileName(), "nested_id");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(26, 0);
-
-		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:27:2: ( any_id ( '.' any_id )* )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:27:4: any_id ( '.' any_id )*
-			{
-			dbg.location(27,4);
-			pushFollow(FOLLOW_any_id_in_nested_id118);
-			any_id();
-			state._fsp--;
-			dbg.location(27,11);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:27:11: ( '.' any_id )*
-			try { dbg.enterSubRule(6);
-
-			loop6:
-			while (true) {
-				int alt6=2;
-				try { dbg.enterDecision(6, decisionCanBacktrack[6]);
-
-				int LA6_0 = input.LA(1);
-				if ( (LA6_0==14) ) {
-					alt6=1;
-				}
-
-				} finally {dbg.exitDecision(6);}
-
-				switch (alt6) {
-				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:27:12: '.' any_id
-					{
-					dbg.location(27,12);
-					match(input,14,FOLLOW_14_in_nested_id121); dbg.location(27,16);
-					pushFollow(FOLLOW_any_id_in_nested_id123);
-					any_id();
-					state._fsp--;
-
-					}
-					break;
-
-				default :
-					break loop6;
-				}
-			}
-			} finally {dbg.exitSubRule(6);}
-
-			}
-
-		}
-		catch (RecognitionException re) {
-			reportError(re);
-			recover(input,re);
-		}
-		finally {
-			// do for sure before leaving
-		}
-		dbg.location(28, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "nested_id");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
-	}
-	// $ANTLR end "nested_id"
-
-
-
-	// $ANTLR start "fncall"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:30:1: fncall : nested_id param ( ( ',' )? param )* ;
-	public final void fncall() throws RecognitionException {
-		try { dbg.enterRule(getGrammarFileName(), "fncall");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
 		dbg.location(30, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:30:8: ( nested_id param ( ( ',' )? param )* )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:30:9: ( KEYWORD '=>' defable )
 			dbg.enterAlt(1);
 
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:30:10: nested_id param ( ( ',' )? param )*
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:30:11: KEYWORD '=>' defable
 			{
-			dbg.location(30,10);
-			pushFollow(FOLLOW_nested_id_in_fncall135);
-			nested_id();
+			dbg.location(30,11);
+			match(input,KEYWORD,FOLLOW_KEYWORD_in_defdecl159); dbg.location(30,19);
+			match(input,21,FOLLOW_21_in_defdecl161); dbg.location(30,24);
+			pushFollow(FOLLOW_defable_in_defdecl163);
+			defable();
 			state._fsp--;
-			dbg.location(30,20);
-			pushFollow(FOLLOW_param_in_fncall137);
-			param();
-			state._fsp--;
-			dbg.location(30,26);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:30:26: ( ( ',' )? param )*
-			try { dbg.enterSubRule(8);
-
-			loop8:
-			while (true) {
-				int alt8=2;
-				try { dbg.enterDecision(8, decisionCanBacktrack[8]);
-
-				switch ( input.LA(1) ) {
-				case ID:
-					{
-					int LA8_2 = input.LA(2);
-					if ( (LA8_2==EOF||(LA8_2 >= ID && LA8_2 <= TYPEID)||(LA8_2 >= 10 && LA8_2 <= 16)||(LA8_2 >= 19 && LA8_2 <= 22)) ) {
-						alt8=1;
-					}
-
-					}
-					break;
-				case INT:
-				case KEYWORD:
-				case STRING:
-				case 10:
-				case 11:
-				case 13:
-				case 19:
-				case 22:
-					{
-					alt8=1;
-					}
-					break;
-				case TYPEID:
-					{
-					int LA8_4 = input.LA(2);
-					if ( (LA8_4==EOF||(LA8_4 >= ID && LA8_4 <= TYPEID)||(LA8_4 >= 10 && LA8_4 <= 14)||LA8_4==16||(LA8_4 >= 19 && LA8_4 <= 22)) ) {
-						alt8=1;
-					}
-
-					}
-					break;
-				}
-				} finally {dbg.exitDecision(8);}
-
-				switch (alt8) {
-				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:30:27: ( ',' )? param
-					{
-					dbg.location(30,27);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:30:27: ( ',' )?
-					int alt7=2;
-					try { dbg.enterSubRule(7);
-					try { dbg.enterDecision(7, decisionCanBacktrack[7]);
-
-					int LA7_0 = input.LA(1);
-					if ( (LA7_0==13) ) {
-						alt7=1;
-					}
-					} finally {dbg.exitDecision(7);}
-
-					switch (alt7) {
-						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:30:27: ','
-							{
-							dbg.location(30,27);
-							match(input,13,FOLLOW_13_in_fncall140); 
-							}
-							break;
-
-					}
-					} finally {dbg.exitSubRule(7);}
-					dbg.location(30,32);
-					pushFollow(FOLLOW_param_in_fncall143);
-					param();
-					state._fsp--;
-
-					}
-					break;
-
-				default :
-					break loop8;
-				}
-			}
-			} finally {dbg.exitSubRule(8);}
 
 			}
 
@@ -702,6 +699,266 @@ public class SneakersParser extends DebugParser {
 
 		}
 		finally {
+			dbg.exitRule(getGrammarFileName(), "defdecl");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "defdecl"
+
+
+
+	// $ANTLR start "nested_id"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:34:1: nested_id : ( any_id | ANONVAR ) ( '.' any_id )* ;
+	public final void nested_id() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "nested_id");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(34, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:35:2: ( ( any_id | ANONVAR ) ( '.' any_id )* )
+			dbg.enterAlt(1);
+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:35:4: ( any_id | ANONVAR ) ( '.' any_id )*
+			{
+			dbg.location(35,4);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:35:4: ( any_id | ANONVAR )
+			int alt8=2;
+			try { dbg.enterSubRule(8);
+			try { dbg.enterDecision(8, decisionCanBacktrack[8]);
+
+			int LA8_0 = input.LA(1);
+			if ( (LA8_0==ID||LA8_0==MUTID||LA8_0==TYPEID) ) {
+				alt8=1;
+			}
+			else if ( (LA8_0==ANONVAR) ) {
+				alt8=2;
+			}
+
+			else {
+				NoViableAltException nvae =
+					new NoViableAltException("", 8, 0, input);
+				dbg.recognitionException(nvae);
+				throw nvae;
+			}
+
+			} finally {dbg.exitDecision(8);}
+
+			switch (alt8) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:35:5: any_id
+					{
+					dbg.location(35,5);
+					pushFollow(FOLLOW_any_id_in_nested_id177);
+					any_id();
+					state._fsp--;
+
+					}
+					break;
+				case 2 :
+					dbg.enterAlt(2);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:35:14: ANONVAR
+					{
+					dbg.location(35,14);
+					match(input,ANONVAR,FOLLOW_ANONVAR_in_nested_id181); 
+					}
+					break;
+
+			}
+			} finally {dbg.exitSubRule(8);}
+			dbg.location(35,23);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:35:23: ( '.' any_id )*
+			try { dbg.enterSubRule(9);
+
+			loop9:
+			while (true) {
+				int alt9=2;
+				try { dbg.enterDecision(9, decisionCanBacktrack[9]);
+
+				int LA9_0 = input.LA(1);
+				if ( (LA9_0==16) ) {
+					alt9=1;
+				}
+
+				} finally {dbg.exitDecision(9);}
+
+				switch (alt9) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:35:24: '.' any_id
+					{
+					dbg.location(35,24);
+					match(input,16,FOLLOW_16_in_nested_id185); dbg.location(35,28);
+					pushFollow(FOLLOW_any_id_in_nested_id187);
+					any_id();
+					state._fsp--;
+
+					}
+					break;
+
+				default :
+					break loop9;
+				}
+			}
+			} finally {dbg.exitSubRule(9);}
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(36, 1);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "nested_id");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "nested_id"
+
+
+
+	// $ANTLR start "fncall"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:38:1: fncall : nested_id param ( ( ',' )? param )* ;
+	public final void fncall() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "fncall");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(38, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:38:8: ( nested_id param ( ( ',' )? param )* )
+			dbg.enterAlt(1);
+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:38:10: nested_id param ( ( ',' )? param )*
+			{
+			dbg.location(38,10);
+			pushFollow(FOLLOW_nested_id_in_fncall199);
+			nested_id();
+			state._fsp--;
+			dbg.location(38,20);
+			pushFollow(FOLLOW_param_in_fncall201);
+			param();
+			state._fsp--;
+			dbg.location(38,26);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:38:26: ( ( ',' )? param )*
+			try { dbg.enterSubRule(11);
+
+			loop11:
+			while (true) {
+				int alt11=2;
+				try { dbg.enterDecision(11, decisionCanBacktrack[11]);
+
+				switch ( input.LA(1) ) {
+				case ID:
+					{
+					int LA11_2 = input.LA(2);
+					if ( (LA11_2==EOF||(LA11_2 >= ANONVAR && LA11_2 <= TYPEID)||(LA11_2 >= 12 && LA11_2 <= 19)||(LA11_2 >= 22 && LA11_2 <= 25)||(LA11_2 >= 28 && LA11_2 <= 31)) ) {
+						alt11=1;
+					}
+
+					}
+					break;
+				case ANONVAR:
+				case INT:
+				case KEYWORD:
+				case STRING:
+				case 12:
+				case 13:
+				case 15:
+				case 23:
+				case 24:
+				case 31:
+					{
+					alt11=1;
+					}
+					break;
+				case MUTID:
+				case TYPEID:
+					{
+					int LA11_4 = input.LA(2);
+					if ( (LA11_4==EOF||(LA11_4 >= ANONVAR && LA11_4 <= TYPEID)||(LA11_4 >= 12 && LA11_4 <= 16)||(LA11_4 >= 18 && LA11_4 <= 19)||(LA11_4 >= 22 && LA11_4 <= 25)||(LA11_4 >= 28 && LA11_4 <= 31)) ) {
+						alt11=1;
+					}
+
+					}
+					break;
+				}
+				} finally {dbg.exitDecision(11);}
+
+				switch (alt11) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:38:27: ( ',' )? param
+					{
+					dbg.location(38,27);
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:38:27: ( ',' )?
+					int alt10=2;
+					try { dbg.enterSubRule(10);
+					try { dbg.enterDecision(10, decisionCanBacktrack[10]);
+
+					int LA10_0 = input.LA(1);
+					if ( (LA10_0==15) ) {
+						alt10=1;
+					}
+					} finally {dbg.exitDecision(10);}
+
+					switch (alt10) {
+						case 1 :
+							dbg.enterAlt(1);
+
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:38:27: ','
+							{
+							dbg.location(38,27);
+							match(input,15,FOLLOW_15_in_fncall204); 
+							}
+							break;
+
+					}
+					} finally {dbg.exitSubRule(10);}
+					dbg.location(38,32);
+					pushFollow(FOLLOW_param_in_fncall207);
+					param();
+					state._fsp--;
+
+					}
+					break;
+
+				default :
+					break loop11;
+				}
+			}
+			} finally {dbg.exitSubRule(11);}
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(39, 1);
+
+		}
+		finally {
 			dbg.exitRule(getGrammarFileName(), "fncall");
 			decRuleLevel();
 			if ( getRuleLevel()==0 ) {dbg.terminate();}
@@ -713,26 +970,26 @@ public class SneakersParser extends DebugParser {
 
 
 	// $ANTLR start "param"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:33:1: param : ( ID ':' expr | expr );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:41:1: param : ( ID ':' expr | expr );
 	public final void param() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "param");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(33, 0);
+		dbg.location(41, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:33:7: ( ID ':' expr | expr )
-			int alt9=2;
-			try { dbg.enterDecision(9, decisionCanBacktrack[9]);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:41:7: ( ID ':' expr | expr )
+			int alt12=2;
+			try { dbg.enterDecision(12, decisionCanBacktrack[12]);
 
-			int LA9_0 = input.LA(1);
-			if ( (LA9_0==ID) ) {
-				int LA9_1 = input.LA(2);
-				if ( (LA9_1==15) ) {
-					alt9=1;
+			int LA12_0 = input.LA(1);
+			if ( (LA12_0==ID) ) {
+				int LA12_1 = input.LA(2);
+				if ( (LA12_1==17) ) {
+					alt12=1;
 				}
-				else if ( (LA9_1==EOF||(LA9_1 >= ID && LA9_1 <= TYPEID)||(LA9_1 >= 10 && LA9_1 <= 14)||LA9_1==16||(LA9_1 >= 19 && LA9_1 <= 22)) ) {
-					alt9=2;
+				else if ( (LA12_1==EOF||(LA12_1 >= ANONVAR && LA12_1 <= TYPEID)||(LA12_1 >= 12 && LA12_1 <= 16)||(LA12_1 >= 18 && LA12_1 <= 19)||(LA12_1 >= 22 && LA12_1 <= 25)||(LA12_1 >= 28 && LA12_1 <= 31)) ) {
+					alt12=2;
 				}
 
 				else {
@@ -740,7 +997,7 @@ public class SneakersParser extends DebugParser {
 					try {
 						input.consume();
 						NoViableAltException nvae =
-							new NoViableAltException("", 9, 1, input);
+							new NoViableAltException("", 12, 1, input);
 						dbg.recognitionException(nvae);
 						throw nvae;
 					} finally {
@@ -749,29 +1006,29 @@ public class SneakersParser extends DebugParser {
 				}
 
 			}
-			else if ( ((LA9_0 >= INT && LA9_0 <= TYPEID)||(LA9_0 >= 10 && LA9_0 <= 11)||LA9_0==19||LA9_0==22) ) {
-				alt9=2;
+			else if ( (LA12_0==ANONVAR||(LA12_0 >= INT && LA12_0 <= TYPEID)||(LA12_0 >= 12 && LA12_0 <= 13)||(LA12_0 >= 23 && LA12_0 <= 24)||LA12_0==31) ) {
+				alt12=2;
 			}
 
 			else {
 				NoViableAltException nvae =
-					new NoViableAltException("", 9, 0, input);
+					new NoViableAltException("", 12, 0, input);
 				dbg.recognitionException(nvae);
 				throw nvae;
 			}
 
-			} finally {dbg.exitDecision(9);}
+			} finally {dbg.exitDecision(12);}
 
-			switch (alt9) {
+			switch (alt12) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:33:9: ID ':' expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:41:9: ID ':' expr
 					{
-					dbg.location(33,9);
-					match(input,ID,FOLLOW_ID_in_param155); dbg.location(33,12);
-					match(input,15,FOLLOW_15_in_param157); dbg.location(33,16);
-					pushFollow(FOLLOW_expr_in_param159);
+					dbg.location(41,9);
+					match(input,ID,FOLLOW_ID_in_param219); dbg.location(41,12);
+					match(input,17,FOLLOW_17_in_param221); dbg.location(41,16);
+					pushFollow(FOLLOW_expr_in_param223);
 					expr();
 					state._fsp--;
 
@@ -780,10 +1037,10 @@ public class SneakersParser extends DebugParser {
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:34:4: expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:42:4: expr
 					{
-					dbg.location(34,4);
-					pushFollow(FOLLOW_expr_in_param164);
+					dbg.location(42,4);
+					pushFollow(FOLLOW_expr_in_param228);
 					expr();
 					state._fsp--;
 
@@ -799,7 +1056,7 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(35, 1);
+		dbg.location(43, 1);
 
 		}
 		finally {
@@ -814,213 +1071,24 @@ public class SneakersParser extends DebugParser {
 
 
 	// $ANTLR start "paramtype"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:37:1: paramtype : ( TYPEID | '(' ( TYPEID )* ')' ':' TYPEID );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:45:1: paramtype : ( TYPEID | '(' ( TYPEID )* ')' ':' TYPEID );
 	public final void paramtype() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "paramtype");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(37, 0);
+		dbg.location(45, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:37:11: ( TYPEID | '(' ( TYPEID )* ')' ':' TYPEID )
-			int alt11=2;
-			try { dbg.enterDecision(11, decisionCanBacktrack[11]);
-
-			int LA11_0 = input.LA(1);
-			if ( (LA11_0==TYPEID) ) {
-				alt11=1;
-			}
-			else if ( (LA11_0==11) ) {
-				alt11=2;
-			}
-
-			else {
-				NoViableAltException nvae =
-					new NoViableAltException("", 11, 0, input);
-				dbg.recognitionException(nvae);
-				throw nvae;
-			}
-
-			} finally {dbg.exitDecision(11);}
-
-			switch (alt11) {
-				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:37:14: TYPEID
-					{
-					dbg.location(37,14);
-					match(input,TYPEID,FOLLOW_TYPEID_in_paramtype175); 
-					}
-					break;
-				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:38:4: '(' ( TYPEID )* ')' ':' TYPEID
-					{
-					dbg.location(38,4);
-					match(input,11,FOLLOW_11_in_paramtype180); dbg.location(38,8);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:38:8: ( TYPEID )*
-					try { dbg.enterSubRule(10);
-
-					loop10:
-					while (true) {
-						int alt10=2;
-						try { dbg.enterDecision(10, decisionCanBacktrack[10]);
-
-						int LA10_0 = input.LA(1);
-						if ( (LA10_0==TYPEID) ) {
-							alt10=1;
-						}
-
-						} finally {dbg.exitDecision(10);}
-
-						switch (alt10) {
-						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:38:8: TYPEID
-							{
-							dbg.location(38,8);
-							match(input,TYPEID,FOLLOW_TYPEID_in_paramtype182); 
-							}
-							break;
-
-						default :
-							break loop10;
-						}
-					}
-					} finally {dbg.exitSubRule(10);}
-					dbg.location(38,16);
-					match(input,12,FOLLOW_12_in_paramtype185); dbg.location(38,20);
-					match(input,15,FOLLOW_15_in_paramtype187); dbg.location(38,24);
-					match(input,TYPEID,FOLLOW_TYPEID_in_paramtype189); 
-					}
-					break;
-
-			}
-		}
-		catch (RecognitionException re) {
-			reportError(re);
-			recover(input,re);
-		}
-		finally {
-			// do for sure before leaving
-		}
-		dbg.location(39, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "paramtype");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
-	}
-	// $ANTLR end "paramtype"
-
-
-
-	// $ANTLR start "fnparam"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:41:1: fnparam : ID ':' paramtype ;
-	public final void fnparam() throws RecognitionException {
-		try { dbg.enterRule(getGrammarFileName(), "fnparam");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(41, 0);
-
-		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:41:9: ( ID ':' paramtype )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:41:11: ID ':' paramtype
-			{
-			dbg.location(41,11);
-			match(input,ID,FOLLOW_ID_in_fnparam200); dbg.location(41,14);
-			match(input,15,FOLLOW_15_in_fnparam202); dbg.location(41,18);
-			pushFollow(FOLLOW_paramtype_in_fnparam204);
-			paramtype();
-			state._fsp--;
-
-			}
-
-		}
-		catch (RecognitionException re) {
-			reportError(re);
-			recover(input,re);
-		}
-		finally {
-			// do for sure before leaving
-		}
-		dbg.location(42, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "fnparam");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
-	}
-	// $ANTLR end "fnparam"
-
-
-
-	// $ANTLR start "fndecl"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:44:1: fndecl : ( '#' '(' ')' ':' TYPEID array | '#' '(' fnparam ( ( ',' )? fnparam )* ')' ':' TYPEID array );
-	public final void fndecl() throws RecognitionException {
-		try { dbg.enterRule(getGrammarFileName(), "fndecl");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(44, 0);
-
-		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:44:8: ( '#' '(' ')' ':' TYPEID array | '#' '(' fnparam ( ( ',' )? fnparam )* ')' ':' TYPEID array )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:45:11: ( TYPEID | '(' ( TYPEID )* ')' ':' TYPEID )
 			int alt14=2;
 			try { dbg.enterDecision(14, decisionCanBacktrack[14]);
 
 			int LA14_0 = input.LA(1);
-			if ( (LA14_0==10) ) {
-				int LA14_1 = input.LA(2);
-				if ( (LA14_1==11) ) {
-					int LA14_2 = input.LA(3);
-					if ( (LA14_2==12) ) {
-						alt14=1;
-					}
-					else if ( (LA14_2==ID) ) {
-						alt14=2;
-					}
-
-					else {
-						int nvaeMark = input.mark();
-						try {
-							for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++) {
-								input.consume();
-							}
-							NoViableAltException nvae =
-								new NoViableAltException("", 14, 2, input);
-							dbg.recognitionException(nvae);
-							throw nvae;
-						} finally {
-							input.rewind(nvaeMark);
-						}
-					}
-
-				}
-
-				else {
-					int nvaeMark = input.mark();
-					try {
-						input.consume();
-						NoViableAltException nvae =
-							new NoViableAltException("", 14, 1, input);
-						dbg.recognitionException(nvae);
-						throw nvae;
-					} finally {
-						input.rewind(nvaeMark);
-					}
-				}
-
+			if ( (LA14_0==TYPEID) ) {
+				alt14=1;
+			}
+			else if ( (LA14_0==13) ) {
+				alt14=2;
 			}
 
 			else {
@@ -1036,33 +1104,20 @@ public class SneakersParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:44:10: '#' '(' ')' ':' TYPEID array
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:45:14: TYPEID
 					{
-					dbg.location(44,10);
-					match(input,10,FOLLOW_10_in_fndecl214); dbg.location(44,14);
-					match(input,11,FOLLOW_11_in_fndecl216); dbg.location(44,18);
-					match(input,12,FOLLOW_12_in_fndecl218); dbg.location(44,22);
-					match(input,15,FOLLOW_15_in_fndecl220); dbg.location(44,26);
-					match(input,TYPEID,FOLLOW_TYPEID_in_fndecl222); dbg.location(44,33);
-					pushFollow(FOLLOW_array_in_fndecl224);
-					array();
-					state._fsp--;
-
+					dbg.location(45,14);
+					match(input,TYPEID,FOLLOW_TYPEID_in_paramtype239); 
 					}
 					break;
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:45:4: '#' '(' fnparam ( ( ',' )? fnparam )* ')' ':' TYPEID array
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:46:4: '(' ( TYPEID )* ')' ':' TYPEID
 					{
-					dbg.location(45,4);
-					match(input,10,FOLLOW_10_in_fndecl230); dbg.location(45,8);
-					match(input,11,FOLLOW_11_in_fndecl232); dbg.location(45,12);
-					pushFollow(FOLLOW_fnparam_in_fndecl234);
-					fnparam();
-					state._fsp--;
-					dbg.location(45,20);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:45:20: ( ( ',' )? fnparam )*
+					dbg.location(46,4);
+					match(input,13,FOLLOW_13_in_paramtype244); dbg.location(46,8);
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:46:8: ( TYPEID )*
 					try { dbg.enterSubRule(13);
 
 					loop13:
@@ -1071,7 +1126,7 @@ public class SneakersParser extends DebugParser {
 						try { dbg.enterDecision(13, decisionCanBacktrack[13]);
 
 						int LA13_0 = input.LA(1);
-						if ( (LA13_0==ID||LA13_0==13) ) {
+						if ( (LA13_0==TYPEID) ) {
 							alt13=1;
 						}
 
@@ -1081,38 +1136,10 @@ public class SneakersParser extends DebugParser {
 						case 1 :
 							dbg.enterAlt(1);
 
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:45:21: ( ',' )? fnparam
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:46:8: TYPEID
 							{
-							dbg.location(45,21);
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:45:21: ( ',' )?
-							int alt12=2;
-							try { dbg.enterSubRule(12);
-							try { dbg.enterDecision(12, decisionCanBacktrack[12]);
-
-							int LA12_0 = input.LA(1);
-							if ( (LA12_0==13) ) {
-								alt12=1;
-							}
-							} finally {dbg.exitDecision(12);}
-
-							switch (alt12) {
-								case 1 :
-									dbg.enterAlt(1);
-
-									// /Users/eli/dev/Sneakers-Java/Sneakers.g:45:21: ','
-									{
-									dbg.location(45,21);
-									match(input,13,FOLLOW_13_in_fndecl237); 
-									}
-									break;
-
-							}
-							} finally {dbg.exitSubRule(12);}
-							dbg.location(45,26);
-							pushFollow(FOLLOW_fnparam_in_fndecl240);
-							fnparam();
-							state._fsp--;
-
+							dbg.location(46,8);
+							match(input,TYPEID,FOLLOW_TYPEID_in_paramtype246); 
 							}
 							break;
 
@@ -1121,12 +1148,347 @@ public class SneakersParser extends DebugParser {
 						}
 					}
 					} finally {dbg.exitSubRule(13);}
-					dbg.location(45,36);
-					match(input,12,FOLLOW_12_in_fndecl244); dbg.location(45,40);
-					match(input,15,FOLLOW_15_in_fndecl246); dbg.location(45,44);
-					match(input,TYPEID,FOLLOW_TYPEID_in_fndecl248); dbg.location(45,51);
-					pushFollow(FOLLOW_array_in_fndecl250);
-					array();
+					dbg.location(46,16);
+					match(input,14,FOLLOW_14_in_paramtype249); dbg.location(46,20);
+					match(input,17,FOLLOW_17_in_paramtype251); dbg.location(46,24);
+					match(input,TYPEID,FOLLOW_TYPEID_in_paramtype253); 
+					}
+					break;
+
+			}
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(47, 1);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "paramtype");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "paramtype"
+
+
+
+	// $ANTLR start "fnparam"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:49:1: fnparam : ID ':' paramtype ;
+	public final void fnparam() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "fnparam");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(49, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:49:9: ( ID ':' paramtype )
+			dbg.enterAlt(1);
+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:49:11: ID ':' paramtype
+			{
+			dbg.location(49,11);
+			match(input,ID,FOLLOW_ID_in_fnparam264); dbg.location(49,14);
+			match(input,17,FOLLOW_17_in_fnparam266); dbg.location(49,18);
+			pushFollow(FOLLOW_paramtype_in_fnparam268);
+			paramtype();
+			state._fsp--;
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(50, 1);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "fnparam");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "fnparam"
+
+
+
+	// $ANTLR start "anonfn"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:52:1: anonfn : ( '#' '[' fncall ']' | '#' '[' nested_id ']' );
+	public final void anonfn() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "anonfn");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(52, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:52:8: ( '#' '[' fncall ']' | '#' '[' nested_id ']' )
+			int alt15=2;
+			try { dbg.enterDecision(15, decisionCanBacktrack[15]);
+
+			try {
+				isCyclicDecision = true;
+				alt15 = dfa15.predict(input);
+			}
+			catch (NoViableAltException nvae) {
+				dbg.recognitionException(nvae);
+				throw nvae;
+			}
+			} finally {dbg.exitDecision(15);}
+
+			switch (alt15) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:52:10: '#' '[' fncall ']'
+					{
+					dbg.location(52,10);
+					match(input,12,FOLLOW_12_in_anonfn278); dbg.location(52,14);
+					match(input,24,FOLLOW_24_in_anonfn280); dbg.location(52,18);
+					pushFollow(FOLLOW_fncall_in_anonfn282);
+					fncall();
+					state._fsp--;
+					dbg.location(52,25);
+					match(input,25,FOLLOW_25_in_anonfn284); 
+					}
+					break;
+				case 2 :
+					dbg.enterAlt(2);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:53:4: '#' '[' nested_id ']'
+					{
+					dbg.location(53,4);
+					match(input,12,FOLLOW_12_in_anonfn289); dbg.location(53,8);
+					match(input,24,FOLLOW_24_in_anonfn291); dbg.location(53,12);
+					pushFollow(FOLLOW_nested_id_in_anonfn293);
+					nested_id();
+					state._fsp--;
+					dbg.location(53,22);
+					match(input,25,FOLLOW_25_in_anonfn295); 
+					}
+					break;
+
+			}
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(54, 1);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "anonfn");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "anonfn"
+
+
+
+	// $ANTLR start "blockdecl"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:56:1: blockdecl : ( '(' ')' ( ':' TYPEID )? contained_block | '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' TYPEID )? contained_block );
+	public final void blockdecl() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "blockdecl");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(56, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:57:2: ( '(' ')' ( ':' TYPEID )? contained_block | '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' TYPEID )? contained_block )
+			int alt20=2;
+			try { dbg.enterDecision(20, decisionCanBacktrack[20]);
+
+			int LA20_0 = input.LA(1);
+			if ( (LA20_0==13) ) {
+				int LA20_1 = input.LA(2);
+				if ( (LA20_1==14) ) {
+					alt20=1;
+				}
+				else if ( (LA20_1==ID) ) {
+					alt20=2;
+				}
+
+				else {
+					int nvaeMark = input.mark();
+					try {
+						input.consume();
+						NoViableAltException nvae =
+							new NoViableAltException("", 20, 1, input);
+						dbg.recognitionException(nvae);
+						throw nvae;
+					} finally {
+						input.rewind(nvaeMark);
+					}
+				}
+
+			}
+
+			else {
+				NoViableAltException nvae =
+					new NoViableAltException("", 20, 0, input);
+				dbg.recognitionException(nvae);
+				throw nvae;
+			}
+
+			} finally {dbg.exitDecision(20);}
+
+			switch (alt20) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:57:4: '(' ')' ( ':' TYPEID )? contained_block
+					{
+					dbg.location(57,4);
+					match(input,13,FOLLOW_13_in_blockdecl306); dbg.location(57,8);
+					match(input,14,FOLLOW_14_in_blockdecl308); dbg.location(57,12);
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:57:12: ( ':' TYPEID )?
+					int alt16=2;
+					try { dbg.enterSubRule(16);
+					try { dbg.enterDecision(16, decisionCanBacktrack[16]);
+
+					int LA16_0 = input.LA(1);
+					if ( (LA16_0==17) ) {
+						alt16=1;
+					}
+					} finally {dbg.exitDecision(16);}
+
+					switch (alt16) {
+						case 1 :
+							dbg.enterAlt(1);
+
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:57:13: ':' TYPEID
+							{
+							dbg.location(57,13);
+							match(input,17,FOLLOW_17_in_blockdecl311); dbg.location(57,17);
+							match(input,TYPEID,FOLLOW_TYPEID_in_blockdecl313); 
+							}
+							break;
+
+					}
+					} finally {dbg.exitSubRule(16);}
+					dbg.location(57,26);
+					pushFollow(FOLLOW_contained_block_in_blockdecl317);
+					contained_block();
+					state._fsp--;
+
+					}
+					break;
+				case 2 :
+					dbg.enterAlt(2);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:58:4: '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' TYPEID )? contained_block
+					{
+					dbg.location(58,4);
+					match(input,13,FOLLOW_13_in_blockdecl322); dbg.location(58,8);
+					pushFollow(FOLLOW_fnparam_in_blockdecl324);
+					fnparam();
+					state._fsp--;
+					dbg.location(58,16);
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:58:16: ( ( ',' )? fnparam )*
+					try { dbg.enterSubRule(18);
+
+					loop18:
+					while (true) {
+						int alt18=2;
+						try { dbg.enterDecision(18, decisionCanBacktrack[18]);
+
+						int LA18_0 = input.LA(1);
+						if ( (LA18_0==ID||LA18_0==15) ) {
+							alt18=1;
+						}
+
+						} finally {dbg.exitDecision(18);}
+
+						switch (alt18) {
+						case 1 :
+							dbg.enterAlt(1);
+
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:58:17: ( ',' )? fnparam
+							{
+							dbg.location(58,17);
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:58:17: ( ',' )?
+							int alt17=2;
+							try { dbg.enterSubRule(17);
+							try { dbg.enterDecision(17, decisionCanBacktrack[17]);
+
+							int LA17_0 = input.LA(1);
+							if ( (LA17_0==15) ) {
+								alt17=1;
+							}
+							} finally {dbg.exitDecision(17);}
+
+							switch (alt17) {
+								case 1 :
+									dbg.enterAlt(1);
+
+									// /Users/eli/dev/Sneakers-Java/Sneakers.g:58:17: ','
+									{
+									dbg.location(58,17);
+									match(input,15,FOLLOW_15_in_blockdecl327); 
+									}
+									break;
+
+							}
+							} finally {dbg.exitSubRule(17);}
+							dbg.location(58,22);
+							pushFollow(FOLLOW_fnparam_in_blockdecl330);
+							fnparam();
+							state._fsp--;
+
+							}
+							break;
+
+						default :
+							break loop18;
+						}
+					}
+					} finally {dbg.exitSubRule(18);}
+					dbg.location(58,32);
+					match(input,14,FOLLOW_14_in_blockdecl334); dbg.location(58,36);
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:58:36: ( ':' TYPEID )?
+					int alt19=2;
+					try { dbg.enterSubRule(19);
+					try { dbg.enterDecision(19, decisionCanBacktrack[19]);
+
+					int LA19_0 = input.LA(1);
+					if ( (LA19_0==17) ) {
+						alt19=1;
+					}
+					} finally {dbg.exitDecision(19);}
+
+					switch (alt19) {
+						case 1 :
+							dbg.enterAlt(1);
+
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:58:37: ':' TYPEID
+							{
+							dbg.location(58,37);
+							match(input,17,FOLLOW_17_in_blockdecl337); dbg.location(58,41);
+							match(input,TYPEID,FOLLOW_TYPEID_in_blockdecl339); 
+							}
+							break;
+
+					}
+					} finally {dbg.exitSubRule(19);}
+					dbg.location(58,50);
+					pushFollow(FOLLOW_contained_block_in_blockdecl343);
+					contained_block();
 					state._fsp--;
 
 					}
@@ -1141,7 +1503,51 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(46, 1);
+		dbg.location(59, 1);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "blockdecl");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "blockdecl"
+
+
+
+	// $ANTLR start "fndecl"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:61:1: fndecl : '#' blockdecl ;
+	public final void fndecl() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "fndecl");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(61, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:61:8: ( '#' blockdecl )
+			dbg.enterAlt(1);
+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:61:10: '#' blockdecl
+			{
+			dbg.location(61,10);
+			match(input,12,FOLLOW_12_in_fndecl353); dbg.location(61,14);
+			pushFollow(FOLLOW_blockdecl_in_fndecl355);
+			blockdecl();
+			state._fsp--;
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(62, 1);
 
 		}
 		finally {
@@ -1155,61 +1561,132 @@ public class SneakersParser extends DebugParser {
 
 
 
+	// $ANTLR start "mutdecl"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:64:1: mutdecl : '@' blockdecl ;
+	public final void mutdecl() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "mutdecl");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(64, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:64:9: ( '@' blockdecl )
+			dbg.enterAlt(1);
+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:64:11: '@' blockdecl
+			{
+			dbg.location(64,11);
+			match(input,23,FOLLOW_23_in_mutdecl365); dbg.location(64,15);
+			pushFollow(FOLLOW_blockdecl_in_mutdecl367);
+			blockdecl();
+			state._fsp--;
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(65, 1);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "mutdecl");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "mutdecl"
+
+
+
 	// $ANTLR start "expr"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:48:1: expr : ( index_expr | dict | fndecl | array );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:67:1: expr : ( index_expr | dict | fndecl | mutdecl | anonfn | array );
 	public final void expr() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "expr");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(48, 0);
+		dbg.location(67, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:48:6: ( index_expr | dict | fndecl | array )
-			int alt15=4;
-			try { dbg.enterDecision(15, decisionCanBacktrack[15]);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:67:6: ( index_expr | dict | fndecl | mutdecl | anonfn | array )
+			int alt21=6;
+			try { dbg.enterDecision(21, decisionCanBacktrack[21]);
 
 			switch ( input.LA(1) ) {
+			case ANONVAR:
 			case ID:
 			case INT:
 			case KEYWORD:
+			case MUTID:
 			case STRING:
 			case TYPEID:
-			case 11:
+			case 13:
 				{
-				alt15=1;
+				alt21=1;
 				}
 				break;
-			case 22:
+			case 31:
 				{
-				alt15=2;
+				alt21=2;
 				}
 				break;
-			case 10:
+			case 12:
 				{
-				alt15=3;
+				int LA21_3 = input.LA(2);
+				if ( (LA21_3==24) ) {
+					alt21=5;
+				}
+				else if ( (LA21_3==13) ) {
+					alt21=3;
+				}
+
+				else {
+					int nvaeMark = input.mark();
+					try {
+						input.consume();
+						NoViableAltException nvae =
+							new NoViableAltException("", 21, 3, input);
+						dbg.recognitionException(nvae);
+						throw nvae;
+					} finally {
+						input.rewind(nvaeMark);
+					}
+				}
+
 				}
 				break;
-			case 19:
+			case 23:
 				{
-				alt15=4;
+				alt21=4;
+				}
+				break;
+			case 24:
+				{
+				alt21=6;
 				}
 				break;
 			default:
 				NoViableAltException nvae =
-					new NoViableAltException("", 15, 0, input);
+					new NoViableAltException("", 21, 0, input);
 				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-			} finally {dbg.exitDecision(15);}
+			} finally {dbg.exitDecision(21);}
 
-			switch (alt15) {
+			switch (alt21) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:48:8: index_expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:67:8: index_expr
 					{
-					dbg.location(48,8);
-					pushFollow(FOLLOW_index_expr_in_expr260);
+					dbg.location(67,8);
+					pushFollow(FOLLOW_index_expr_in_expr377);
 					index_expr();
 					state._fsp--;
 
@@ -1218,10 +1695,10 @@ public class SneakersParser extends DebugParser {
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:49:4: dict
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:68:4: dict
 					{
-					dbg.location(49,4);
-					pushFollow(FOLLOW_dict_in_expr265);
+					dbg.location(68,4);
+					pushFollow(FOLLOW_dict_in_expr382);
 					dict();
 					state._fsp--;
 
@@ -1230,10 +1707,10 @@ public class SneakersParser extends DebugParser {
 				case 3 :
 					dbg.enterAlt(3);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:50:4: fndecl
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:69:4: fndecl
 					{
-					dbg.location(50,4);
-					pushFollow(FOLLOW_fndecl_in_expr270);
+					dbg.location(69,4);
+					pushFollow(FOLLOW_fndecl_in_expr387);
 					fndecl();
 					state._fsp--;
 
@@ -1242,10 +1719,34 @@ public class SneakersParser extends DebugParser {
 				case 4 :
 					dbg.enterAlt(4);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:51:4: array
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:4: mutdecl
 					{
-					dbg.location(51,4);
-					pushFollow(FOLLOW_array_in_expr275);
+					dbg.location(70,4);
+					pushFollow(FOLLOW_mutdecl_in_expr392);
+					mutdecl();
+					state._fsp--;
+
+					}
+					break;
+				case 5 :
+					dbg.enterAlt(5);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:71:4: anonfn
+					{
+					dbg.location(71,4);
+					pushFollow(FOLLOW_anonfn_in_expr397);
+					anonfn();
+					state._fsp--;
+
+					}
+					break;
+				case 6 :
+					dbg.enterAlt(6);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:72:4: array
+					{
+					dbg.location(72,4);
+					pushFollow(FOLLOW_array_in_expr402);
 					array();
 					state._fsp--;
 
@@ -1261,7 +1762,7 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(52, 1);
+		dbg.location(73, 1);
 
 		}
 		finally {
@@ -1276,26 +1777,26 @@ public class SneakersParser extends DebugParser {
 
 
 	// $ANTLR start "standalone_fncall"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:54:1: standalone_fncall : '(' fncall ')' ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:75:1: standalone_fncall : '(' fncall ')' ;
 	public final void standalone_fncall() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "standalone_fncall");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(54, 0);
+		dbg.location(75, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:55:2: ( '(' fncall ')' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:76:2: ( '(' fncall ')' )
 			dbg.enterAlt(1);
 
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:55:4: '(' fncall ')'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:76:4: '(' fncall ')'
 			{
-			dbg.location(55,4);
-			match(input,11,FOLLOW_11_in_standalone_fncall286); dbg.location(55,8);
-			pushFollow(FOLLOW_fncall_in_standalone_fncall288);
+			dbg.location(76,4);
+			match(input,13,FOLLOW_13_in_standalone_fncall413); dbg.location(76,8);
+			pushFollow(FOLLOW_fncall_in_standalone_fncall415);
 			fncall();
 			state._fsp--;
-			dbg.location(55,15);
-			match(input,12,FOLLOW_12_in_standalone_fncall290); 
+			dbg.location(76,15);
+			match(input,14,FOLLOW_14_in_standalone_fncall417); 
 			}
 
 		}
@@ -1306,7 +1807,7 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(56, 1);
+		dbg.location(77, 1);
 
 		}
 		finally {
@@ -1320,89 +1821,167 @@ public class SneakersParser extends DebugParser {
 
 
 
-	// $ANTLR start "index_expr"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:58:1: index_expr : ( KEYWORD | INT | STRING | nested_id | standalone_fncall );
-	public final void index_expr() throws RecognitionException {
-		try { dbg.enterRule(getGrammarFileName(), "index_expr");
+	// $ANTLR start "mutcall"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:79:1: mutcall : ( '<' nested_id '>' | '<' fncall '>' );
+	public final void mutcall() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "mutcall");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(58, 0);
+		dbg.location(79, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:59:2: ( KEYWORD | INT | STRING | nested_id | standalone_fncall )
-			int alt16=5;
-			try { dbg.enterDecision(16, decisionCanBacktrack[16]);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:79:9: ( '<' nested_id '>' | '<' fncall '>' )
+			int alt22=2;
+			try { dbg.enterDecision(22, decisionCanBacktrack[22]);
 
-			switch ( input.LA(1) ) {
-			case KEYWORD:
-				{
-				alt16=1;
-				}
-				break;
-			case INT:
-				{
-				alt16=2;
-				}
-				break;
-			case STRING:
-				{
-				alt16=3;
-				}
-				break;
-			case ID:
-			case TYPEID:
-				{
-				alt16=4;
-				}
-				break;
-			case 11:
-				{
-				alt16=5;
-				}
-				break;
-			default:
-				NoViableAltException nvae =
-					new NoViableAltException("", 16, 0, input);
+			try {
+				isCyclicDecision = true;
+				alt22 = dfa22.predict(input);
+			}
+			catch (NoViableAltException nvae) {
 				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-			} finally {dbg.exitDecision(16);}
+			} finally {dbg.exitDecision(22);}
 
-			switch (alt16) {
+			switch (alt22) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:59:4: KEYWORD
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:79:11: '<' nested_id '>'
 					{
-					dbg.location(59,4);
-					match(input,KEYWORD,FOLLOW_KEYWORD_in_index_expr302); 
+					dbg.location(79,11);
+					match(input,19,FOLLOW_19_in_mutcall427); dbg.location(79,15);
+					pushFollow(FOLLOW_nested_id_in_mutcall429);
+					nested_id();
+					state._fsp--;
+					dbg.location(79,25);
+					match(input,22,FOLLOW_22_in_mutcall431); 
 					}
 					break;
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:60:4: INT
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:80:4: '<' fncall '>'
 					{
-					dbg.location(60,4);
-					match(input,INT,FOLLOW_INT_in_index_expr307); 
+					dbg.location(80,4);
+					match(input,19,FOLLOW_19_in_mutcall436); dbg.location(80,8);
+					pushFollow(FOLLOW_fncall_in_mutcall438);
+					fncall();
+					state._fsp--;
+					dbg.location(80,15);
+					match(input,22,FOLLOW_22_in_mutcall440); 
+					}
+					break;
+
+			}
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(81, 1);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "mutcall");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "mutcall"
+
+
+
+	// $ANTLR start "index_expr"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:83:1: index_expr : ( KEYWORD | INT | STRING | nested_id | standalone_fncall );
+	public final void index_expr() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "index_expr");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(83, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:84:2: ( KEYWORD | INT | STRING | nested_id | standalone_fncall )
+			int alt23=5;
+			try { dbg.enterDecision(23, decisionCanBacktrack[23]);
+
+			switch ( input.LA(1) ) {
+			case KEYWORD:
+				{
+				alt23=1;
+				}
+				break;
+			case INT:
+				{
+				alt23=2;
+				}
+				break;
+			case STRING:
+				{
+				alt23=3;
+				}
+				break;
+			case ANONVAR:
+			case ID:
+			case MUTID:
+			case TYPEID:
+				{
+				alt23=4;
+				}
+				break;
+			case 13:
+				{
+				alt23=5;
+				}
+				break;
+			default:
+				NoViableAltException nvae =
+					new NoViableAltException("", 23, 0, input);
+				dbg.recognitionException(nvae);
+				throw nvae;
+			}
+			} finally {dbg.exitDecision(23);}
+
+			switch (alt23) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:84:4: KEYWORD
+					{
+					dbg.location(84,4);
+					match(input,KEYWORD,FOLLOW_KEYWORD_in_index_expr452); 
+					}
+					break;
+				case 2 :
+					dbg.enterAlt(2);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:85:4: INT
+					{
+					dbg.location(85,4);
+					match(input,INT,FOLLOW_INT_in_index_expr457); 
 					}
 					break;
 				case 3 :
 					dbg.enterAlt(3);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:61:4: STRING
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:86:4: STRING
 					{
-					dbg.location(61,4);
-					match(input,STRING,FOLLOW_STRING_in_index_expr312); 
+					dbg.location(86,4);
+					match(input,STRING,FOLLOW_STRING_in_index_expr462); 
 					}
 					break;
 				case 4 :
 					dbg.enterAlt(4);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:62:4: nested_id
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:87:4: nested_id
 					{
-					dbg.location(62,4);
-					pushFollow(FOLLOW_nested_id_in_index_expr317);
+					dbg.location(87,4);
+					pushFollow(FOLLOW_nested_id_in_index_expr467);
 					nested_id();
 					state._fsp--;
 
@@ -1411,10 +1990,10 @@ public class SneakersParser extends DebugParser {
 				case 5 :
 					dbg.enterAlt(5);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:63:4: standalone_fncall
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:88:4: standalone_fncall
 					{
-					dbg.location(63,4);
-					pushFollow(FOLLOW_standalone_fncall_in_index_expr322);
+					dbg.location(88,4);
+					pushFollow(FOLLOW_standalone_fncall_in_index_expr472);
 					standalone_fncall();
 					state._fsp--;
 
@@ -1430,7 +2009,7 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(64, 1);
+		dbg.location(89, 1);
 
 		}
 		finally {
@@ -1445,26 +2024,26 @@ public class SneakersParser extends DebugParser {
 
 
 	// $ANTLR start "dict_pair"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:66:1: dict_pair : index_expr '=>' expr ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:91:1: dict_pair : index_expr '=>' expr ;
 	public final void dict_pair() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "dict_pair");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(66, 0);
+		dbg.location(91, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:67:2: ( index_expr '=>' expr )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:2: ( index_expr '=>' expr )
 			dbg.enterAlt(1);
 
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:67:4: index_expr '=>' expr
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:4: index_expr '=>' expr
 			{
-			dbg.location(67,4);
-			pushFollow(FOLLOW_index_expr_in_dict_pair334);
+			dbg.location(92,4);
+			pushFollow(FOLLOW_index_expr_in_dict_pair484);
 			index_expr();
 			state._fsp--;
-			dbg.location(67,15);
-			match(input,18,FOLLOW_18_in_dict_pair336); dbg.location(67,20);
-			pushFollow(FOLLOW_expr_in_dict_pair338);
+			dbg.location(92,15);
+			match(input,21,FOLLOW_21_in_dict_pair486); dbg.location(92,20);
+			pushFollow(FOLLOW_expr_in_dict_pair488);
 			expr();
 			state._fsp--;
 
@@ -1478,7 +2057,7 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(68, 1);
+		dbg.location(93, 1);
 
 		}
 		finally {
@@ -1493,40 +2072,40 @@ public class SneakersParser extends DebugParser {
 
 
 	// $ANTLR start "dict"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:1: dict : '{' ( dict_pair )? ( ',' dict_pair )* '}' ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:1: dict : '{' ( dict_pair )? ( ',' dict_pair )* '}' ;
 	public final void dict() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "dict");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(70, 0);
+		dbg.location(95, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:6: ( '{' ( dict_pair )? ( ',' dict_pair )* '}' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:6: ( '{' ( dict_pair )? ( ',' dict_pair )* '}' )
 			dbg.enterAlt(1);
 
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:8: '{' ( dict_pair )? ( ',' dict_pair )* '}'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:8: '{' ( dict_pair )? ( ',' dict_pair )* '}'
 			{
-			dbg.location(70,8);
-			match(input,22,FOLLOW_22_in_dict348); dbg.location(70,12);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:12: ( dict_pair )?
-			int alt17=2;
-			try { dbg.enterSubRule(17);
-			try { dbg.enterDecision(17, decisionCanBacktrack[17]);
+			dbg.location(95,8);
+			match(input,31,FOLLOW_31_in_dict498); dbg.location(95,12);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:12: ( dict_pair )?
+			int alt24=2;
+			try { dbg.enterSubRule(24);
+			try { dbg.enterDecision(24, decisionCanBacktrack[24]);
 
-			int LA17_0 = input.LA(1);
-			if ( ((LA17_0 >= ID && LA17_0 <= TYPEID)||LA17_0==11) ) {
-				alt17=1;
+			int LA24_0 = input.LA(1);
+			if ( ((LA24_0 >= ANONVAR && LA24_0 <= TYPEID)||LA24_0==13) ) {
+				alt24=1;
 			}
-			} finally {dbg.exitDecision(17);}
+			} finally {dbg.exitDecision(24);}
 
-			switch (alt17) {
+			switch (alt24) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:13: dict_pair
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:13: dict_pair
 					{
-					dbg.location(70,13);
-					pushFollow(FOLLOW_dict_pair_in_dict351);
+					dbg.location(95,13);
+					pushFollow(FOLLOW_dict_pair_in_dict501);
 					dict_pair();
 					state._fsp--;
 
@@ -1534,32 +2113,32 @@ public class SneakersParser extends DebugParser {
 					break;
 
 			}
-			} finally {dbg.exitSubRule(17);}
-			dbg.location(70,25);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:25: ( ',' dict_pair )*
-			try { dbg.enterSubRule(18);
+			} finally {dbg.exitSubRule(24);}
+			dbg.location(95,25);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:25: ( ',' dict_pair )*
+			try { dbg.enterSubRule(25);
 
-			loop18:
+			loop25:
 			while (true) {
-				int alt18=2;
-				try { dbg.enterDecision(18, decisionCanBacktrack[18]);
+				int alt25=2;
+				try { dbg.enterDecision(25, decisionCanBacktrack[25]);
 
-				int LA18_0 = input.LA(1);
-				if ( (LA18_0==13) ) {
-					alt18=1;
+				int LA25_0 = input.LA(1);
+				if ( (LA25_0==15) ) {
+					alt25=1;
 				}
 
-				} finally {dbg.exitDecision(18);}
+				} finally {dbg.exitDecision(25);}
 
-				switch (alt18) {
+				switch (alt25) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:26: ',' dict_pair
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:26: ',' dict_pair
 					{
-					dbg.location(70,26);
-					match(input,13,FOLLOW_13_in_dict356); dbg.location(70,30);
-					pushFollow(FOLLOW_dict_pair_in_dict358);
+					dbg.location(95,26);
+					match(input,15,FOLLOW_15_in_dict506); dbg.location(95,30);
+					pushFollow(FOLLOW_dict_pair_in_dict508);
 					dict_pair();
 					state._fsp--;
 
@@ -1567,12 +2146,12 @@ public class SneakersParser extends DebugParser {
 					break;
 
 				default :
-					break loop18;
+					break loop25;
 				}
 			}
-			} finally {dbg.exitSubRule(18);}
-			dbg.location(70,42);
-			match(input,23,FOLLOW_23_in_dict362); 
+			} finally {dbg.exitSubRule(25);}
+			dbg.location(95,42);
+			match(input,32,FOLLOW_32_in_dict512); 
 			}
 
 		}
@@ -1583,7 +2162,7 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(71, 1);
+		dbg.location(96, 1);
 
 		}
 		finally {
@@ -1597,219 +2176,29 @@ public class SneakersParser extends DebugParser {
 
 
 
-	// $ANTLR start "array"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:1: array : ( '[' ( expr )? ( ',' expr )* ']' | '[' ( stat )+ ']' );
-	public final void array() throws RecognitionException {
-		try { dbg.enterRule(getGrammarFileName(), "array");
+	// $ANTLR start "contained_block"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:98:1: contained_block : '[' block ']' ;
+	public final void contained_block() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "contained_block");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(73, 0);
+		dbg.location(98, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:7: ( '[' ( expr )? ( ',' expr )* ']' | '[' ( stat )+ ']' )
-			int alt22=2;
-			try { dbg.enterDecision(22, decisionCanBacktrack[22]);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:99:2: ( '[' block ']' )
+			dbg.enterAlt(1);
 
-			int LA22_0 = input.LA(1);
-			if ( (LA22_0==19) ) {
-				switch ( input.LA(2) ) {
-				case INT:
-				case KEYWORD:
-				case STRING:
-				case 10:
-				case 11:
-				case 13:
-				case 19:
-				case 20:
-				case 22:
-					{
-					alt22=1;
-					}
-					break;
-				case ID:
-				case TYPEID:
-					{
-					int LA22_3 = input.LA(3);
-					if ( ((LA22_3 >= 13 && LA22_3 <= 14)||LA22_3==20) ) {
-						alt22=1;
-					}
-					else if ( (LA22_3==17) ) {
-						alt22=2;
-					}
-
-					else {
-						int nvaeMark = input.mark();
-						try {
-							for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++) {
-								input.consume();
-							}
-							NoViableAltException nvae =
-								new NoViableAltException("", 22, 3, input);
-							dbg.recognitionException(nvae);
-							throw nvae;
-						} finally {
-							input.rewind(nvaeMark);
-						}
-					}
-
-					}
-					break;
-				case 21:
-					{
-					alt22=2;
-					}
-					break;
-				default:
-					int nvaeMark = input.mark();
-					try {
-						input.consume();
-						NoViableAltException nvae =
-							new NoViableAltException("", 22, 1, input);
-						dbg.recognitionException(nvae);
-						throw nvae;
-					} finally {
-						input.rewind(nvaeMark);
-					}
-				}
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:99:4: '[' block ']'
+			{
+			dbg.location(99,4);
+			match(input,24,FOLLOW_24_in_contained_block525); dbg.location(99,8);
+			pushFollow(FOLLOW_block_in_contained_block527);
+			block();
+			state._fsp--;
+			dbg.location(99,14);
+			match(input,25,FOLLOW_25_in_contained_block529); 
 			}
 
-			else {
-				NoViableAltException nvae =
-					new NoViableAltException("", 22, 0, input);
-				dbg.recognitionException(nvae);
-				throw nvae;
-			}
-
-			} finally {dbg.exitDecision(22);}
-
-			switch (alt22) {
-				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:9: '[' ( expr )? ( ',' expr )* ']'
-					{
-					dbg.location(73,9);
-					match(input,19,FOLLOW_19_in_array374); dbg.location(73,13);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:13: ( expr )?
-					int alt19=2;
-					try { dbg.enterSubRule(19);
-					try { dbg.enterDecision(19, decisionCanBacktrack[19]);
-
-					int LA19_0 = input.LA(1);
-					if ( ((LA19_0 >= ID && LA19_0 <= TYPEID)||(LA19_0 >= 10 && LA19_0 <= 11)||LA19_0==19||LA19_0==22) ) {
-						alt19=1;
-					}
-					} finally {dbg.exitDecision(19);}
-
-					switch (alt19) {
-						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:13: expr
-							{
-							dbg.location(73,13);
-							pushFollow(FOLLOW_expr_in_array376);
-							expr();
-							state._fsp--;
-
-							}
-							break;
-
-					}
-					} finally {dbg.exitSubRule(19);}
-					dbg.location(73,19);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:19: ( ',' expr )*
-					try { dbg.enterSubRule(20);
-
-					loop20:
-					while (true) {
-						int alt20=2;
-						try { dbg.enterDecision(20, decisionCanBacktrack[20]);
-
-						int LA20_0 = input.LA(1);
-						if ( (LA20_0==13) ) {
-							alt20=1;
-						}
-
-						} finally {dbg.exitDecision(20);}
-
-						switch (alt20) {
-						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:20: ',' expr
-							{
-							dbg.location(73,20);
-							match(input,13,FOLLOW_13_in_array380); dbg.location(73,24);
-							pushFollow(FOLLOW_expr_in_array382);
-							expr();
-							state._fsp--;
-
-							}
-							break;
-
-						default :
-							break loop20;
-						}
-					}
-					} finally {dbg.exitSubRule(20);}
-					dbg.location(73,31);
-					match(input,20,FOLLOW_20_in_array386); 
-					}
-					break;
-				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:74:4: '[' ( stat )+ ']'
-					{
-					dbg.location(74,4);
-					match(input,19,FOLLOW_19_in_array391); dbg.location(74,8);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:74:8: ( stat )+
-					int cnt21=0;
-					try { dbg.enterSubRule(21);
-
-					loop21:
-					while (true) {
-						int alt21=2;
-						try { dbg.enterDecision(21, decisionCanBacktrack[21]);
-
-						int LA21_0 = input.LA(1);
-						if ( (LA21_0==ID||LA21_0==TYPEID||LA21_0==21) ) {
-							alt21=1;
-						}
-
-						} finally {dbg.exitDecision(21);}
-
-						switch (alt21) {
-						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:74:8: stat
-							{
-							dbg.location(74,8);
-							pushFollow(FOLLOW_stat_in_array393);
-							stat();
-							state._fsp--;
-
-							}
-							break;
-
-						default :
-							if ( cnt21 >= 1 ) break loop21;
-							EarlyExitException eee = new EarlyExitException(21, input);
-							dbg.recognitionException(eee);
-
-							throw eee;
-						}
-						cnt21++;
-					}
-					} finally {dbg.exitSubRule(21);}
-					dbg.location(74,14);
-					match(input,20,FOLLOW_20_in_array396); 
-					}
-					break;
-
-			}
 		}
 		catch (RecognitionException re) {
 			reportError(re);
@@ -1818,7 +2207,112 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(75, 1);
+		dbg.location(100, 1);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "contained_block");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "contained_block"
+
+
+
+	// $ANTLR start "array"
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:102:1: array : '[' ( expr )? ( ',' expr )* ']' ;
+	public final void array() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "array");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(102, 0);
+
+		try {
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:102:7: ( '[' ( expr )? ( ',' expr )* ']' )
+			dbg.enterAlt(1);
+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:102:9: '[' ( expr )? ( ',' expr )* ']'
+			{
+			dbg.location(102,9);
+			match(input,24,FOLLOW_24_in_array539); dbg.location(102,13);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:102:13: ( expr )?
+			int alt26=2;
+			try { dbg.enterSubRule(26);
+			try { dbg.enterDecision(26, decisionCanBacktrack[26]);
+
+			int LA26_0 = input.LA(1);
+			if ( ((LA26_0 >= ANONVAR && LA26_0 <= TYPEID)||(LA26_0 >= 12 && LA26_0 <= 13)||(LA26_0 >= 23 && LA26_0 <= 24)||LA26_0==31) ) {
+				alt26=1;
+			}
+			} finally {dbg.exitDecision(26);}
+
+			switch (alt26) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:102:13: expr
+					{
+					dbg.location(102,13);
+					pushFollow(FOLLOW_expr_in_array541);
+					expr();
+					state._fsp--;
+
+					}
+					break;
+
+			}
+			} finally {dbg.exitSubRule(26);}
+			dbg.location(102,19);
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:102:19: ( ',' expr )*
+			try { dbg.enterSubRule(27);
+
+			loop27:
+			while (true) {
+				int alt27=2;
+				try { dbg.enterDecision(27, decisionCanBacktrack[27]);
+
+				int LA27_0 = input.LA(1);
+				if ( (LA27_0==15) ) {
+					alt27=1;
+				}
+
+				} finally {dbg.exitDecision(27);}
+
+				switch (alt27) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:102:20: ',' expr
+					{
+					dbg.location(102,20);
+					match(input,15,FOLLOW_15_in_array545); dbg.location(102,24);
+					pushFollow(FOLLOW_expr_in_array547);
+					expr();
+					state._fsp--;
+
+					}
+					break;
+
+				default :
+					break loop27;
+				}
+			}
+			} finally {dbg.exitSubRule(27);}
+			dbg.location(102,31);
+			match(input,25,FOLLOW_25_in_array551); 
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(103, 1);
 
 		}
 		finally {
@@ -1833,21 +2327,21 @@ public class SneakersParser extends DebugParser {
 
 
 	// $ANTLR start "any_id"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:86:1: any_id : ( ID | TYPEID );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:1: any_id : ( ID | TYPEID | MUTID );
 	public final void any_id() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "any_id");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(86, 0);
+		dbg.location(121, 0);
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:87:2: ( ID | TYPEID )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:122:2: ( ID | TYPEID | MUTID )
 			dbg.enterAlt(1);
 
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:
 			{
-			dbg.location(87,2);
-			if ( input.LA(1)==ID||input.LA(1)==TYPEID ) {
+			dbg.location(122,2);
+			if ( input.LA(1)==ID||input.LA(1)==MUTID||input.LA(1)==TYPEID ) {
 				input.consume();
 				state.errorRecovery=false;
 			}
@@ -1866,7 +2360,7 @@ public class SneakersParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(89, 1);
+		dbg.location(125, 1);
 
 		}
 		finally {
@@ -1881,150 +2375,383 @@ public class SneakersParser extends DebugParser {
 	// Delegated rules
 
 
-	protected DFA3 dfa3 = new DFA3(this);
-	static final String DFA3_eotS =
-		"\12\uffff";
-	static final String DFA3_eofS =
-		"\4\uffff\1\3\1\uffff\2\10\1\uffff\1\3";
-	static final String DFA3_minS =
-		"\1\4\1\21\1\4\1\uffff\4\4\1\uffff\1\4";
-	static final String DFA3_maxS =
-		"\1\10\1\21\1\26\1\uffff\1\26\1\10\2\26\1\uffff\1\26";
-	static final String DFA3_acceptS =
-		"\3\uffff\1\1\4\uffff\1\2\1\uffff";
-	static final String DFA3_specialS =
-		"\12\uffff}>";
-	static final String[] DFA3_transitionS = {
-			"\1\1\3\uffff\1\1",
-			"\1\2",
-			"\1\4\3\3\1\4\1\uffff\2\3\7\uffff\1\3\2\uffff\1\3",
+	protected DFA2 dfa2 = new DFA2(this);
+	protected DFA5 dfa5 = new DFA5(this);
+	protected DFA15 dfa15 = new DFA15(this);
+	protected DFA22 dfa22 = new DFA22(this);
+	static final String DFA2_eotS =
+		"\16\uffff";
+	static final String DFA2_eofS =
+		"\6\uffff\2\10\2\uffff\1\13\1\uffff\1\13\1\10";
+	static final String DFA2_minS =
+		"\1\5\2\uffff\1\4\2\uffff\2\4\1\uffff\1\5\1\4\1\uffff\2\4";
+	static final String DFA2_maxS =
+		"\1\36\2\uffff\1\37\2\uffff\2\37\1\uffff\1\12\1\37\1\uffff\2\37";
+	static final String DFA2_acceptS =
+		"\1\uffff\1\1\1\2\1\uffff\1\5\1\6\2\uffff\1\4\2\uffff\1\3\2\uffff";
+	static final String DFA2_specialS =
+		"\16\uffff}>";
+	static final String[] DFA2_transitionS = {
+			"\1\1\2\uffff\1\1\1\uffff\1\1\10\uffff\1\4\10\uffff\1\2\1\5\1\3",
 			"",
-			"\1\6\3\10\1\7\1\uffff\2\10\2\uffff\1\5\1\uffff\1\3\2\uffff\1\10\2\3"+
-			"\1\10",
-			"\1\11\3\uffff\1\11",
-			"\5\10\1\uffff\2\10\1\uffff\4\10\1\3\1\uffff\4\10",
-			"\5\10\1\uffff\2\10\1\uffff\2\10\1\uffff\1\10\1\3\1\uffff\4\10",
 			"",
-			"\1\6\3\10\1\7\1\uffff\2\10\2\uffff\1\5\1\uffff\1\3\2\uffff\1\10\2\3"+
-			"\1\10"
+			"\1\7\1\6\2\10\1\6\1\10\1\6\1\uffff\2\10\11\uffff\2\10\6\uffff\1\10",
+			"",
+			"",
+			"\1\13\1\12\2\13\1\14\1\13\1\14\1\uffff\2\13\2\uffff\1\11\1\uffff\2\10"+
+			"\3\uffff\2\13\3\uffff\3\10\1\13",
+			"\1\13\1\12\2\13\1\14\1\13\1\14\1\uffff\2\13\2\uffff\1\11\1\uffff\2\10"+
+			"\3\uffff\2\13\3\uffff\3\10\1\13",
+			"",
+			"\1\15\2\uffff\1\15\1\uffff\1\15",
+			"\7\13\1\uffff\2\13\1\uffff\5\13\1\10\2\uffff\2\13\3\uffff\4\13",
+			"",
+			"\7\13\1\uffff\2\13\1\uffff\2\13\1\uffff\2\13\1\10\2\uffff\2\13\3\uffff"+
+			"\4\13",
+			"\1\13\1\12\2\13\1\14\1\13\1\14\1\uffff\2\13\2\uffff\1\11\1\uffff\2\10"+
+			"\3\uffff\2\13\3\uffff\3\10\1\13"
 	};
 
-	static final short[] DFA3_eot = DFA.unpackEncodedString(DFA3_eotS);
-	static final short[] DFA3_eof = DFA.unpackEncodedString(DFA3_eofS);
-	static final char[] DFA3_min = DFA.unpackEncodedStringToUnsignedChars(DFA3_minS);
-	static final char[] DFA3_max = DFA.unpackEncodedStringToUnsignedChars(DFA3_maxS);
-	static final short[] DFA3_accept = DFA.unpackEncodedString(DFA3_acceptS);
-	static final short[] DFA3_special = DFA.unpackEncodedString(DFA3_specialS);
-	static final short[][] DFA3_transition;
+	static final short[] DFA2_eot = DFA.unpackEncodedString(DFA2_eotS);
+	static final short[] DFA2_eof = DFA.unpackEncodedString(DFA2_eofS);
+	static final char[] DFA2_min = DFA.unpackEncodedStringToUnsignedChars(DFA2_minS);
+	static final char[] DFA2_max = DFA.unpackEncodedStringToUnsignedChars(DFA2_maxS);
+	static final short[] DFA2_accept = DFA.unpackEncodedString(DFA2_acceptS);
+	static final short[] DFA2_special = DFA.unpackEncodedString(DFA2_specialS);
+	static final short[][] DFA2_transition;
 
 	static {
-		int numStates = DFA3_transitionS.length;
-		DFA3_transition = new short[numStates][];
+		int numStates = DFA2_transitionS.length;
+		DFA2_transition = new short[numStates][];
 		for (int i=0; i<numStates; i++) {
-			DFA3_transition[i] = DFA.unpackEncodedString(DFA3_transitionS[i]);
+			DFA2_transition[i] = DFA.unpackEncodedString(DFA2_transitionS[i]);
 		}
 	}
 
-	protected class DFA3 extends DFA {
+	protected class DFA2 extends DFA {
 
-		public DFA3(BaseRecognizer recognizer) {
+		public DFA2(BaseRecognizer recognizer) {
 			this.recognizer = recognizer;
-			this.decisionNumber = 3;
-			this.eot = DFA3_eot;
-			this.eof = DFA3_eof;
-			this.min = DFA3_min;
-			this.max = DFA3_max;
-			this.accept = DFA3_accept;
-			this.special = DFA3_special;
-			this.transition = DFA3_transition;
+			this.decisionNumber = 2;
+			this.eot = DFA2_eot;
+			this.eof = DFA2_eof;
+			this.min = DFA2_min;
+			this.max = DFA2_max;
+			this.accept = DFA2_accept;
+			this.special = DFA2_special;
+			this.transition = DFA2_transition;
 		}
 		@Override
 		public String getDescription() {
-			return "12:1: assignment : ( any_id '=' expr | any_id '=' fncall );";
+			return "10:1: stat : ( assignment | ifstat | 'return' fncall | 'return' expr | mutcall | 'pass' );";
 		}
 		public void error(NoViableAltException nvae) {
 			dbg.recognitionException(nvae);
 		}
 	}
 
-	public static final BitSet FOLLOW_stat_in_prog29 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_16_in_prog31 = new BitSet(new long[]{0x0000000000200112L});
-	public static final BitSet FOLLOW_assignment_in_stat41 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_21_in_stat46 = new BitSet(new long[]{0x0000000000480DF0L});
-	public static final BitSet FOLLOW_expr_in_stat48 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_any_id_in_assignment59 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_17_in_assignment61 = new BitSet(new long[]{0x0000000000480DF0L});
-	public static final BitSet FOLLOW_expr_in_assignment63 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_any_id_in_assignment68 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_17_in_assignment70 = new BitSet(new long[]{0x0000000000000110L});
-	public static final BitSet FOLLOW_fncall_in_assignment72 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_TYPEID_in_defable83 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_fndecl_in_defable88 = new BitSet(new long[]{0x0000000000200110L});
-	public static final BitSet FOLLOW_stat_in_defable90 = new BitSet(new long[]{0x0000000000200112L});
-	public static final BitSet FOLLOW_KEYWORD_in_defdecl101 = new BitSet(new long[]{0x0000000000040000L});
-	public static final BitSet FOLLOW_18_in_defdecl103 = new BitSet(new long[]{0x0000000000000500L});
-	public static final BitSet FOLLOW_defable_in_defdecl105 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_any_id_in_nested_id118 = new BitSet(new long[]{0x0000000000004002L});
-	public static final BitSet FOLLOW_14_in_nested_id121 = new BitSet(new long[]{0x0000000000000110L});
-	public static final BitSet FOLLOW_any_id_in_nested_id123 = new BitSet(new long[]{0x0000000000004002L});
-	public static final BitSet FOLLOW_nested_id_in_fncall135 = new BitSet(new long[]{0x0000000000480DF0L});
-	public static final BitSet FOLLOW_param_in_fncall137 = new BitSet(new long[]{0x0000000000482DF2L});
-	public static final BitSet FOLLOW_13_in_fncall140 = new BitSet(new long[]{0x0000000000480DF0L});
-	public static final BitSet FOLLOW_param_in_fncall143 = new BitSet(new long[]{0x0000000000482DF2L});
-	public static final BitSet FOLLOW_ID_in_param155 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_15_in_param157 = new BitSet(new long[]{0x0000000000480DF0L});
-	public static final BitSet FOLLOW_expr_in_param159 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expr_in_param164 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_TYPEID_in_paramtype175 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_11_in_paramtype180 = new BitSet(new long[]{0x0000000000001100L});
-	public static final BitSet FOLLOW_TYPEID_in_paramtype182 = new BitSet(new long[]{0x0000000000001100L});
-	public static final BitSet FOLLOW_12_in_paramtype185 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_15_in_paramtype187 = new BitSet(new long[]{0x0000000000000100L});
-	public static final BitSet FOLLOW_TYPEID_in_paramtype189 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ID_in_fnparam200 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_15_in_fnparam202 = new BitSet(new long[]{0x0000000000000900L});
-	public static final BitSet FOLLOW_paramtype_in_fnparam204 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_10_in_fndecl214 = new BitSet(new long[]{0x0000000000000800L});
-	public static final BitSet FOLLOW_11_in_fndecl216 = new BitSet(new long[]{0x0000000000001000L});
-	public static final BitSet FOLLOW_12_in_fndecl218 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_15_in_fndecl220 = new BitSet(new long[]{0x0000000000000100L});
-	public static final BitSet FOLLOW_TYPEID_in_fndecl222 = new BitSet(new long[]{0x0000000000080000L});
-	public static final BitSet FOLLOW_array_in_fndecl224 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_10_in_fndecl230 = new BitSet(new long[]{0x0000000000000800L});
-	public static final BitSet FOLLOW_11_in_fndecl232 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_fnparam_in_fndecl234 = new BitSet(new long[]{0x0000000000003010L});
-	public static final BitSet FOLLOW_13_in_fndecl237 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_fnparam_in_fndecl240 = new BitSet(new long[]{0x0000000000003010L});
-	public static final BitSet FOLLOW_12_in_fndecl244 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_15_in_fndecl246 = new BitSet(new long[]{0x0000000000000100L});
-	public static final BitSet FOLLOW_TYPEID_in_fndecl248 = new BitSet(new long[]{0x0000000000080000L});
-	public static final BitSet FOLLOW_array_in_fndecl250 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_index_expr_in_expr260 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_dict_in_expr265 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_fndecl_in_expr270 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_array_in_expr275 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_11_in_standalone_fncall286 = new BitSet(new long[]{0x0000000000000110L});
-	public static final BitSet FOLLOW_fncall_in_standalone_fncall288 = new BitSet(new long[]{0x0000000000001000L});
-	public static final BitSet FOLLOW_12_in_standalone_fncall290 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_KEYWORD_in_index_expr302 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_INT_in_index_expr307 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STRING_in_index_expr312 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nested_id_in_index_expr317 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_standalone_fncall_in_index_expr322 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_index_expr_in_dict_pair334 = new BitSet(new long[]{0x0000000000040000L});
-	public static final BitSet FOLLOW_18_in_dict_pair336 = new BitSet(new long[]{0x0000000000480DF0L});
-	public static final BitSet FOLLOW_expr_in_dict_pair338 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_22_in_dict348 = new BitSet(new long[]{0x00000000008029F0L});
-	public static final BitSet FOLLOW_dict_pair_in_dict351 = new BitSet(new long[]{0x0000000000802000L});
-	public static final BitSet FOLLOW_13_in_dict356 = new BitSet(new long[]{0x00000000000009F0L});
-	public static final BitSet FOLLOW_dict_pair_in_dict358 = new BitSet(new long[]{0x0000000000802000L});
-	public static final BitSet FOLLOW_23_in_dict362 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_19_in_array374 = new BitSet(new long[]{0x0000000000582DF0L});
-	public static final BitSet FOLLOW_expr_in_array376 = new BitSet(new long[]{0x0000000000102000L});
-	public static final BitSet FOLLOW_13_in_array380 = new BitSet(new long[]{0x0000000000480DF0L});
-	public static final BitSet FOLLOW_expr_in_array382 = new BitSet(new long[]{0x0000000000102000L});
-	public static final BitSet FOLLOW_20_in_array386 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_19_in_array391 = new BitSet(new long[]{0x0000000000200110L});
-	public static final BitSet FOLLOW_stat_in_array393 = new BitSet(new long[]{0x0000000000300110L});
-	public static final BitSet FOLLOW_20_in_array396 = new BitSet(new long[]{0x0000000000000002L});
+	static final String DFA5_eotS =
+		"\13\uffff";
+	static final String DFA5_eofS =
+		"\4\uffff\2\3\1\uffff\2\11\1\uffff\1\3";
+	static final String DFA5_minS =
+		"\1\5\1\24\1\4\1\uffff\2\4\1\5\2\4\1\uffff\1\4";
+	static final String DFA5_maxS =
+		"\1\12\1\24\1\37\1\uffff\2\37\1\12\2\37\1\uffff\1\37";
+	static final String DFA5_acceptS =
+		"\3\uffff\1\1\5\uffff\1\2\1\uffff";
+	static final String DFA5_specialS =
+		"\13\uffff}>";
+	static final String[] DFA5_transitionS = {
+			"\1\1\2\uffff\1\1\1\uffff\1\1",
+			"\1\2",
+			"\1\5\1\4\2\3\1\4\1\3\1\4\1\uffff\2\3\11\uffff\2\3\6\uffff\1\3",
+			"",
+			"\1\11\1\7\2\11\1\10\1\11\1\10\1\uffff\2\11\2\uffff\1\6\1\uffff\2\3\3"+
+			"\uffff\2\11\3\uffff\3\3\1\11",
+			"\1\11\1\7\2\11\1\10\1\11\1\10\1\uffff\2\11\2\uffff\1\6\1\uffff\2\3\3"+
+			"\uffff\2\11\3\uffff\3\3\1\11",
+			"\1\12\2\uffff\1\12\1\uffff\1\12",
+			"\7\11\1\uffff\2\11\1\uffff\5\11\1\3\2\uffff\2\11\3\uffff\4\11",
+			"\7\11\1\uffff\2\11\1\uffff\2\11\1\uffff\2\11\1\3\2\uffff\2\11\3\uffff"+
+			"\4\11",
+			"",
+			"\1\11\1\7\2\11\1\10\1\11\1\10\1\uffff\2\11\2\uffff\1\6\1\uffff\2\3\3"+
+			"\uffff\2\11\3\uffff\3\3\1\11"
+	};
+
+	static final short[] DFA5_eot = DFA.unpackEncodedString(DFA5_eotS);
+	static final short[] DFA5_eof = DFA.unpackEncodedString(DFA5_eofS);
+	static final char[] DFA5_min = DFA.unpackEncodedStringToUnsignedChars(DFA5_minS);
+	static final char[] DFA5_max = DFA.unpackEncodedStringToUnsignedChars(DFA5_maxS);
+	static final short[] DFA5_accept = DFA.unpackEncodedString(DFA5_acceptS);
+	static final short[] DFA5_special = DFA.unpackEncodedString(DFA5_specialS);
+	static final short[][] DFA5_transition;
+
+	static {
+		int numStates = DFA5_transitionS.length;
+		DFA5_transition = new short[numStates][];
+		for (int i=0; i<numStates; i++) {
+			DFA5_transition[i] = DFA.unpackEncodedString(DFA5_transitionS[i]);
+		}
+	}
+
+	protected class DFA5 extends DFA {
+
+		public DFA5(BaseRecognizer recognizer) {
+			this.recognizer = recognizer;
+			this.decisionNumber = 5;
+			this.eot = DFA5_eot;
+			this.eof = DFA5_eof;
+			this.min = DFA5_min;
+			this.max = DFA5_max;
+			this.accept = DFA5_accept;
+			this.special = DFA5_special;
+			this.transition = DFA5_transition;
+		}
+		@Override
+		public String getDescription() {
+			return "20:1: assignment : ( any_id '=' expr | any_id '=' fncall );";
+		}
+		public void error(NoViableAltException nvae) {
+			dbg.recognitionException(nvae);
+		}
+	}
+
+	static final String DFA15_eotS =
+		"\11\uffff";
+	static final String DFA15_eofS =
+		"\11\uffff";
+	static final String DFA15_minS =
+		"\1\14\1\30\3\4\1\5\2\uffff\1\4";
+	static final String DFA15_maxS =
+		"\1\14\1\30\1\12\2\37\1\12\2\uffff\1\37";
+	static final String DFA15_acceptS =
+		"\6\uffff\1\1\1\2\1\uffff";
+	static final String DFA15_specialS =
+		"\11\uffff}>";
+	static final String[] DFA15_transitionS = {
+			"\1\1",
+			"\1\2",
+			"\1\4\1\3\2\uffff\1\3\1\uffff\1\3",
+			"\7\6\1\uffff\2\6\2\uffff\1\5\6\uffff\2\6\1\7\5\uffff\1\6",
+			"\7\6\1\uffff\2\6\2\uffff\1\5\6\uffff\2\6\1\7\5\uffff\1\6",
+			"\1\10\2\uffff\1\10\1\uffff\1\10",
+			"",
+			"",
+			"\7\6\1\uffff\2\6\2\uffff\1\5\6\uffff\2\6\1\7\5\uffff\1\6"
+	};
+
+	static final short[] DFA15_eot = DFA.unpackEncodedString(DFA15_eotS);
+	static final short[] DFA15_eof = DFA.unpackEncodedString(DFA15_eofS);
+	static final char[] DFA15_min = DFA.unpackEncodedStringToUnsignedChars(DFA15_minS);
+	static final char[] DFA15_max = DFA.unpackEncodedStringToUnsignedChars(DFA15_maxS);
+	static final short[] DFA15_accept = DFA.unpackEncodedString(DFA15_acceptS);
+	static final short[] DFA15_special = DFA.unpackEncodedString(DFA15_specialS);
+	static final short[][] DFA15_transition;
+
+	static {
+		int numStates = DFA15_transitionS.length;
+		DFA15_transition = new short[numStates][];
+		for (int i=0; i<numStates; i++) {
+			DFA15_transition[i] = DFA.unpackEncodedString(DFA15_transitionS[i]);
+		}
+	}
+
+	protected class DFA15 extends DFA {
+
+		public DFA15(BaseRecognizer recognizer) {
+			this.recognizer = recognizer;
+			this.decisionNumber = 15;
+			this.eot = DFA15_eot;
+			this.eof = DFA15_eof;
+			this.min = DFA15_min;
+			this.max = DFA15_max;
+			this.accept = DFA15_accept;
+			this.special = DFA15_special;
+			this.transition = DFA15_transition;
+		}
+		@Override
+		public String getDescription() {
+			return "52:1: anonfn : ( '#' '[' fncall ']' | '#' '[' nested_id ']' );";
+		}
+		public void error(NoViableAltException nvae) {
+			dbg.recognitionException(nvae);
+		}
+	}
+
+	static final String DFA22_eotS =
+		"\10\uffff";
+	static final String DFA22_eofS =
+		"\10\uffff";
+	static final String DFA22_minS =
+		"\1\23\3\4\1\5\2\uffff\1\4";
+	static final String DFA22_maxS =
+		"\1\23\1\12\2\37\1\12\2\uffff\1\37";
+	static final String DFA22_acceptS =
+		"\5\uffff\1\1\1\2\1\uffff";
+	static final String DFA22_specialS =
+		"\10\uffff}>";
+	static final String[] DFA22_transitionS = {
+			"\1\1",
+			"\1\3\1\2\2\uffff\1\2\1\uffff\1\2",
+			"\7\6\1\uffff\2\6\2\uffff\1\4\5\uffff\1\5\2\6\6\uffff\1\6",
+			"\7\6\1\uffff\2\6\2\uffff\1\4\5\uffff\1\5\2\6\6\uffff\1\6",
+			"\1\7\2\uffff\1\7\1\uffff\1\7",
+			"",
+			"",
+			"\7\6\1\uffff\2\6\2\uffff\1\4\5\uffff\1\5\2\6\6\uffff\1\6"
+	};
+
+	static final short[] DFA22_eot = DFA.unpackEncodedString(DFA22_eotS);
+	static final short[] DFA22_eof = DFA.unpackEncodedString(DFA22_eofS);
+	static final char[] DFA22_min = DFA.unpackEncodedStringToUnsignedChars(DFA22_minS);
+	static final char[] DFA22_max = DFA.unpackEncodedStringToUnsignedChars(DFA22_maxS);
+	static final short[] DFA22_accept = DFA.unpackEncodedString(DFA22_acceptS);
+	static final short[] DFA22_special = DFA.unpackEncodedString(DFA22_specialS);
+	static final short[][] DFA22_transition;
+
+	static {
+		int numStates = DFA22_transitionS.length;
+		DFA22_transition = new short[numStates][];
+		for (int i=0; i<numStates; i++) {
+			DFA22_transition[i] = DFA.unpackEncodedString(DFA22_transitionS[i]);
+		}
+	}
+
+	protected class DFA22 extends DFA {
+
+		public DFA22(BaseRecognizer recognizer) {
+			this.recognizer = recognizer;
+			this.decisionNumber = 22;
+			this.eot = DFA22_eot;
+			this.eof = DFA22_eof;
+			this.min = DFA22_min;
+			this.max = DFA22_max;
+			this.accept = DFA22_accept;
+			this.special = DFA22_special;
+			this.transition = DFA22_transition;
+		}
+		@Override
+		public String getDescription() {
+			return "79:1: mutcall : ( '<' nested_id '>' | '<' fncall '>' );";
+		}
+		public void error(NoViableAltException nvae) {
+			dbg.recognitionException(nvae);
+		}
+	}
+
+	public static final BitSet FOLLOW_block_in_prog27 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_stat_in_block37 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_18_in_block39 = new BitSet(new long[]{0x0000000070080522L});
+	public static final BitSet FOLLOW_assignment_in_stat49 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ifstat_in_stat54 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_30_in_stat59 = new BitSet(new long[]{0x0000000000000530L});
+	public static final BitSet FOLLOW_fncall_in_stat61 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_30_in_stat66 = new BitSet(new long[]{0x00000000818037F0L});
+	public static final BitSet FOLLOW_expr_in_stat68 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_mutcall_in_stat73 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_29_in_stat78 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_28_in_ifstat88 = new BitSet(new long[]{0x00000000818037F0L});
+	public static final BitSet FOLLOW_expr_in_ifstat90 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_contained_block_in_ifstat92 = new BitSet(new long[]{0x000000000C000002L});
+	public static final BitSet FOLLOW_27_in_ifstat95 = new BitSet(new long[]{0x00000000818037F0L});
+	public static final BitSet FOLLOW_expr_in_ifstat97 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_contained_block_in_ifstat99 = new BitSet(new long[]{0x000000000C000002L});
+	public static final BitSet FOLLOW_26_in_ifstat104 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_contained_block_in_ifstat106 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_any_id_in_assignment117 = new BitSet(new long[]{0x0000000000100000L});
+	public static final BitSet FOLLOW_20_in_assignment119 = new BitSet(new long[]{0x00000000818037F0L});
+	public static final BitSet FOLLOW_expr_in_assignment121 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_any_id_in_assignment126 = new BitSet(new long[]{0x0000000000100000L});
+	public static final BitSet FOLLOW_20_in_assignment128 = new BitSet(new long[]{0x0000000000000530L});
+	public static final BitSet FOLLOW_fncall_in_assignment130 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TYPEID_in_defable141 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_fndecl_in_defable146 = new BitSet(new long[]{0x0000000070080520L});
+	public static final BitSet FOLLOW_stat_in_defable148 = new BitSet(new long[]{0x0000000070080522L});
+	public static final BitSet FOLLOW_KEYWORD_in_defdecl159 = new BitSet(new long[]{0x0000000000200000L});
+	public static final BitSet FOLLOW_21_in_defdecl161 = new BitSet(new long[]{0x0000000000001400L});
+	public static final BitSet FOLLOW_defable_in_defdecl163 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_any_id_in_nested_id177 = new BitSet(new long[]{0x0000000000010002L});
+	public static final BitSet FOLLOW_ANONVAR_in_nested_id181 = new BitSet(new long[]{0x0000000000010002L});
+	public static final BitSet FOLLOW_16_in_nested_id185 = new BitSet(new long[]{0x0000000000000520L});
+	public static final BitSet FOLLOW_any_id_in_nested_id187 = new BitSet(new long[]{0x0000000000010002L});
+	public static final BitSet FOLLOW_nested_id_in_fncall199 = new BitSet(new long[]{0x00000000818037F0L});
+	public static final BitSet FOLLOW_param_in_fncall201 = new BitSet(new long[]{0x000000008180B7F2L});
+	public static final BitSet FOLLOW_15_in_fncall204 = new BitSet(new long[]{0x00000000818037F0L});
+	public static final BitSet FOLLOW_param_in_fncall207 = new BitSet(new long[]{0x000000008180B7F2L});
+	public static final BitSet FOLLOW_ID_in_param219 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_17_in_param221 = new BitSet(new long[]{0x00000000818037F0L});
+	public static final BitSet FOLLOW_expr_in_param223 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expr_in_param228 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TYPEID_in_paramtype239 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_13_in_paramtype244 = new BitSet(new long[]{0x0000000000004400L});
+	public static final BitSet FOLLOW_TYPEID_in_paramtype246 = new BitSet(new long[]{0x0000000000004400L});
+	public static final BitSet FOLLOW_14_in_paramtype249 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_17_in_paramtype251 = new BitSet(new long[]{0x0000000000000400L});
+	public static final BitSet FOLLOW_TYPEID_in_paramtype253 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ID_in_fnparam264 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_17_in_fnparam266 = new BitSet(new long[]{0x0000000000002400L});
+	public static final BitSet FOLLOW_paramtype_in_fnparam268 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_12_in_anonfn278 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_24_in_anonfn280 = new BitSet(new long[]{0x0000000000000530L});
+	public static final BitSet FOLLOW_fncall_in_anonfn282 = new BitSet(new long[]{0x0000000002000000L});
+	public static final BitSet FOLLOW_25_in_anonfn284 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_12_in_anonfn289 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_24_in_anonfn291 = new BitSet(new long[]{0x0000000000000530L});
+	public static final BitSet FOLLOW_nested_id_in_anonfn293 = new BitSet(new long[]{0x0000000002000000L});
+	public static final BitSet FOLLOW_25_in_anonfn295 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_13_in_blockdecl306 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_14_in_blockdecl308 = new BitSet(new long[]{0x0000000001020000L});
+	public static final BitSet FOLLOW_17_in_blockdecl311 = new BitSet(new long[]{0x0000000000000400L});
+	public static final BitSet FOLLOW_TYPEID_in_blockdecl313 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_contained_block_in_blockdecl317 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_13_in_blockdecl322 = new BitSet(new long[]{0x0000000000000020L});
+	public static final BitSet FOLLOW_fnparam_in_blockdecl324 = new BitSet(new long[]{0x000000000000C020L});
+	public static final BitSet FOLLOW_15_in_blockdecl327 = new BitSet(new long[]{0x0000000000000020L});
+	public static final BitSet FOLLOW_fnparam_in_blockdecl330 = new BitSet(new long[]{0x000000000000C020L});
+	public static final BitSet FOLLOW_14_in_blockdecl334 = new BitSet(new long[]{0x0000000001020000L});
+	public static final BitSet FOLLOW_17_in_blockdecl337 = new BitSet(new long[]{0x0000000000000400L});
+	public static final BitSet FOLLOW_TYPEID_in_blockdecl339 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_contained_block_in_blockdecl343 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_12_in_fndecl353 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_blockdecl_in_fndecl355 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_23_in_mutdecl365 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_blockdecl_in_mutdecl367 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_index_expr_in_expr377 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_dict_in_expr382 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_fndecl_in_expr387 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_mutdecl_in_expr392 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_anonfn_in_expr397 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_array_in_expr402 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_13_in_standalone_fncall413 = new BitSet(new long[]{0x0000000000000530L});
+	public static final BitSet FOLLOW_fncall_in_standalone_fncall415 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_14_in_standalone_fncall417 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_19_in_mutcall427 = new BitSet(new long[]{0x0000000000000530L});
+	public static final BitSet FOLLOW_nested_id_in_mutcall429 = new BitSet(new long[]{0x0000000000400000L});
+	public static final BitSet FOLLOW_22_in_mutcall431 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_19_in_mutcall436 = new BitSet(new long[]{0x0000000000000530L});
+	public static final BitSet FOLLOW_fncall_in_mutcall438 = new BitSet(new long[]{0x0000000000400000L});
+	public static final BitSet FOLLOW_22_in_mutcall440 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_KEYWORD_in_index_expr452 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_INT_in_index_expr457 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STRING_in_index_expr462 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nested_id_in_index_expr467 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_standalone_fncall_in_index_expr472 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_index_expr_in_dict_pair484 = new BitSet(new long[]{0x0000000000200000L});
+	public static final BitSet FOLLOW_21_in_dict_pair486 = new BitSet(new long[]{0x00000000818037F0L});
+	public static final BitSet FOLLOW_expr_in_dict_pair488 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_31_in_dict498 = new BitSet(new long[]{0x000000010000A7F0L});
+	public static final BitSet FOLLOW_dict_pair_in_dict501 = new BitSet(new long[]{0x0000000100008000L});
+	public static final BitSet FOLLOW_15_in_dict506 = new BitSet(new long[]{0x00000000000027F0L});
+	public static final BitSet FOLLOW_dict_pair_in_dict508 = new BitSet(new long[]{0x0000000100008000L});
+	public static final BitSet FOLLOW_32_in_dict512 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_24_in_contained_block525 = new BitSet(new long[]{0x0000000070080520L});
+	public static final BitSet FOLLOW_block_in_contained_block527 = new BitSet(new long[]{0x0000000002000000L});
+	public static final BitSet FOLLOW_25_in_contained_block529 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_24_in_array539 = new BitSet(new long[]{0x000000008380B7F0L});
+	public static final BitSet FOLLOW_expr_in_array541 = new BitSet(new long[]{0x0000000002008000L});
+	public static final BitSet FOLLOW_15_in_array545 = new BitSet(new long[]{0x00000000818037F0L});
+	public static final BitSet FOLLOW_expr_in_array547 = new BitSet(new long[]{0x0000000002008000L});
+	public static final BitSet FOLLOW_25_in_array551 = new BitSet(new long[]{0x0000000000000002L});
 }
