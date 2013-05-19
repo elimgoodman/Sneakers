@@ -1,11 +1,15 @@
 grammar Sneakers;
 
+options {output=AST;}
+tokens {BLOCK;FNCALL;}
+
 @parser::header { package sneakers; }
 @lexer::header { package sneakers; }
 
-prog	:	block;
+prog	:	block
+	;
 
-block 	:	(stat ';')+;
+block 	:	(stat ';')+ -> ^(BLOCK stat+);
 
 stat	:	assignment
 	|	ifstat
@@ -18,8 +22,8 @@ stat	:	assignment
 ifstat	:	'if' expr contained_block ('elseif' expr contained_block)* ('else' contained_block)?;
 
 assignment
-	:	any_id '=' expr
-	|	any_id '=' fncall
+	:	any_id '=' expr -> ^('=' any_id expr)
+	|	any_id '=' fncall -> ^('=' any_id fncall)
 	;
 
 
@@ -32,10 +36,11 @@ defdecl	:	KEYWORD '=>' defable
 
 
 nested_id	
-	:	(any_id | ANONVAR) ('.' any_id)*
+	:	ANONVAR ('.' any_id)* -> ^(ID ANONVAR any_id*)
+	|	any_id ('.' any_id)* -> ^(ID any_id*)
 	;
 
-fncall	:	nested_id param (','? param)*
+fncall	:	nested_id param (','? param)* -> ^(FNCALL nested_id param*)
 	;
 
 param	:	ID ':' expr
@@ -136,7 +141,5 @@ STRING
     ;
 
 /*TODO:
-- loops
-- if statements
 - expressions that yield function symbols ie ((fn...) 1 2)
 */
