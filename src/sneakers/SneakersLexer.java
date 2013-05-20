@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Sneakers.g 2013-05-19 10:59:07
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Sneakers.g 2013-05-19 22:04:39
  package sneakers; 
 
 import org.antlr.runtime.*;
@@ -9,16 +9,6 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class SneakersLexer extends Lexer {
 	public static final int EOF=-1;
-	public static final int T__14=14;
-	public static final int T__15=15;
-	public static final int T__16=16;
-	public static final int T__17=17;
-	public static final int T__18=18;
-	public static final int T__19=19;
-	public static final int T__20=20;
-	public static final int T__21=21;
-	public static final int T__22=22;
-	public static final int T__23=23;
 	public static final int T__24=24;
 	public static final int T__25=25;
 	public static final int T__26=26;
@@ -30,16 +20,36 @@ public class SneakersLexer extends Lexer {
 	public static final int T__32=32;
 	public static final int T__33=33;
 	public static final int T__34=34;
-	public static final int ANONVAR=4;
-	public static final int BLOCK=5;
-	public static final int FNCALL=6;
-	public static final int ID=7;
-	public static final int INT=8;
-	public static final int KEYWORD=9;
-	public static final int MUTID=10;
-	public static final int STRING=11;
-	public static final int TYPEID=12;
-	public static final int WS=13;
+	public static final int T__35=35;
+	public static final int T__36=36;
+	public static final int T__37=37;
+	public static final int T__38=38;
+	public static final int T__39=39;
+	public static final int T__40=40;
+	public static final int T__41=41;
+	public static final int T__42=42;
+	public static final int T__43=43;
+	public static final int T__44=44;
+	public static final int ANONFN=4;
+	public static final int ANONVAR=5;
+	public static final int ARRAY=6;
+	public static final int BLOCK=7;
+	public static final int BLOCKDECL=8;
+	public static final int DICT=9;
+	public static final int FNCALL=10;
+	public static final int FNDECL=11;
+	public static final int FNPARAM=12;
+	public static final int ID=13;
+	public static final int INT=14;
+	public static final int KEYWORD=15;
+	public static final int MUTDECL=16;
+	public static final int MUTID=17;
+	public static final int PARAM=18;
+	public static final int PARAMTYPEFN=19;
+	public static final int RET=20;
+	public static final int STRING=21;
+	public static final int TYPEID=22;
+	public static final int WS=23;
 
 	// delegates
 	// delegators
@@ -56,216 +66,15 @@ public class SneakersLexer extends Lexer {
 	}
 	@Override public String getGrammarFileName() { return "/Users/eli/dev/Sneakers-Java/Sneakers.g"; }
 
-	// $ANTLR start "T__14"
-	public final void mT__14() throws RecognitionException {
-		try {
-			int _type = T__14;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:4:7: ( '#' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:4:9: '#'
-			{
-			match('#'); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__14"
-
-	// $ANTLR start "T__15"
-	public final void mT__15() throws RecognitionException {
-		try {
-			int _type = T__15;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:5:7: ( '(' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:5:9: '('
-			{
-			match('('); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__15"
-
-	// $ANTLR start "T__16"
-	public final void mT__16() throws RecognitionException {
-		try {
-			int _type = T__16;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:7: ( ')' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:9: ')'
-			{
-			match(')'); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__16"
-
-	// $ANTLR start "T__17"
-	public final void mT__17() throws RecognitionException {
-		try {
-			int _type = T__17;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:7:7: ( ',' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:7:9: ','
-			{
-			match(','); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__17"
-
-	// $ANTLR start "T__18"
-	public final void mT__18() throws RecognitionException {
-		try {
-			int _type = T__18;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:7: ( '.' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:9: '.'
-			{
-			match('.'); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__18"
-
-	// $ANTLR start "T__19"
-	public final void mT__19() throws RecognitionException {
-		try {
-			int _type = T__19;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:9:7: ( ':' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:9:9: ':'
-			{
-			match(':'); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__19"
-
-	// $ANTLR start "T__20"
-	public final void mT__20() throws RecognitionException {
-		try {
-			int _type = T__20;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:10:7: ( ';' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:10:9: ';'
-			{
-			match(';'); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__20"
-
-	// $ANTLR start "T__21"
-	public final void mT__21() throws RecognitionException {
-		try {
-			int _type = T__21;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:11:7: ( '<' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:11:9: '<'
-			{
-			match('<'); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__21"
-
-	// $ANTLR start "T__22"
-	public final void mT__22() throws RecognitionException {
-		try {
-			int _type = T__22;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:12:7: ( '=' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:12:9: '='
-			{
-			match('='); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__22"
-
-	// $ANTLR start "T__23"
-	public final void mT__23() throws RecognitionException {
-		try {
-			int _type = T__23;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:13:7: ( '=>' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:13:9: '=>'
-			{
-			match("=>"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__23"
-
 	// $ANTLR start "T__24"
 	public final void mT__24() throws RecognitionException {
 		try {
 			int _type = T__24;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:14:7: ( '>' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:14:9: '>'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:4:7: ( '#' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:4:9: '#'
 			{
-			match('>'); 
+			match('#'); 
 			}
 
 			state.type = _type;
@@ -282,10 +91,10 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = T__25;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:15:7: ( '@' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:15:9: '@'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:5:7: ( '(' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:5:9: '('
 			{
-			match('@'); 
+			match('('); 
 			}
 
 			state.type = _type;
@@ -302,10 +111,10 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = T__26;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:16:7: ( '[' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:16:9: '['
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:7: ( ')' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:6:9: ')'
 			{
-			match('['); 
+			match(')'); 
 			}
 
 			state.type = _type;
@@ -322,10 +131,10 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = T__27;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:17:7: ( ']' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:17:9: ']'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:7:7: ( ',' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:7:9: ','
 			{
-			match(']'); 
+			match(','); 
 			}
 
 			state.type = _type;
@@ -342,11 +151,10 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = T__28;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:7: ( 'else' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:9: 'else'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:7: ( '.' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:8:9: '.'
 			{
-			match("else"); 
-
+			match('.'); 
 			}
 
 			state.type = _type;
@@ -363,11 +171,10 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = T__29;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:19:7: ( 'elseif' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:19:9: 'elseif'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:9:7: ( ':' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:9:9: ':'
 			{
-			match("elseif"); 
-
+			match(':'); 
 			}
 
 			state.type = _type;
@@ -384,11 +191,10 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = T__30;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:20:7: ( 'if' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:20:9: 'if'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:10:7: ( ';' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:10:9: ';'
 			{
-			match("if"); 
-
+			match(';'); 
 			}
 
 			state.type = _type;
@@ -405,11 +211,10 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = T__31;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:21:7: ( 'pass' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:21:9: 'pass'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:11:7: ( '<' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:11:9: '<'
 			{
-			match("pass"); 
-
+			match('<'); 
 			}
 
 			state.type = _type;
@@ -426,11 +231,10 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = T__32;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:22:7: ( 'return' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:22:9: 'return'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:12:7: ( '=' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:12:9: '='
 			{
-			match("return"); 
-
+			match('='); 
 			}
 
 			state.type = _type;
@@ -447,10 +251,11 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = T__33;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:23:7: ( '{' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:23:9: '{'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:13:7: ( '=>' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:13:9: '=>'
 			{
-			match('{'); 
+			match("=>"); 
+
 			}
 
 			state.type = _type;
@@ -467,6 +272,211 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = T__34;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:14:7: ( '>' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:14:9: '>'
+			{
+			match('>'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__34"
+
+	// $ANTLR start "T__35"
+	public final void mT__35() throws RecognitionException {
+		try {
+			int _type = T__35;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:15:7: ( '@' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:15:9: '@'
+			{
+			match('@'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__35"
+
+	// $ANTLR start "T__36"
+	public final void mT__36() throws RecognitionException {
+		try {
+			int _type = T__36;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:16:7: ( '[' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:16:9: '['
+			{
+			match('['); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__36"
+
+	// $ANTLR start "T__37"
+	public final void mT__37() throws RecognitionException {
+		try {
+			int _type = T__37;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:17:7: ( ']' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:17:9: ']'
+			{
+			match(']'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__37"
+
+	// $ANTLR start "T__38"
+	public final void mT__38() throws RecognitionException {
+		try {
+			int _type = T__38;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:7: ( 'else' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:18:9: 'else'
+			{
+			match("else"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__38"
+
+	// $ANTLR start "T__39"
+	public final void mT__39() throws RecognitionException {
+		try {
+			int _type = T__39;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:19:7: ( 'elseif' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:19:9: 'elseif'
+			{
+			match("elseif"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__39"
+
+	// $ANTLR start "T__40"
+	public final void mT__40() throws RecognitionException {
+		try {
+			int _type = T__40;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:20:7: ( 'if' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:20:9: 'if'
+			{
+			match("if"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__40"
+
+	// $ANTLR start "T__41"
+	public final void mT__41() throws RecognitionException {
+		try {
+			int _type = T__41;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:21:7: ( 'pass' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:21:9: 'pass'
+			{
+			match("pass"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__41"
+
+	// $ANTLR start "T__42"
+	public final void mT__42() throws RecognitionException {
+		try {
+			int _type = T__42;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:22:7: ( 'return' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:22:9: 'return'
+			{
+			match("return"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__42"
+
+	// $ANTLR start "T__43"
+	public final void mT__43() throws RecognitionException {
+		try {
+			int _type = T__43;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:23:7: ( '{' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:23:9: '{'
+			{
+			match('{'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__43"
+
+	// $ANTLR start "T__44"
+	public final void mT__44() throws RecognitionException {
+		try {
+			int _type = T__44;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:24:7: ( '}' )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:24:9: '}'
 			{
@@ -480,18 +490,18 @@ public class SneakersLexer extends Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "T__34"
+	// $ANTLR end "T__44"
 
 	// $ANTLR start "ANONVAR"
 	public final void mANONVAR() throws RecognitionException {
 		try {
 			int _type = ANONVAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:111:9: ( '$' ( INT )? )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:111:11: '$' ( INT )?
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:136:9: ( '$' ( INT )? )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:136:11: '$' ( INT )?
 			{
 			match('$'); 
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:111:15: ( INT )?
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:136:15: ( INT )?
 			int alt1=2;
 			int LA1_0 = input.LA(1);
 			if ( ((LA1_0 >= '0' && LA1_0 <= '9')) ) {
@@ -499,7 +509,7 @@ public class SneakersLexer extends Lexer {
 			}
 			switch (alt1) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:111:15: INT
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:136:15: INT
 					{
 					mINT(); 
 
@@ -524,8 +534,8 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = KEYWORD;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:114:9: ( ':' ID )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:114:11: ':' ID
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:139:9: ( ':' ID )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:139:11: ':' ID
 			{
 			match(':'); 
 			mID(); 
@@ -546,8 +556,8 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:117:5: ( ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '-' | '!' | '?' | '=' | '>' | '<' )* )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:117:7: ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '-' | '!' | '?' | '=' | '>' | '<' )*
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:142:5: ( ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '-' | '!' | '?' | '=' | '>' | '<' )* )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:142:7: ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '-' | '!' | '?' | '=' | '>' | '<' )*
 			{
 			if ( (input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -557,7 +567,7 @@ public class SneakersLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:117:18: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '-' | '!' | '?' | '=' | '>' | '<' )*
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:142:18: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | '-' | '!' | '?' | '=' | '>' | '<' )*
 			loop2:
 			while (true) {
 				int alt2=2;
@@ -602,8 +612,8 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = TYPEID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:8: ( ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )* )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:10: ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:145:8: ( ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )* )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:145:10: ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z') ) {
 				input.consume();
@@ -613,7 +623,7 @@ public class SneakersLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:21: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:145:21: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
 			loop3:
 			while (true) {
 				int alt3=2;
@@ -658,8 +668,8 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = MUTID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:123:7: ( '@' ID )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:123:9: '@' ID
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:148:7: ( '@' ID )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:148:9: '@' ID
 			{
 			match('@'); 
 			mID(); 
@@ -680,10 +690,10 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = INT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:132:5: ( ( '0' .. '9' )+ )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:132:7: ( '0' .. '9' )+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:157:5: ( ( '0' .. '9' )+ )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:157:7: ( '0' .. '9' )+
 			{
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:132:7: ( '0' .. '9' )+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:157:7: ( '0' .. '9' )+
 			int cnt4=0;
 			loop4:
 			while (true) {
@@ -732,8 +742,8 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:136:4: ( ( ' ' | '\\t' | '\\n' ) )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:136:6: ( ' ' | '\\t' | '\\n' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:161:4: ( ( ' ' | '\\t' | '\\n' ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:161:6: ( ' ' | '\\t' | '\\n' )
 			{
 			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)==' ' ) {
 				input.consume();
@@ -760,11 +770,11 @@ public class SneakersLexer extends Lexer {
 		try {
 			int _type = STRING;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:140:5: ( '\"' (~ ( '\"' ) )* '\"' )
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:140:8: '\"' (~ ( '\"' ) )* '\"'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:5: ( '\"' (~ ( '\"' ) )* '\"' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:8: '\"' (~ ( '\"' ) )* '\"'
 			{
 			match('\"'); 
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:140:12: (~ ( '\"' ) )*
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:12: (~ ( '\"' ) )*
 			loop5:
 			while (true) {
 				int alt5=2;
@@ -807,7 +817,7 @@ public class SneakersLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:8: ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | ANONVAR | KEYWORD | ID | TYPEID | MUTID | INT | WS | STRING )
+		// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:8: ( T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | ANONVAR | KEYWORD | ID | TYPEID | MUTID | INT | WS | STRING )
 		int alt6=29;
 		switch ( input.LA(1) ) {
 		case '#':
@@ -1239,149 +1249,149 @@ public class SneakersLexer extends Lexer {
 		}
 		switch (alt6) {
 			case 1 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:10: T__14
-				{
-				mT__14(); 
-
-				}
-				break;
-			case 2 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:16: T__15
-				{
-				mT__15(); 
-
-				}
-				break;
-			case 3 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:22: T__16
-				{
-				mT__16(); 
-
-				}
-				break;
-			case 4 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:28: T__17
-				{
-				mT__17(); 
-
-				}
-				break;
-			case 5 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:34: T__18
-				{
-				mT__18(); 
-
-				}
-				break;
-			case 6 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:40: T__19
-				{
-				mT__19(); 
-
-				}
-				break;
-			case 7 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:46: T__20
-				{
-				mT__20(); 
-
-				}
-				break;
-			case 8 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:52: T__21
-				{
-				mT__21(); 
-
-				}
-				break;
-			case 9 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:58: T__22
-				{
-				mT__22(); 
-
-				}
-				break;
-			case 10 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:64: T__23
-				{
-				mT__23(); 
-
-				}
-				break;
-			case 11 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:70: T__24
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:10: T__24
 				{
 				mT__24(); 
 
 				}
 				break;
-			case 12 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:76: T__25
+			case 2 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:16: T__25
 				{
 				mT__25(); 
 
 				}
 				break;
-			case 13 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:82: T__26
+			case 3 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:22: T__26
 				{
 				mT__26(); 
 
 				}
 				break;
-			case 14 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:88: T__27
+			case 4 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:28: T__27
 				{
 				mT__27(); 
 
 				}
 				break;
-			case 15 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:94: T__28
+			case 5 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:34: T__28
 				{
 				mT__28(); 
 
 				}
 				break;
-			case 16 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:100: T__29
+			case 6 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:40: T__29
 				{
 				mT__29(); 
 
 				}
 				break;
-			case 17 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:106: T__30
+			case 7 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:46: T__30
 				{
 				mT__30(); 
 
 				}
 				break;
-			case 18 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:112: T__31
+			case 8 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:52: T__31
 				{
 				mT__31(); 
 
 				}
 				break;
-			case 19 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:118: T__32
+			case 9 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:58: T__32
 				{
 				mT__32(); 
 
 				}
 				break;
-			case 20 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:124: T__33
+			case 10 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:64: T__33
 				{
 				mT__33(); 
 
 				}
 				break;
-			case 21 :
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:130: T__34
+			case 11 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:70: T__34
 				{
 				mT__34(); 
+
+				}
+				break;
+			case 12 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:76: T__35
+				{
+				mT__35(); 
+
+				}
+				break;
+			case 13 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:82: T__36
+				{
+				mT__36(); 
+
+				}
+				break;
+			case 14 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:88: T__37
+				{
+				mT__37(); 
+
+				}
+				break;
+			case 15 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:94: T__38
+				{
+				mT__38(); 
+
+				}
+				break;
+			case 16 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:100: T__39
+				{
+				mT__39(); 
+
+				}
+				break;
+			case 17 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:106: T__40
+				{
+				mT__40(); 
+
+				}
+				break;
+			case 18 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:112: T__41
+				{
+				mT__41(); 
+
+				}
+				break;
+			case 19 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:118: T__42
+				{
+				mT__42(); 
+
+				}
+				break;
+			case 20 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:124: T__43
+				{
+				mT__43(); 
+
+				}
+				break;
+			case 21 :
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:1:130: T__44
+				{
+				mT__44(); 
 
 				}
 				break;

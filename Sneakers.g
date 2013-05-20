@@ -1,7 +1,24 @@
 grammar Sneakers;
 
-options {output=AST;}
-tokens {BLOCK;FNCALL;}
+options {
+	output=AST;
+	ASTLabelType=CommonTree;
+}
+
+tokens {
+	BLOCK;
+	FNCALL;
+	PARAM;
+	RET;
+	FNDECL;
+	MUTDECL;
+	BLOCKDECL;
+	FNPARAM;
+	PARAMTYPEFN;
+	ARRAY;
+	DICT;
+	ANONFN;
+}
 
 @parser::header { package sneakers; }
 @lexer::header { package sneakers; }
@@ -13,13 +30,20 @@ block 	:	(stat ';')+ -> ^(BLOCK stat+);
 
 stat	:	assignment
 	|	ifstat
-	|	'return' fncall
-	|	'return' expr
+	|	returnstat
 	|	mutcall
 	|	'pass'
 	;
 
-ifstat	:	'if' expr contained_block ('elseif' expr contained_block)* ('else' contained_block)?;
+returnstat
+	:	'return' fncall -> ^(RET fncall)
+	|	'return' expr -> ^(RET expr)
+	;
+
+ifstat	:	'if' ifexpr=expr ifblock=contained_block 
+		('elseif' elifexpr+=expr elifblock+=contained_block)* 
+		('else' elseblock=contained_block)?
+		-> ^('if' $ifexpr $ifblock ($elifexpr $elifblock)* $elseblock?);
 
 assignment
 	:	any_id '=' expr -> ^('=' any_id expr)
@@ -36,37 +60,38 @@ defdecl	:	KEYWORD '=>' defable
 
 
 nested_id	
-	:	ANONVAR ('.' any_id)* -> ^(ID ANONVAR any_id*)
-	|	any_id ('.' any_id)* -> ^(ID any_id*)
+	:	ANONVAR ('.' any_id)* -> ANONVAR any_id*
+	|	any_id ('.' any_id)* -> any_id*
 	;
 
 fncall	:	nested_id param (','? param)* -> ^(FNCALL nested_id param*)
 	;
 
-param	:	ID ':' expr
-	|	expr
+param	:	ID ':' expr -> ^(PARAM ID expr)
+	|	expr -> ^(PARAM expr)
 	;
 
 paramtype : 	TYPEID
-	|	'(' TYPEID* ')' ':' TYPEID
+	|	'(' TYPEID (',' TYPEID)* ')' ':' TYPEID -> ^(PARAMTYPEFN TYPEID+)
+	|	'(' ')' ':' TYPEID -> ^(PARAMTYPEFN TYPEID)
 	;	
 
-fnparam	:	ID ':' paramtype
+fnparam	:	ID ':' paramtype -> ^(FNPARAM ID paramtype)
 	;
 
-anonfn	:	'#' '[' fncall ']'
-	|	'#' '[' nested_id ']'
+anonfn	:	'#' '[' fncall ']' -> ^(ANONFN fncall)
+	|	'#' '[' nested_id ']' -> ^(ANONFN nested_id)
 	;
 
 blockdecl
-	:	'(' ')' (':' TYPEID)? contained_block
-	|	'(' fnparam (','? fnparam)* ')' (':' TYPEID)? contained_block
+	:	'(' ')' (':' TYPEID)? contained_block -> ^(BLOCKDECL TYPEID? contained_block)
+	|	'(' fnparam (','? fnparam)* ')' (':' TYPEID)? contained_block -> ^(BLOCKDECL fnparam* TYPEID? contained_block)
 	;
 
-fndecl	:	'#' blockdecl
+fndecl	:	'#' blockdecl -> ^(FNDECL blockdecl)
 	;
 
-mutdecl	:	'@' blockdecl
+mutdecl	:	'@' blockdecl -> ^(MUTDECL blockdecl)
 	;
 
 expr	:	index_expr
@@ -78,14 +103,14 @@ expr	:	index_expr
 	;
 
 standalone_fncall
-	:	'(' fncall ')'
+	:	'(' fncall ')' -> fncall
 	;
 
-mutcall	:	'<' nested_id '>'
-	|	'<' fncall '>'
+mutcall	:	'<' nested_id '>' -> nested_id
+	|	'<' fncall '>' -> fncall
 	;
 
-index_expr	
+index_expr
 	:	KEYWORD
 	|	INT
 	|	STRING
@@ -94,17 +119,17 @@ index_expr
 	;
 
 dict_pair 
-	:	index_expr '=>' expr
+	:	index_expr '=>' expr -> index_expr expr
 	;
 
-dict	:	'{' (dict_pair)? (',' dict_pair)* '}'
+dict	:	'{' (dict_pair)? (',' dict_pair)* '}' -> ^(DICT dict_pair*)
 	;  
 
 contained_block
-	:	'[' block ']'
+	:	'[' block ']' -> block
 	;
 
-array	:	'[' expr? (',' expr)* ']'
+array	:	'[' expr? (',' expr)* ']' -> ^(ARRAY expr*)
 	;
 
 
@@ -142,4 +167,8 @@ STRING
 
 /*TODO:
 - expressions that yield function symbols ie ((fn...) 1 2)
+- exceptions
+- overloaded fns
+- member mutators (ie, things that are elements of a class but modify member variables)
+- parameterized types
 */
