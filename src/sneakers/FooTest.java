@@ -9,13 +9,13 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.Token;
 import org.antlr.runtime.TokenRewriteStream;
+import org.antlr.runtime.TokenStream;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeAdaptor;
 import org.antlr.runtime.tree.TreeAdaptor;
 import org.junit.Test;
 
 import sneakers.SneakersParser.prog_return;
-import sneakers.SneakersParser.returnstat_return;
 
 public class FooTest {
 
@@ -44,19 +44,32 @@ public class FooTest {
     assertEquals(true, true);
   }*/
 
-    public CommonTree getTree(String text) {
+    public SneakersAST getTree(String text) {
         CharStream cs = new ANTLRStringStream(text);
         SneakersLexer lex = new SneakersLexer(cs);
         TokenRewriteStream tokens = new TokenRewriteStream(lex);
         SneakersParser grammar = new SneakersParser(tokens);
 
-        TreeAdaptor adaptor = new CommonTreeAdaptor() {
-            public Object create(Token payload) {
-                return new CommonTree(payload);
+        TreeAdaptor sneakersAdaptor = new CommonTreeAdaptor() {
+            public Object create(Token token) {
+                return new SneakersAST(token);
+            }
+            public Object dupNode(Object t) {
+                if ( t==null ) {
+                    return null;
+                }
+                return create(((SneakersAST)t).token);
+            }
+            public Object errorNode(TokenStream input, Token start, Token stop,
+                                    RecognitionException e)
+            {
+                SneakersErrorNode t = new SneakersErrorNode(input, start, stop, e);
+                //System.out.println("returning error node '"+t+"' @index="+input.index());
+                return t;
             }
         };
 
-        grammar.setTreeAdaptor(adaptor);
+        grammar.setTreeAdaptor(sneakersAdaptor);
         SneakersParser.prog_return ret = null;
         try {
             ret = grammar.prog();
@@ -65,13 +78,13 @@ public class FooTest {
             e.printStackTrace();
             return null;
         }
-        return (CommonTree)ret.getTree();
+        return ret.getTree();
     }
 
     @Test
     public void test2() {
-        CommonTree tree = this.getTree("return 1;");
-        this.printTree(tree, 4);
+        SneakersAST tree = this.getTree("return 1;");
+        //this.printTree(tree, 4);
     }
 
     public void printTree(CommonTree t, int indent) {

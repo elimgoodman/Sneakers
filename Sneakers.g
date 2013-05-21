@@ -2,8 +2,10 @@ grammar Sneakers;
 
 options {
 	output=AST;
-	ASTLabelType=CommonTree;
+	ASTLabelType=SneakersAST;
 }
+
+
 
 tokens {
 	BLOCK;
