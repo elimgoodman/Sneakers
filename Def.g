@@ -6,6 +6,8 @@ options {
   filter = true;
 }
 
+@header { package sneakers; }
+
 @members {
     SymbolTable symtab;
     Scope currentScope;
@@ -19,16 +21,16 @@ options {
 
 topdown
     :   enterBlock
-    |   enterMethod
-    |   enterClass
+    //|   enterMethod
+    //|   enterClass
     |   varDeclaration
-    |   atoms
+//    |   atoms
     ;
 
 bottomup
     :   exitBlock
-    |   exitMethod
-    |   exitClass
+    //|   exitMethod
+    //|   exitClass
     ;
 
 // S C O P E S
@@ -45,13 +47,13 @@ exitBlock
     ;
 
 // START: class
-enterClass
-    :   ^('class' name=ID (^(EXTENDS sup=ID))? .)
+/*enterClass
+    :   ^('class' name=TYPEID .)
         { // def class but leave superclass blank until ref phase
         System.out.println("line "+$name.getLine()+
                            ": def class "+$name.text);
         // record scope in AST for next pass
-        if ( $sup!=null ) $sup.scope = currentScope; 
+        //if ( $sup!=null ) $sup.scope = currentScope; 
         ClassSymbol cs = new ClassSymbol($name.text,currentScope,null);
         cs.def = $name;           // point from symbol table into AST
         $name.symbol = cs;        // point from AST into symbol table
@@ -88,23 +90,24 @@ exitMethod
         currentScope = currentScope.getEnclosingScope();    // pop arg scope
         }
     ;
-
+*/
 // START: atoms
 /** Set scope for any identifiers in expressions or assignments */
-atoms
+/*atoms
 @init {CymbolAST t = (CymbolAST)input.LT(1);}
     :  {t.hasAncestor(EXPR)||t.hasAncestor(ASSIGN)}? ('this'|ID)
        {t.scope = currentScope;}
-    ;
+    ;*/
 //END: atoms
 
 // START: var
 varDeclaration // global, parameter, or local variable
-    :   ^((FIELD_DECL|VAR_DECL|ARG_DECL) type=. ID .?)
+    :   ^('=' ID .?)
         {
         System.out.println("line "+$ID.getLine()+": def "+$ID.text);
-        $type.scope = currentScope;
+        
         VariableSymbol vs = new VariableSymbol($ID.text,null);
+        vs.scope = currentScope;
         vs.def = $ID;            // track AST location of def's ID
         $ID.symbol = vs;         // track in AST
         currentScope.define(vs);

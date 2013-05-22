@@ -63,7 +63,9 @@ ifstat	:	'if' ifexpr=expr ifblock=contained_block
 		-> ^('if' $ifexpr $ifblock ($elifexpr $elifblock)* $elseblock?);
 
 assignment
-	:	any_id '=' expr -> ^('=' any_id expr)
+	:	TYPEID '=' 'class' expr -> ^('class' TYPEID expr)
+	|	newclass=TYPEID '=' oldclass=TYPEID '.' 'extend' expr -> ^('extend' $newclass $oldclass expr)
+	|	any_id '=' expr -> ^('=' any_id expr)
 	|	any_id '=' fncall -> ^('=' any_id fncall)
 	;
 
