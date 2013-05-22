@@ -1,8 +1,4 @@
 package sneakers;
-
-import org.antlr.runtime.Token;
-import org.antlr.runtime.tree.CommonTree;
-
 /***
  * Excerpted from "Language Implementation Patterns",
  * published by The Pragmatic Bookshelf.
@@ -11,10 +7,7 @@ import org.antlr.runtime.tree.CommonTree;
  * We make no guarantees that this code is fit for any purpose. 
  * Visit http://www.pragmaticprogrammer.com/titles/tpdsl for more book information.
 ***/
-
-public class SneakersAST extends CommonTree {
-    public Scope scope;   // set by Def.g; ID lives in which scope?
-    public Symbol symbol; // set by Ref.g; point at def in symbol table 
-    public SneakersAST(Token t) { super(t); }
+/** A "tag" to indicate which symbols are types */
+public interface Type {
+    public String getName();
 }
-
