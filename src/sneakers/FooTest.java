@@ -19,31 +19,6 @@ import sneakers.SneakersParser.prog_return;
 
 public class FooTest {
 
-    public Object parse(String text) {
-        CharStream cs = new ANTLRStringStream(text);
-        SneakersLexer lexer = new SneakersLexer(cs);
-        CommonTokenStream tokens = new CommonTokenStream();
-        tokens.setTokenSource(lexer);
-        SneakersParser parser = new SneakersParser(tokens);
-        try {
-            prog_return p = parser.prog();
-            return p.tree;
-        } catch (RecognitionException e) {
-            System.out.println("here?");
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-  
-  /*
-  @Test
-  public void test() {
-    Object t = parse("a = 1;");
-    System.out.println(t);
-    assertEquals(true, true);
-  }*/
-
     public SneakersAST getTree(String text) {
         CharStream cs = new ANTLRStringStream(text);
         SneakersLexer lex = new SneakersLexer(cs);
@@ -80,13 +55,112 @@ public class FooTest {
         }
         return ret.getTree();
     }
-
+    
     @Test
-    public void test2() {
+    public void testReturn() {
         SneakersAST tree = this.getTree("return 1;");
-        //this.printTree(tree, 4);
+        
+        assertEquals("BLOCK", tree.token.getText());
+        assertEquals("RET", tree.getChild(0).getText());
+        assertEquals("1", tree.getChild(0).getChild(0).getText());
     }
 
+    @Test
+    public void testAssignInt() {
+        SneakersAST tree = this.getTree("a = 1;");
+        
+        assertEquals("=", tree.getChild(0).getText());
+        assertEquals("a", tree.getChild(0).getChild(0).getText());
+        assertEquals("1", tree.getChild(0).getChild(1).getText());
+    }
+    
+    @Test
+    public void testAssignFnCall() {
+        SneakersAST tree = this.getTree("a = add 1 2;");
+        
+        assertEquals("=", tree.getChild(0).getText());
+        assertEquals("a", tree.getChild(0).getChild(0).getText());
+        assertEquals("FNCALL", tree.getChild(0).getChild(1).getText());
+        assertEquals("add", tree.getChild(0).getChild(1).getChild(0).getText());
+        assertEquals("PARAM", tree.getChild(0).getChild(1).getChild(1).getText());
+        assertEquals("1", tree.getChild(0).getChild(1).getChild(1).getChild(0).getText());
+        assertEquals("PARAM", tree.getChild(0).getChild(1).getChild(2).getText());
+        assertEquals("2", tree.getChild(0).getChild(1).getChild(2).getChild(0).getText());
+    }
+      
+    @Test
+    public void testIfStat() {
+        SneakersAST tree = this.getTree("if a [return 1;];");
+        
+        assertEquals("if", tree.getChild(0).getText());
+        assertEquals("a", tree.getChild(0).getChild(0).getText());
+    }  
+    
+    @Test
+    public void testFnDef() {
+        SneakersAST tree = this.getTree("a = #(x:Int, y:String):Int [return 1;];");
+        
+        assertEquals("FNDECL", tree.getChild(0).getChild(1).getText());
+    }  
+    
+    @Test
+    public void testFnAsParam() {
+        SneakersAST tree = this.getTree("a = #(x:#(Int, Int):Int, y:String):Int [return 1;];");
+    }  
+    
+    @Test
+    public void testMutAsParam() {
+        SneakersAST tree = this.getTree("a = #(x:@(Int, Int):Int, y:String):Int [return 1;];");
+       // printTree(tree, 4);
+    } 
+    
+    @Test
+    public void testMutVar() {
+        SneakersAST tree = this.getTree("@a = {};");
+       // printTree(tree, 4);
+    } 
+    
+    @Test
+    public void testMutAssign() {
+        SneakersAST tree = this.getTree("a = @(x:Int):None [return 1;];");
+       // printTree(tree, 4);
+    } 
+    
+    @Test
+    public void testPass() {
+        SneakersAST tree = this.getTree("pass;");
+       // printTree(tree, 4);
+    } 
+    
+    @Test
+    public void testMutCall() {
+        SneakersAST tree = this.getTree("<print! \"hello\">;");
+       // printTree(tree, 4);
+    }  
+    
+    @Test
+    public void testArray() {
+        SneakersAST tree = this.getTree("a = [1, 2, 3];");
+       // printTree(tree, 4);
+    }  
+    
+    @Test
+    public void testDict() {
+        SneakersAST tree = this.getTree("a = {:foo => 2};");
+       // printTree(tree, 4);
+    }
+    
+    @Test
+    public void testDottedMethod() {
+        SneakersAST tree = this.getTree("a = b.c 1 2 3;");
+       // printTree(tree, 4);
+    }
+    
+    @Test(expected=ParseException.class)
+    public void testParseError() {
+        SneakersAST tree = this.getTree("a = ");
+    }  
+    
     public void printTree(CommonTree t, int indent) {
         if ( t != null ) {
             StringBuffer sb = new StringBuffer(indent);

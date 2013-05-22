@@ -17,6 +17,7 @@ tokens {
 	BLOCKDECL;
 	FNPARAM;
 	PARAMTYPEFN;
+	PARAMTYPEMUT;
 	ARRAY;
 	DICT;
 	ANONFN;
@@ -24,6 +25,20 @@ tokens {
 
 @parser::header { package sneakers; }
 @lexer::header { package sneakers; }
+
+@parser::members {
+  @Override
+  public void reportError(RecognitionException e) {
+    throw new ParseException(e); 
+  }
+}
+
+@lexer::members {
+  @Override
+  public void reportError(RecognitionException e) {
+    throw new LexException(e); 
+  }
+}
 
 prog	:	block
 	;
@@ -73,9 +88,14 @@ param	:	ID ':' expr -> ^(PARAM ID expr)
 	|	expr -> ^(PARAM expr)
 	;
 
+blockparamtype 
+	:	'(' TYPEID (',' TYPEID)* ')' ':' TYPEID -> TYPEID+
+	|	'(' ')' ':' TYPEID -> TYPEID
+	;
+
 paramtype : 	TYPEID
-	|	'(' TYPEID (',' TYPEID)* ')' ':' TYPEID -> ^(PARAMTYPEFN TYPEID+)
-	|	'(' ')' ':' TYPEID -> ^(PARAMTYPEFN TYPEID)
+	|	'#' blockparamtype -> ^(PARAMTYPEFN blockparamtype)
+	|	'@' blockparamtype -> ^(PARAMTYPEMUT blockparamtype)
 	;	
 
 fnparam	:	ID ':' paramtype -> ^(FNPARAM ID paramtype)
@@ -86,8 +106,8 @@ anonfn	:	'#' '[' fncall ']' -> ^(ANONFN fncall)
 	;
 
 blockdecl
-	:	'(' ')' (':' TYPEID)? contained_block -> ^(BLOCKDECL TYPEID? contained_block)
-	|	'(' fnparam (','? fnparam)* ')' (':' TYPEID)? contained_block -> ^(BLOCKDECL fnparam* TYPEID? contained_block)
+	:	'(' ')' (':' TYPEID)? contained_block -> TYPEID? contained_block
+	|	'(' fnparam (','? fnparam)* ')' (':' TYPEID)? contained_block -> fnparam* TYPEID? contained_block
 	;
 
 fndecl	:	'#' blockdecl -> ^(FNDECL blockdecl)
@@ -173,4 +193,5 @@ STRING
 - overloaded fns
 - member mutators (ie, things that are elements of a class but modify member variables)
 - parameterized types
+- ifstat can be an expression
 */
