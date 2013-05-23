@@ -212,7 +212,7 @@ public class ParseTests {
     
     @Test(expected=ParseException.class)
     public void testParseError() {
-        SneakersAST tree = this.getTree("a = ");
+        this.getTree("a = ");
     }  
     
     public void printTree(CommonTree t, int indent) {
