@@ -21,6 +21,7 @@ tokens {
 	ARRAY;
 	DICT;
 	ANONFN;
+	FIELDDEF;
 }
 
 @parser::header { package sneakers; }
@@ -62,19 +63,24 @@ ifstat	:	'if' ifexpr=expr ifblock=contained_block
 		('else' elseblock=contained_block)?
 		-> ^('if' $ifexpr $ifblock ($elifexpr $elifblock)* $elseblock?);
 
+classdef:	'{' (fielddef)? (',' fielddef)* '}' -> fielddef*
+	;
+
 assignment
-	:	TYPEID '=' 'class' expr -> ^('class' TYPEID expr)
-	|	newclass=TYPEID '=' oldclass=TYPEID '.' 'extend' expr -> ^('extend' $newclass $oldclass expr)
+	:	TYPEID '=' 'class' classdef -> ^('class' TYPEID classdef)
+	|	newclass=TYPEID '=' oldclass=TYPEID '.' 'extend' classdef -> ^('extend' $newclass $oldclass classdef)
 	|	any_id '=' expr -> ^('=' any_id expr)
 	|	any_id '=' fncall -> ^('=' any_id fncall)
 	;
 
 
-defable	:	TYPEID
-	|	fndecl stat+
+defable	:	paramtype
+	|	fndecl
+	|	mutdecl
 	;
 
-defdecl	:	KEYWORD '=>' defable
+fielddef	
+	:	KEYWORD '=>' defable -> ^(FIELDDEF KEYWORD defable)
 	;
 
 

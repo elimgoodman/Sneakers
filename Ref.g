@@ -29,7 +29,7 @@ topdown
 // S C O P E S
 
 // START: class
-enterClass
+/*enterClass
     :   ^('class' name=ID (^(EXTENDS sup=ID))? ^(MEMBERS .*))
         {
         if ( $sup!=null ) {
@@ -45,30 +45,30 @@ enterClass
         }
         }
     ;
-// END: class
+// END: class*/
 
-enterMethod
+/*enterMethod
     :   ^(METHOD_DECL type ID .*) // match method subtree with 0-or-more args
         {
         $ID.symbol.type = $type.tsym; // set return type of method
         System.out.println("line "+$ID.getLine()+": set method type "+$ID.symbol);
         }
-    ;
+    ;*/
 
 // D e f i n e  s y m b o l s
 
 // START: var
-varDeclaration // global, parameter, or local variable
+/*varDeclaration // global, parameter, or local variable
     :   ^((FIELD_DECL|VAR_DECL|ARG_DECL) type ID .?)
         {
         $ID.symbol.type = $type.tsym; // set return type of variable
         System.out.println("line "+$ID.getLine()+": set var type "+$ID.symbol);
         }
     ;
-// END: field
+// END: field*/
 
 /** Not included in tree pattern matching directly.  Needed by declarations */
-type returns [Type tsym]
+/*type returns [Type tsym]
 @init {
     // get scope from AST; use to resolve type name and save it in AST
     $start.symbol = $start.scope.resolve($start.getText());
@@ -78,11 +78,11 @@ type returns [Type tsym]
     |   'int'
     |   'void'
     |   ID // struct name
-    ;
+    ;*/
 
 // START: exprRoot
 assignment  : ^( '=' expr expr ) ;
-resolveExpr : ^( EXPR expr ) ;
+//resolveExpr : ^( EXPR expr ) ;
 // END: exprRoot
 
 // START: expr

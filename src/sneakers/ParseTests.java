@@ -191,8 +191,8 @@ public class ParseTests {
     
     @Test
     public void testClassDef() {
-        SneakersAST tree = this.getTree("Person = class {:a => Int};");
-       // printTree(tree, 4);
+        SneakersAST tree = this.getTree("Person = class {:a => Int, :b => #(Int):None, :c => #():None [return 1;]};");
+       //printTree(tree, 4);
     }
     
     @Test
