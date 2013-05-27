@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Sneakers.g 2013-05-27 12:35:47
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Sneakers.g 2013-05-27 12:43:32
  package sneakers; 
 
 import org.antlr.runtime.*;
@@ -6,18 +6,16 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.antlr.runtime.debug.*;
-import java.io.IOException;
 import org.antlr.runtime.tree.*;
 
 
 @SuppressWarnings("all")
-public class SneakersParser extends DebugParser {
+public class SneakersParser extends Parser {
 	public static final String[] tokenNames = new String[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ANONFN", "ANONVAR", "ARRAY", 
 		"ASSIGN", "BLOCK", "BLOCKDECL", "CLASSDEF", "DICT", "EXPR", "FIELDDEF", 
-		"FNCALL", "FNDECL", "FNPARAM", "ID", "INT", "KEYWORD", "LETTER", "MUTDECL", 
-		"MUTID", "PARAM", "PARAMTYPEFN", "PARAMTYPEMUT", "RET", "STRING", "WS", 
+		"FNCALL", "FNDECL", "FNPARAM", "ID", "INT", "KEYWORD", "MUTDECL", "MUTID", 
+		"PARAM", "PARAMTYPEFN", "PARAMTYPEMUT", "RET", "STRING", "TYPEID", "WS", 
 		"'#'", "'('", "')'", "','", "'.'", "':'", "';'", "'<'", "'=>'", "'>'", 
 		"'@'", "'['", "']'", "'else'", "'elseif'", "'extend'", "'if'", "'pass'", 
 		"'return'", "'{'", "'}'"
@@ -60,14 +58,14 @@ public class SneakersParser extends DebugParser {
 	public static final int ID=17;
 	public static final int INT=18;
 	public static final int KEYWORD=19;
-	public static final int LETTER=20;
-	public static final int MUTDECL=21;
-	public static final int MUTID=22;
-	public static final int PARAM=23;
-	public static final int PARAMTYPEFN=24;
-	public static final int PARAMTYPEMUT=25;
-	public static final int RET=26;
-	public static final int STRING=27;
+	public static final int MUTDECL=20;
+	public static final int MUTID=21;
+	public static final int PARAM=22;
+	public static final int PARAMTYPEFN=23;
+	public static final int PARAMTYPEMUT=24;
+	public static final int RET=25;
+	public static final int STRING=26;
+	public static final int TYPEID=27;
 	public static final int WS=28;
 
 	// delegates
@@ -78,111 +76,57 @@ public class SneakersParser extends DebugParser {
 	// delegators
 
 
-	public static final String[] ruleNames = new String[] {
-		"invalidRule", "stat", "fielddef", "nested_id", "returnstat", "blockparamtype", 
-		"anonfn", "defable", "expr", "param", "fndecl", "standalone_fncall", "prog", 
-		"index_expr", "ifstat", "array", "block", "fncall", "paramtype", "fnparam", 
-		"assignment", "blockdecl", "dict_pair", "dict", "contained_block", "mutcall", 
-		"any_id", "mutdecl", "classdef"
-	};
-
-	public static final boolean[] decisionCanBacktrack = new boolean[] {
-		false, // invalid decision
-		false, false, false, false, false, false, false, false, false, false, 
-		    false, false, false, false, false, false, false, false, false, false, 
-		    false, false, false, false, false, false, false, false, false, false, 
-		    false
-	};
-
- 
-	public int ruleLevel = 0;
-	public int getRuleLevel() { return ruleLevel; }
-	public void incRuleLevel() { ruleLevel++; }
-	public void decRuleLevel() { ruleLevel--; }
 	public SneakersParser(TokenStream input) {
-		this(input, DebugEventSocketProxy.DEFAULT_DEBUGGER_PORT, new RecognizerSharedState());
+		this(input, new RecognizerSharedState());
 	}
-	public SneakersParser(TokenStream input, int port, RecognizerSharedState state) {
+	public SneakersParser(TokenStream input, RecognizerSharedState state) {
 		super(input, state);
-		DebugEventSocketProxy proxy =
-			new DebugEventSocketProxy(this,port,adaptor);
-		setDebugListener(proxy);
-		setTokenStream(new DebugTokenStream(input,proxy));
-		try {
-			proxy.handshake();
-		}
-		catch (IOException ioe) {
-			reportError(ioe);
-		}
-		TreeAdaptor adap = new CommonTreeAdaptor();
-		setTreeAdaptor(adap);
-		proxy.setTreeAdaptor(adap);
 	}
 
-	public SneakersParser(TokenStream input, DebugEventListener dbg) {
-		super(input, dbg);
-		 
-		TreeAdaptor adap = new CommonTreeAdaptor();
-		setTreeAdaptor(adap);
+	protected TreeAdaptor adaptor = new CommonTreeAdaptor();
 
+	public void setTreeAdaptor(TreeAdaptor adaptor) {
+		this.adaptor = adaptor;
 	}
-
-	protected boolean evalPredicate(boolean result, String predicate) {
-		dbg.semanticPredicate(result, predicate);
-		return result;
+	public TreeAdaptor getTreeAdaptor() {
+		return adaptor;
 	}
-
-		protected DebugTreeAdaptor adaptor;
-		public void setTreeAdaptor(TreeAdaptor adaptor) {
-			this.adaptor = new DebugTreeAdaptor(dbg,adaptor);
-		}
-		public TreeAdaptor getTreeAdaptor() {
-			return adaptor;
-		}
 	@Override public String[] getTokenNames() { return SneakersParser.tokenNames; }
 	@Override public String getGrammarFileName() { return "/Users/eli/dev/Sneakers-Java/Sneakers.g"; }
 
 
 	  @Override
 	  public void reportError(RecognitionException e) {
-	    //throw new ParseException(e); 
+	    throw new ParseException(e); 
 	  }
 
 
 	public static class prog_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "prog"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:48:1: prog : block ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:47:1: prog : block ;
 	public final SneakersParser.prog_return prog() throws RecognitionException {
 		SneakersParser.prog_return retval = new SneakersParser.prog_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		ParserRuleReturnScope block1 =null;
 
 
-		try { dbg.enterRule(getGrammarFileName(), "prog");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(48, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:48:6: ( block )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:48:8: block
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:47:6: ( block )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:47:8: block
 			{
-			root_0 = (CommonTree)adaptor.nil();
+			root_0 = (SneakersAST)adaptor.nil();
 
 
-			dbg.location(48,8);
-			pushFollow(FOLLOW_block_in_prog143);
+			pushFollow(FOLLOW_block_in_prog141);
 			block1=block();
 			state._fsp--;
 
@@ -192,95 +136,69 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(49, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "prog");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "prog"
 
 
 	public static class block_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "block"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:51:1: block : ( stat ';' )+ -> ^( BLOCK ( stat )+ ) ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:50:1: block : ( stat ';' )+ -> ^( BLOCK ( stat )+ ) ;
 	public final SneakersParser.block_return block() throws RecognitionException {
 		SneakersParser.block_return retval = new SneakersParser.block_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal3=null;
 		ParserRuleReturnScope stat2 =null;
 
-		CommonTree char_literal3_tree=null;
+		SneakersAST char_literal3_tree=null;
 		RewriteRuleTokenStream stream_35=new RewriteRuleTokenStream(adaptor,"token 35");
 		RewriteRuleSubtreeStream stream_stat=new RewriteRuleSubtreeStream(adaptor,"rule stat");
 
-		try { dbg.enterRule(getGrammarFileName(), "block");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(51, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:51:8: ( ( stat ';' )+ -> ^( BLOCK ( stat )+ ) )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:51:10: ( stat ';' )+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:50:8: ( ( stat ';' )+ -> ^( BLOCK ( stat )+ ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:50:10: ( stat ';' )+
 			{
-			dbg.location(51,10);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:51:10: ( stat ';' )+
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:50:10: ( stat ';' )+
 			int cnt1=0;
-			try { dbg.enterSubRule(1);
-
 			loop1:
 			while (true) {
 				int alt1=2;
-				try { dbg.enterDecision(1, decisionCanBacktrack[1]);
-
 				int LA1_0 = input.LA(1);
-				if ( (LA1_0==ID||LA1_0==MUTID||LA1_0==36||(LA1_0 >= 45 && LA1_0 <= 47)) ) {
+				if ( (LA1_0==ID||LA1_0==MUTID||LA1_0==TYPEID||LA1_0==36||(LA1_0 >= 45 && LA1_0 <= 47)) ) {
 					alt1=1;
 				}
 
-				} finally {dbg.exitDecision(1);}
-
 				switch (alt1) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:51:11: stat ';'
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:50:11: stat ';'
 					{
-					dbg.location(51,11);
-					pushFollow(FOLLOW_stat_in_block155);
+					pushFollow(FOLLOW_stat_in_block153);
 					stat2=stat();
 					state._fsp--;
 
-					stream_stat.add(stat2.getTree());dbg.location(51,16);
-					char_literal3=(Token)match(input,35,FOLLOW_35_in_block157);  
+					stream_stat.add(stat2.getTree());
+					char_literal3=(Token)match(input,35,FOLLOW_35_in_block155);  
 					stream_35.add(char_literal3);
 
 					}
@@ -289,13 +207,10 @@ public class SneakersParser extends DebugParser {
 				default :
 					if ( cnt1 >= 1 ) break loop1;
 					EarlyExitException eee = new EarlyExitException(1, input);
-					dbg.recognitionException(eee);
-
 					throw eee;
 				}
 				cnt1++;
 			}
-			} finally {dbg.exitSubRule(1);}
 
 			// AST REWRITE
 			// elements: stat
@@ -307,21 +222,17 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 51:22: -> ^( BLOCK ( stat )+ )
+			root_0 = (SneakersAST)adaptor.nil();
+			// 50:22: -> ^( BLOCK ( stat )+ )
 			{
-				dbg.location(51,25);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:51:25: ^( BLOCK ( stat )+ )
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:50:25: ^( BLOCK ( stat )+ )
 				{
-				CommonTree root_1 = (CommonTree)adaptor.nil();
-				dbg.location(51,27);
-				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(BLOCK, "BLOCK"), root_1);
-				dbg.location(51,33);
+				SneakersAST root_1 = (SneakersAST)adaptor.nil();
+				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(BLOCK, "BLOCK"), root_1);
 				if ( !(stream_stat.hasNext()) ) {
 					throw new RewriteEarlyExitException();
 				}
 				while ( stream_stat.hasNext() ) {
-					dbg.location(51,33);
 					adaptor.addChild(root_1, stream_stat.nextTree());
 				}
 				stream_stat.reset();
@@ -338,46 +249,37 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(51, 38);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "block");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "block"
 
 
 	public static class stat_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "stat"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:53:1: stat : ( assignment | ifstat | returnstat | mutcall | 'pass' );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:52:1: stat : ( assignment | ifstat | returnstat | mutcall | 'pass' );
 	public final SneakersParser.stat_return stat() throws RecognitionException {
 		SneakersParser.stat_return retval = new SneakersParser.stat_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token string_literal8=null;
 		ParserRuleReturnScope assignment4 =null;
@@ -385,21 +287,15 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope returnstat6 =null;
 		ParserRuleReturnScope mutcall7 =null;
 
-		CommonTree string_literal8_tree=null;
-
-		try { dbg.enterRule(getGrammarFileName(), "stat");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(53, 0);
+		SneakersAST string_literal8_tree=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:53:6: ( assignment | ifstat | returnstat | mutcall | 'pass' )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:52:6: ( assignment | ifstat | returnstat | mutcall | 'pass' )
 			int alt2=5;
-			try { dbg.enterDecision(2, decisionCanBacktrack[2]);
-
 			switch ( input.LA(1) ) {
 			case ID:
 			case MUTID:
+			case TYPEID:
 				{
 				alt2=1;
 				}
@@ -427,22 +323,16 @@ public class SneakersParser extends DebugParser {
 			default:
 				NoViableAltException nvae =
 					new NoViableAltException("", 2, 0, input);
-				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-			} finally {dbg.exitDecision(2);}
-
 			switch (alt2) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:53:8: assignment
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:52:8: assignment
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(53,8);
-					pushFollow(FOLLOW_assignment_in_stat176);
+					pushFollow(FOLLOW_assignment_in_stat174);
 					assignment4=assignment();
 					state._fsp--;
 
@@ -451,15 +341,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:54:4: ifstat
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:53:4: ifstat
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(54,4);
-					pushFollow(FOLLOW_ifstat_in_stat181);
+					pushFollow(FOLLOW_ifstat_in_stat179);
 					ifstat5=ifstat();
 					state._fsp--;
 
@@ -468,15 +355,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 3 :
-					dbg.enterAlt(3);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:55:4: returnstat
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:54:4: returnstat
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(55,4);
-					pushFollow(FOLLOW_returnstat_in_stat186);
+					pushFollow(FOLLOW_returnstat_in_stat184);
 					returnstat6=returnstat();
 					state._fsp--;
 
@@ -485,15 +369,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 4 :
-					dbg.enterAlt(4);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:56:4: mutcall
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:55:4: mutcall
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(56,4);
-					pushFollow(FOLLOW_mutcall_in_stat191);
+					pushFollow(FOLLOW_mutcall_in_stat189);
 					mutcall7=mutcall();
 					state._fsp--;
 
@@ -502,16 +383,13 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 5 :
-					dbg.enterAlt(5);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:57:4: 'pass'
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:56:4: 'pass'
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(57,4);
-					string_literal8=(Token)match(input,46,FOLLOW_46_in_stat196); 
-					string_literal8_tree = (CommonTree)adaptor.create(string_literal8);
+					string_literal8=(Token)match(input,46,FOLLOW_46_in_stat194); 
+					string_literal8_tree = (SneakersAST)adaptor.create(string_literal8);
 					adaptor.addChild(root_0, string_literal8_tree);
 
 					}
@@ -520,89 +398,61 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(58, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "stat");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "stat"
 
 
 	public static class returnstat_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "returnstat"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:60:1: returnstat : ( 'return' fncall -> ^( RET fncall ) | 'return' expr -> ^( RET expr ) );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:59:1: returnstat : ( 'return' fncall -> ^( RET fncall ) | 'return' expr -> ^( RET expr ) );
 	public final SneakersParser.returnstat_return returnstat() throws RecognitionException {
 		SneakersParser.returnstat_return retval = new SneakersParser.returnstat_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token string_literal9=null;
 		Token string_literal11=null;
 		ParserRuleReturnScope fncall10 =null;
 		ParserRuleReturnScope expr12 =null;
 
-		CommonTree string_literal9_tree=null;
-		CommonTree string_literal11_tree=null;
+		SneakersAST string_literal9_tree=null;
+		SneakersAST string_literal11_tree=null;
 		RewriteRuleTokenStream stream_47=new RewriteRuleTokenStream(adaptor,"token 47");
 		RewriteRuleSubtreeStream stream_fncall=new RewriteRuleSubtreeStream(adaptor,"rule fncall");
 		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,"rule expr");
 
-		try { dbg.enterRule(getGrammarFileName(), "returnstat");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(60, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:61:2: ( 'return' fncall -> ^( RET fncall ) | 'return' expr -> ^( RET expr ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:60:2: ( 'return' fncall -> ^( RET fncall ) | 'return' expr -> ^( RET expr ) )
 			int alt3=2;
-			try { dbg.enterDecision(3, decisionCanBacktrack[3]);
-
-			try {
-				isCyclicDecision = true;
-				alt3 = dfa3.predict(input);
-			}
-			catch (NoViableAltException nvae) {
-				dbg.recognitionException(nvae);
-				throw nvae;
-			}
-			} finally {dbg.exitDecision(3);}
-
+			alt3 = dfa3.predict(input);
 			switch (alt3) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:61:4: 'return' fncall
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:60:4: 'return' fncall
 					{
-					dbg.location(61,4);
-					string_literal9=(Token)match(input,47,FOLLOW_47_in_returnstat207);  
+					string_literal9=(Token)match(input,47,FOLLOW_47_in_returnstat205);  
 					stream_47.add(string_literal9);
-					dbg.location(61,13);
-					pushFollow(FOLLOW_fncall_in_returnstat209);
+
+					pushFollow(FOLLOW_fncall_in_returnstat207);
 					fncall10=fncall();
 					state._fsp--;
 
@@ -617,16 +467,13 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 61:20: -> ^( RET fncall )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 60:20: -> ^( RET fncall )
 					{
-						dbg.location(61,23);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:61:23: ^( RET fncall )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:60:23: ^( RET fncall )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(61,25);
-						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(RET, "RET"), root_1);
-						dbg.location(61,29);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(RET, "RET"), root_1);
 						adaptor.addChild(root_1, stream_fncall.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -639,15 +486,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:62:4: 'return' expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:61:4: 'return' expr
 					{
-					dbg.location(62,4);
-					string_literal11=(Token)match(input,47,FOLLOW_47_in_returnstat222);  
+					string_literal11=(Token)match(input,47,FOLLOW_47_in_returnstat220);  
 					stream_47.add(string_literal11);
-					dbg.location(62,13);
-					pushFollow(FOLLOW_expr_in_returnstat224);
+
+					pushFollow(FOLLOW_expr_in_returnstat222);
 					expr12=expr();
 					state._fsp--;
 
@@ -662,16 +506,13 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 62:18: -> ^( RET expr )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 61:18: -> ^( RET expr )
 					{
-						dbg.location(62,21);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:62:21: ^( RET expr )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:61:21: ^( RET expr )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(62,23);
-						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(RET, "RET"), root_1);
-						dbg.location(62,27);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(RET, "RET"), root_1);
 						adaptor.addChild(root_1, stream_expr.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -687,46 +528,37 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(63, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "returnstat");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "returnstat"
 
 
 	public static class ifstat_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "ifstat"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:65:1: ifstat : 'if' ifexpr= expr ifblock= contained_block ( 'elseif' elifexpr+= expr elifblock+= contained_block )* ( 'else' elseblock= contained_block )? -> ^( 'if' $ifexpr $ifblock ( $elifexpr $elifblock)* ( $elseblock)? ) ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:64:1: ifstat : 'if' ifexpr= expr ifblock= contained_block ( 'elseif' elifexpr+= expr elifblock+= contained_block )* ( 'else' elseblock= contained_block )? -> ^( 'if' $ifexpr $ifblock ( $elifexpr $elifblock)* ( $elseblock)? ) ;
 	public final SneakersParser.ifstat_return ifstat() throws RecognitionException {
 		SneakersParser.ifstat_return retval = new SneakersParser.ifstat_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token string_literal13=null;
 		Token string_literal14=null;
@@ -738,73 +570,56 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope elseblock =null;
 		RuleReturnScope elifexpr = null;
 		RuleReturnScope elifblock = null;
-		CommonTree string_literal13_tree=null;
-		CommonTree string_literal14_tree=null;
-		CommonTree string_literal15_tree=null;
+		SneakersAST string_literal13_tree=null;
+		SneakersAST string_literal14_tree=null;
+		SneakersAST string_literal15_tree=null;
 		RewriteRuleTokenStream stream_45=new RewriteRuleTokenStream(adaptor,"token 45");
 		RewriteRuleTokenStream stream_43=new RewriteRuleTokenStream(adaptor,"token 43");
 		RewriteRuleTokenStream stream_42=new RewriteRuleTokenStream(adaptor,"token 42");
 		RewriteRuleSubtreeStream stream_contained_block=new RewriteRuleSubtreeStream(adaptor,"rule contained_block");
 		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,"rule expr");
 
-		try { dbg.enterRule(getGrammarFileName(), "ifstat");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(65, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:65:8: ( 'if' ifexpr= expr ifblock= contained_block ( 'elseif' elifexpr+= expr elifblock+= contained_block )* ( 'else' elseblock= contained_block )? -> ^( 'if' $ifexpr $ifblock ( $elifexpr $elifblock)* ( $elseblock)? ) )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:65:10: 'if' ifexpr= expr ifblock= contained_block ( 'elseif' elifexpr+= expr elifblock+= contained_block )* ( 'else' elseblock= contained_block )?
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:64:8: ( 'if' ifexpr= expr ifblock= contained_block ( 'elseif' elifexpr+= expr elifblock+= contained_block )* ( 'else' elseblock= contained_block )? -> ^( 'if' $ifexpr $ifblock ( $elifexpr $elifblock)* ( $elseblock)? ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:64:10: 'if' ifexpr= expr ifblock= contained_block ( 'elseif' elifexpr+= expr elifblock+= contained_block )* ( 'else' elseblock= contained_block )?
 			{
-			dbg.location(65,10);
-			string_literal13=(Token)match(input,45,FOLLOW_45_in_ifstat242);  
+			string_literal13=(Token)match(input,45,FOLLOW_45_in_ifstat240);  
 			stream_45.add(string_literal13);
-			dbg.location(65,21);
-			pushFollow(FOLLOW_expr_in_ifstat246);
+
+			pushFollow(FOLLOW_expr_in_ifstat244);
 			ifexpr=expr();
 			state._fsp--;
 
-			stream_expr.add(ifexpr.getTree());dbg.location(65,34);
-			pushFollow(FOLLOW_contained_block_in_ifstat250);
+			stream_expr.add(ifexpr.getTree());
+			pushFollow(FOLLOW_contained_block_in_ifstat248);
 			ifblock=contained_block();
 			state._fsp--;
 
-			stream_contained_block.add(ifblock.getTree());dbg.location(66,3);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:66:3: ( 'elseif' elifexpr+= expr elifblock+= contained_block )*
-			try { dbg.enterSubRule(4);
-
+			stream_contained_block.add(ifblock.getTree());
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:65:3: ( 'elseif' elifexpr+= expr elifblock+= contained_block )*
 			loop4:
 			while (true) {
 				int alt4=2;
-				try { dbg.enterDecision(4, decisionCanBacktrack[4]);
-
 				int LA4_0 = input.LA(1);
 				if ( (LA4_0==43) ) {
 					alt4=1;
 				}
 
-				} finally {dbg.exitDecision(4);}
-
 				switch (alt4) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:66:4: 'elseif' elifexpr+= expr elifblock+= contained_block
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:65:4: 'elseif' elifexpr+= expr elifblock+= contained_block
 					{
-					dbg.location(66,4);
-					string_literal14=(Token)match(input,43,FOLLOW_43_in_ifstat256);  
+					string_literal14=(Token)match(input,43,FOLLOW_43_in_ifstat254);  
 					stream_43.add(string_literal14);
-					dbg.location(66,21);
-					pushFollow(FOLLOW_expr_in_ifstat260);
+
+					pushFollow(FOLLOW_expr_in_ifstat258);
 					elifexpr=expr();
 					state._fsp--;
 
 					stream_expr.add(elifexpr.getTree());
 					if (list_elifexpr==null) list_elifexpr=new ArrayList<Object>();
-					list_elifexpr.add(elifexpr.getTree());dbg.location(66,37);
-					pushFollow(FOLLOW_contained_block_in_ifstat264);
+					list_elifexpr.add(elifexpr.getTree());
+					pushFollow(FOLLOW_contained_block_in_ifstat262);
 					elifblock=contained_block();
 					state._fsp--;
 
@@ -818,30 +633,21 @@ public class SneakersParser extends DebugParser {
 					break loop4;
 				}
 			}
-			} finally {dbg.exitSubRule(4);}
-			dbg.location(67,3);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:67:3: ( 'else' elseblock= contained_block )?
-			int alt5=2;
-			try { dbg.enterSubRule(5);
-			try { dbg.enterDecision(5, decisionCanBacktrack[5]);
 
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:66:3: ( 'else' elseblock= contained_block )?
+			int alt5=2;
 			int LA5_0 = input.LA(1);
 			if ( (LA5_0==42) ) {
 				alt5=1;
 			}
-			} finally {dbg.exitDecision(5);}
-
 			switch (alt5) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:67:4: 'else' elseblock= contained_block
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:66:4: 'else' elseblock= contained_block
 					{
-					dbg.location(67,4);
-					string_literal15=(Token)match(input,42,FOLLOW_42_in_ifstat272);  
+					string_literal15=(Token)match(input,42,FOLLOW_42_in_ifstat270);  
 					stream_42.add(string_literal15);
-					dbg.location(67,20);
-					pushFollow(FOLLOW_contained_block_in_ifstat276);
+
+					pushFollow(FOLLOW_contained_block_in_ifstat274);
 					elseblock=contained_block();
 					state._fsp--;
 
@@ -850,10 +656,9 @@ public class SneakersParser extends DebugParser {
 					break;
 
 			}
-			} finally {dbg.exitSubRule(5);}
 
 			// AST REWRITE
-			// elements: elifblock, 45, elifexpr, elseblock, ifexpr, ifblock
+			// elements: ifexpr, 45, elseblock, ifblock, elifexpr, elifblock
 			// token labels: 
 			// rule labels: ifblock, retval, ifexpr, elseblock
 			// token list labels: 
@@ -866,30 +671,25 @@ public class SneakersParser extends DebugParser {
 			RewriteRuleSubtreeStream stream_elseblock=new RewriteRuleSubtreeStream(adaptor,"rule elseblock",elseblock!=null?elseblock.getTree():null);
 			RewriteRuleSubtreeStream stream_elifblock=new RewriteRuleSubtreeStream(adaptor,"token elifblock",list_elifblock);
 			RewriteRuleSubtreeStream stream_elifexpr=new RewriteRuleSubtreeStream(adaptor,"token elifexpr",list_elifexpr);
-			root_0 = (CommonTree)adaptor.nil();
-			// 68:3: -> ^( 'if' $ifexpr $ifblock ( $elifexpr $elifblock)* ( $elseblock)? )
+			root_0 = (SneakersAST)adaptor.nil();
+			// 67:3: -> ^( 'if' $ifexpr $ifblock ( $elifexpr $elifblock)* ( $elseblock)? )
 			{
-				dbg.location(68,6);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:68:6: ^( 'if' $ifexpr $ifblock ( $elifexpr $elifblock)* ( $elseblock)? )
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:67:6: ^( 'if' $ifexpr $ifblock ( $elifexpr $elifblock)* ( $elseblock)? )
 				{
-				CommonTree root_1 = (CommonTree)adaptor.nil();
-				dbg.location(68,8);
-				root_1 = (CommonTree)adaptor.becomeRoot(stream_45.nextNode(), root_1);
-				dbg.location(68,14);
-				adaptor.addChild(root_1, stream_ifexpr.nextTree());dbg.location(68,22);
-				adaptor.addChild(root_1, stream_ifblock.nextTree());dbg.location(68,30);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:68:30: ( $elifexpr $elifblock)*
-				while ( stream_elifblock.hasNext()||stream_elifexpr.hasNext() ) {
-					dbg.location(68,32);
-					adaptor.addChild(root_1, stream_elifexpr.nextTree());dbg.location(68,42);
+				SneakersAST root_1 = (SneakersAST)adaptor.nil();
+				root_1 = (SneakersAST)adaptor.becomeRoot(stream_45.nextNode(), root_1);
+				adaptor.addChild(root_1, stream_ifexpr.nextTree());
+				adaptor.addChild(root_1, stream_ifblock.nextTree());
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:67:30: ( $elifexpr $elifblock)*
+				while ( stream_elifexpr.hasNext()||stream_elifblock.hasNext() ) {
+					adaptor.addChild(root_1, stream_elifexpr.nextTree());
 					adaptor.addChild(root_1, stream_elifblock.nextTree());
 				}
-				stream_elifblock.reset();
 				stream_elifexpr.reset();
-				dbg.location(68,55);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:68:55: ( $elseblock)?
+				stream_elifblock.reset();
+
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:67:55: ( $elseblock)?
 				if ( stream_elseblock.hasNext() ) {
-					dbg.location(68,55);
 					adaptor.addChild(root_1, stream_elseblock.nextTree());
 				}
 				stream_elseblock.reset();
@@ -906,46 +706,37 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(68, 65);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "ifstat");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "ifstat"
 
 
 	public static class classdef_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "classdef"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:1: classdef : '{' ( fielddef )? ( ',' fielddef )* '}' -> ( fielddef )* ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:69:1: classdef : '{' ( fielddef )? ( ',' fielddef )* '}' -> ( fielddef )* ;
 	public final SneakersParser.classdef_return classdef() throws RecognitionException {
 		SneakersParser.classdef_return retval = new SneakersParser.classdef_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal16=null;
 		Token char_literal18=null;
@@ -953,48 +744,32 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope fielddef17 =null;
 		ParserRuleReturnScope fielddef19 =null;
 
-		CommonTree char_literal16_tree=null;
-		CommonTree char_literal18_tree=null;
-		CommonTree char_literal20_tree=null;
+		SneakersAST char_literal16_tree=null;
+		SneakersAST char_literal18_tree=null;
+		SneakersAST char_literal20_tree=null;
 		RewriteRuleTokenStream stream_49=new RewriteRuleTokenStream(adaptor,"token 49");
 		RewriteRuleTokenStream stream_48=new RewriteRuleTokenStream(adaptor,"token 48");
 		RewriteRuleTokenStream stream_32=new RewriteRuleTokenStream(adaptor,"token 32");
 		RewriteRuleSubtreeStream stream_fielddef=new RewriteRuleSubtreeStream(adaptor,"rule fielddef");
 
-		try { dbg.enterRule(getGrammarFileName(), "classdef");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(70, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:9: ( '{' ( fielddef )? ( ',' fielddef )* '}' -> ( fielddef )* )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:11: '{' ( fielddef )? ( ',' fielddef )* '}'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:69:9: ( '{' ( fielddef )? ( ',' fielddef )* '}' -> ( fielddef )* )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:69:11: '{' ( fielddef )? ( ',' fielddef )* '}'
 			{
-			dbg.location(70,11);
-			char_literal16=(Token)match(input,48,FOLLOW_48_in_classdef312);  
+			char_literal16=(Token)match(input,48,FOLLOW_48_in_classdef310);  
 			stream_48.add(char_literal16);
-			dbg.location(70,15);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:15: ( fielddef )?
-			int alt6=2;
-			try { dbg.enterSubRule(6);
-			try { dbg.enterDecision(6, decisionCanBacktrack[6]);
 
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:69:15: ( fielddef )?
+			int alt6=2;
 			int LA6_0 = input.LA(1);
 			if ( (LA6_0==KEYWORD) ) {
 				alt6=1;
 			}
-			} finally {dbg.exitDecision(6);}
-
 			switch (alt6) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:16: fielddef
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:69:16: fielddef
 					{
-					dbg.location(70,16);
-					pushFollow(FOLLOW_fielddef_in_classdef315);
+					pushFollow(FOLLOW_fielddef_in_classdef313);
 					fielddef17=fielddef();
 					state._fsp--;
 
@@ -1003,34 +778,24 @@ public class SneakersParser extends DebugParser {
 					break;
 
 			}
-			} finally {dbg.exitSubRule(6);}
-			dbg.location(70,27);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:27: ( ',' fielddef )*
-			try { dbg.enterSubRule(7);
 
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:69:27: ( ',' fielddef )*
 			loop7:
 			while (true) {
 				int alt7=2;
-				try { dbg.enterDecision(7, decisionCanBacktrack[7]);
-
 				int LA7_0 = input.LA(1);
 				if ( (LA7_0==32) ) {
 					alt7=1;
 				}
 
-				} finally {dbg.exitDecision(7);}
-
 				switch (alt7) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:28: ',' fielddef
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:69:28: ',' fielddef
 					{
-					dbg.location(70,28);
-					char_literal18=(Token)match(input,32,FOLLOW_32_in_classdef320);  
+					char_literal18=(Token)match(input,32,FOLLOW_32_in_classdef318);  
 					stream_32.add(char_literal18);
-					dbg.location(70,32);
-					pushFollow(FOLLOW_fielddef_in_classdef322);
+
+					pushFollow(FOLLOW_fielddef_in_classdef320);
 					fielddef19=fielddef();
 					state._fsp--;
 
@@ -1042,9 +807,8 @@ public class SneakersParser extends DebugParser {
 					break loop7;
 				}
 			}
-			} finally {dbg.exitSubRule(7);}
-			dbg.location(70,43);
-			char_literal20=(Token)match(input,49,FOLLOW_49_in_classdef326);  
+
+			char_literal20=(Token)match(input,49,FOLLOW_49_in_classdef324);  
 			stream_49.add(char_literal20);
 
 			// AST REWRITE
@@ -1057,13 +821,11 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 70:47: -> ( fielddef )*
+			root_0 = (SneakersAST)adaptor.nil();
+			// 69:47: -> ( fielddef )*
 			{
-				dbg.location(70,50);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:50: ( fielddef )*
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:69:50: ( fielddef )*
 				while ( stream_fielddef.hasNext() ) {
-					dbg.location(70,50);
 					adaptor.addChild(root_0, stream_fielddef.nextTree());
 				}
 				stream_fielddef.reset();
@@ -1077,50 +839,41 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(71, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "classdef");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "classdef"
 
 
 	public static class assignment_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "assignment"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:1: assignment : ( ID '=' 'class' classdef -> ^( 'class' ID classdef ) |newclass= ID '=' oldclass= ID '.' 'extend' classdef -> ^( 'extend' $newclass $oldclass classdef ) | any_id '=' expr -> ^( '=' any_id expr ) | any_id '=' fncall -> ^( '=' any_id fncall ) );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:72:1: assignment : ( TYPEID '=' 'class' classdef -> ^( 'class' TYPEID classdef ) |newclass= TYPEID '=' oldclass= TYPEID '.' 'extend' classdef -> ^( 'extend' $newclass $oldclass classdef ) | any_id '=' expr -> ^( '=' any_id expr ) | any_id '=' fncall -> ^( '=' any_id fncall ) );
 	public final SneakersParser.assignment_return assignment() throws RecognitionException {
 		SneakersParser.assignment_return retval = new SneakersParser.assignment_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token newclass=null;
 		Token oldclass=null;
-		Token ID21=null;
+		Token TYPEID21=null;
 		Token char_literal22=null;
 		Token string_literal23=null;
 		Token char_literal25=null;
@@ -1135,69 +888,50 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope any_id32 =null;
 		ParserRuleReturnScope fncall34 =null;
 
-		CommonTree newclass_tree=null;
-		CommonTree oldclass_tree=null;
-		CommonTree ID21_tree=null;
-		CommonTree char_literal22_tree=null;
-		CommonTree string_literal23_tree=null;
-		CommonTree char_literal25_tree=null;
-		CommonTree char_literal26_tree=null;
-		CommonTree string_literal27_tree=null;
-		CommonTree char_literal30_tree=null;
-		CommonTree char_literal33_tree=null;
+		SneakersAST newclass_tree=null;
+		SneakersAST oldclass_tree=null;
+		SneakersAST TYPEID21_tree=null;
+		SneakersAST char_literal22_tree=null;
+		SneakersAST string_literal23_tree=null;
+		SneakersAST char_literal25_tree=null;
+		SneakersAST char_literal26_tree=null;
+		SneakersAST string_literal27_tree=null;
+		SneakersAST char_literal30_tree=null;
+		SneakersAST char_literal33_tree=null;
 		RewriteRuleTokenStream stream_CLASSDEF=new RewriteRuleTokenStream(adaptor,"token CLASSDEF");
 		RewriteRuleTokenStream stream_44=new RewriteRuleTokenStream(adaptor,"token 44");
-		RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 		RewriteRuleTokenStream stream_33=new RewriteRuleTokenStream(adaptor,"token 33");
+		RewriteRuleTokenStream stream_TYPEID=new RewriteRuleTokenStream(adaptor,"token TYPEID");
 		RewriteRuleTokenStream stream_ASSIGN=new RewriteRuleTokenStream(adaptor,"token ASSIGN");
 		RewriteRuleSubtreeStream stream_classdef=new RewriteRuleSubtreeStream(adaptor,"rule classdef");
 		RewriteRuleSubtreeStream stream_any_id=new RewriteRuleSubtreeStream(adaptor,"rule any_id");
 		RewriteRuleSubtreeStream stream_fncall=new RewriteRuleSubtreeStream(adaptor,"rule fncall");
 		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,"rule expr");
 
-		try { dbg.enterRule(getGrammarFileName(), "assignment");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(73, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:74:2: ( ID '=' 'class' classdef -> ^( 'class' ID classdef ) |newclass= ID '=' oldclass= ID '.' 'extend' classdef -> ^( 'extend' $newclass $oldclass classdef ) | any_id '=' expr -> ^( '=' any_id expr ) | any_id '=' fncall -> ^( '=' any_id fncall ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:2: ( TYPEID '=' 'class' classdef -> ^( 'class' TYPEID classdef ) |newclass= TYPEID '=' oldclass= TYPEID '.' 'extend' classdef -> ^( 'extend' $newclass $oldclass classdef ) | any_id '=' expr -> ^( '=' any_id expr ) | any_id '=' fncall -> ^( '=' any_id fncall ) )
 			int alt8=4;
-			try { dbg.enterDecision(8, decisionCanBacktrack[8]);
-
-			try {
-				isCyclicDecision = true;
-				alt8 = dfa8.predict(input);
-			}
-			catch (NoViableAltException nvae) {
-				dbg.recognitionException(nvae);
-				throw nvae;
-			}
-			} finally {dbg.exitDecision(8);}
-
+			alt8 = dfa8.predict(input);
 			switch (alt8) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:74:4: ID '=' 'class' classdef
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:4: TYPEID '=' 'class' classdef
 					{
-					dbg.location(74,4);
-					ID21=(Token)match(input,ID,FOLLOW_ID_in_assignment342);  
-					stream_ID.add(ID21);
-					dbg.location(74,7);
-					char_literal22=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_assignment344);  
+					TYPEID21=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_assignment340);  
+					stream_TYPEID.add(TYPEID21);
+
+					char_literal22=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_assignment342);  
 					stream_ASSIGN.add(char_literal22);
-					dbg.location(74,11);
-					string_literal23=(Token)match(input,CLASSDEF,FOLLOW_CLASSDEF_in_assignment346);  
+
+					string_literal23=(Token)match(input,CLASSDEF,FOLLOW_CLASSDEF_in_assignment344);  
 					stream_CLASSDEF.add(string_literal23);
-					dbg.location(74,19);
-					pushFollow(FOLLOW_classdef_in_assignment348);
+
+					pushFollow(FOLLOW_classdef_in_assignment346);
 					classdef24=classdef();
 					state._fsp--;
 
 					stream_classdef.add(classdef24.getTree());
 					// AST REWRITE
-					// elements: ID, classdef, CLASSDEF
+					// elements: CLASSDEF, classdef, TYPEID
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1206,17 +940,14 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 74:28: -> ^( 'class' ID classdef )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 73:32: -> ^( 'class' TYPEID classdef )
 					{
-						dbg.location(74,31);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:74:31: ^( 'class' ID classdef )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:73:35: ^( 'class' TYPEID classdef )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(74,33);
-						root_1 = (CommonTree)adaptor.becomeRoot(stream_CLASSDEF.nextNode(), root_1);
-						dbg.location(74,41);
-						adaptor.addChild(root_1, stream_ID.nextNode());dbg.location(74,44);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot(stream_CLASSDEF.nextNode(), root_1);
+						adaptor.addChild(root_1, stream_TYPEID.nextNode());
 						adaptor.addChild(root_1, stream_classdef.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -1229,33 +960,30 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:75:4: newclass= ID '=' oldclass= ID '.' 'extend' classdef
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:74:4: newclass= TYPEID '=' oldclass= TYPEID '.' 'extend' classdef
 					{
-					dbg.location(75,12);
-					newclass=(Token)match(input,ID,FOLLOW_ID_in_assignment365);  
-					stream_ID.add(newclass);
-					dbg.location(75,16);
-					char_literal25=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_assignment367);  
+					newclass=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_assignment363);  
+					stream_TYPEID.add(newclass);
+
+					char_literal25=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_assignment365);  
 					stream_ASSIGN.add(char_literal25);
-					dbg.location(75,28);
-					oldclass=(Token)match(input,ID,FOLLOW_ID_in_assignment371);  
-					stream_ID.add(oldclass);
-					dbg.location(75,32);
-					char_literal26=(Token)match(input,33,FOLLOW_33_in_assignment373);  
+
+					oldclass=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_assignment369);  
+					stream_TYPEID.add(oldclass);
+
+					char_literal26=(Token)match(input,33,FOLLOW_33_in_assignment371);  
 					stream_33.add(char_literal26);
-					dbg.location(75,36);
-					string_literal27=(Token)match(input,44,FOLLOW_44_in_assignment375);  
+
+					string_literal27=(Token)match(input,44,FOLLOW_44_in_assignment373);  
 					stream_44.add(string_literal27);
-					dbg.location(75,45);
-					pushFollow(FOLLOW_classdef_in_assignment377);
+
+					pushFollow(FOLLOW_classdef_in_assignment375);
 					classdef28=classdef();
 					state._fsp--;
 
 					stream_classdef.add(classdef28.getTree());
 					// AST REWRITE
-					// elements: 44, classdef, oldclass, newclass
+					// elements: newclass, classdef, oldclass, 44
 					// token labels: oldclass, newclass
 					// rule labels: retval
 					// token list labels: 
@@ -1266,18 +994,15 @@ public class SneakersParser extends DebugParser {
 					RewriteRuleTokenStream stream_newclass=new RewriteRuleTokenStream(adaptor,"token newclass",newclass);
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 75:54: -> ^( 'extend' $newclass $oldclass classdef )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 74:62: -> ^( 'extend' $newclass $oldclass classdef )
 					{
-						dbg.location(75,57);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:75:57: ^( 'extend' $newclass $oldclass classdef )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:74:65: ^( 'extend' $newclass $oldclass classdef )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(75,59);
-						root_1 = (CommonTree)adaptor.becomeRoot(stream_44.nextNode(), root_1);
-						dbg.location(75,69);
-						adaptor.addChild(root_1, stream_newclass.nextNode());dbg.location(75,79);
-						adaptor.addChild(root_1, stream_oldclass.nextNode());dbg.location(75,88);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot(stream_44.nextNode(), root_1);
+						adaptor.addChild(root_1, stream_newclass.nextNode());
+						adaptor.addChild(root_1, stream_oldclass.nextNode());
 						adaptor.addChild(root_1, stream_classdef.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -1290,26 +1015,23 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 3 :
-					dbg.enterAlt(3);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:76:4: any_id '=' expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:75:4: any_id '=' expr
 					{
-					dbg.location(76,4);
-					pushFollow(FOLLOW_any_id_in_assignment396);
+					pushFollow(FOLLOW_any_id_in_assignment394);
 					any_id29=any_id();
 					state._fsp--;
 
-					stream_any_id.add(any_id29.getTree());dbg.location(76,11);
-					char_literal30=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_assignment398);  
+					stream_any_id.add(any_id29.getTree());
+					char_literal30=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_assignment396);  
 					stream_ASSIGN.add(char_literal30);
-					dbg.location(76,15);
-					pushFollow(FOLLOW_expr_in_assignment400);
+
+					pushFollow(FOLLOW_expr_in_assignment398);
 					expr31=expr();
 					state._fsp--;
 
 					stream_expr.add(expr31.getTree());
 					// AST REWRITE
-					// elements: any_id, ASSIGN, expr
+					// elements: expr, any_id, ASSIGN
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1318,17 +1040,14 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 76:20: -> ^( '=' any_id expr )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 75:20: -> ^( '=' any_id expr )
 					{
-						dbg.location(76,23);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:76:23: ^( '=' any_id expr )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:75:23: ^( '=' any_id expr )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(76,25);
-						root_1 = (CommonTree)adaptor.becomeRoot(stream_ASSIGN.nextNode(), root_1);
-						dbg.location(76,29);
-						adaptor.addChild(root_1, stream_any_id.nextTree());dbg.location(76,36);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot(stream_ASSIGN.nextNode(), root_1);
+						adaptor.addChild(root_1, stream_any_id.nextTree());
 						adaptor.addChild(root_1, stream_expr.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -1341,20 +1060,17 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 4 :
-					dbg.enterAlt(4);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:77:4: any_id '=' fncall
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:76:4: any_id '=' fncall
 					{
-					dbg.location(77,4);
-					pushFollow(FOLLOW_any_id_in_assignment415);
+					pushFollow(FOLLOW_any_id_in_assignment413);
 					any_id32=any_id();
 					state._fsp--;
 
-					stream_any_id.add(any_id32.getTree());dbg.location(77,11);
-					char_literal33=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_assignment417);  
+					stream_any_id.add(any_id32.getTree());
+					char_literal33=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_assignment415);  
 					stream_ASSIGN.add(char_literal33);
-					dbg.location(77,15);
-					pushFollow(FOLLOW_fncall_in_assignment419);
+
+					pushFollow(FOLLOW_fncall_in_assignment417);
 					fncall34=fncall();
 					state._fsp--;
 
@@ -1369,17 +1085,14 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 77:22: -> ^( '=' any_id fncall )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 76:22: -> ^( '=' any_id fncall )
 					{
-						dbg.location(77,25);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:77:25: ^( '=' any_id fncall )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:76:25: ^( '=' any_id fncall )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(77,27);
-						root_1 = (CommonTree)adaptor.becomeRoot(stream_ASSIGN.nextNode(), root_1);
-						dbg.location(77,31);
-						adaptor.addChild(root_1, stream_any_id.nextTree());dbg.location(77,38);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot(stream_ASSIGN.nextNode(), root_1);
+						adaptor.addChild(root_1, stream_any_id.nextTree());
 						adaptor.addChild(root_1, stream_fncall.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -1395,64 +1108,48 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(78, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "assignment");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "assignment"
 
 
 	public static class defable_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "defable"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:81:1: defable : ( paramtype | fndecl | mutdecl );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:80:1: defable : ( paramtype | fndecl | mutdecl );
 	public final SneakersParser.defable_return defable() throws RecognitionException {
 		SneakersParser.defable_return retval = new SneakersParser.defable_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		ParserRuleReturnScope paramtype35 =null;
 		ParserRuleReturnScope fndecl36 =null;
 		ParserRuleReturnScope mutdecl37 =null;
 
 
-		try { dbg.enterRule(getGrammarFileName(), "defable");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(81, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:81:9: ( paramtype | fndecl | mutdecl )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:80:9: ( paramtype | fndecl | mutdecl )
 			int alt9=3;
-			try { dbg.enterDecision(9, decisionCanBacktrack[9]);
-
 			switch ( input.LA(1) ) {
-			case ID:
+			case TYPEID:
 				{
 				alt9=1;
 				}
@@ -1461,42 +1158,23 @@ public class SneakersParser extends DebugParser {
 				{
 				int LA9_2 = input.LA(2);
 				if ( (LA9_2==30) ) {
-					int LA9_4 = input.LA(3);
-					if ( (LA9_4==ID) ) {
+					switch ( input.LA(3) ) {
+					case TYPEID:
+						{
+						alt9=1;
+						}
+						break;
+					case 31:
+						{
 						int LA9_6 = input.LA(4);
 						if ( (LA9_6==34) ) {
-							alt9=2;
-						}
-						else if ( ((LA9_6 >= 31 && LA9_6 <= 32)) ) {
-							alt9=1;
-						}
-
-						else {
-							int nvaeMark = input.mark();
-							try {
-								for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++) {
-									input.consume();
-								}
-								NoViableAltException nvae =
-									new NoViableAltException("", 9, 6, input);
-								dbg.recognitionException(nvae);
-								throw nvae;
-							} finally {
-								input.rewind(nvaeMark);
-							}
-						}
-
-					}
-					else if ( (LA9_4==31) ) {
-						int LA9_7 = input.LA(4);
-						if ( (LA9_7==34) ) {
-							int LA9_11 = input.LA(5);
-							if ( (LA9_11==ID) ) {
-								int LA9_14 = input.LA(6);
-								if ( (LA9_14==32||LA9_14==49) ) {
+							int LA9_10 = input.LA(5);
+							if ( (LA9_10==TYPEID) ) {
+								int LA9_12 = input.LA(6);
+								if ( (LA9_12==32||LA9_12==49) ) {
 									alt9=1;
 								}
-								else if ( (LA9_14==40) ) {
+								else if ( (LA9_12==40) ) {
 									alt9=2;
 								}
 
@@ -1507,8 +1185,116 @@ public class SneakersParser extends DebugParser {
 											input.consume();
 										}
 										NoViableAltException nvae =
-											new NoViableAltException("", 9, 14, input);
-										dbg.recognitionException(nvae);
+											new NoViableAltException("", 9, 12, input);
+										throw nvae;
+									} finally {
+										input.rewind(nvaeMark);
+									}
+								}
+
+							}
+
+							else {
+								int nvaeMark = input.mark();
+								try {
+									for (int nvaeConsume = 0; nvaeConsume < 5 - 1; nvaeConsume++) {
+										input.consume();
+									}
+									NoViableAltException nvae =
+										new NoViableAltException("", 9, 10, input);
+									throw nvae;
+								} finally {
+									input.rewind(nvaeMark);
+								}
+							}
+
+						}
+						else if ( (LA9_6==40) ) {
+							alt9=2;
+						}
+
+						else {
+							int nvaeMark = input.mark();
+							try {
+								for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++) {
+									input.consume();
+								}
+								NoViableAltException nvae =
+									new NoViableAltException("", 9, 6, input);
+								throw nvae;
+							} finally {
+								input.rewind(nvaeMark);
+							}
+						}
+
+						}
+						break;
+					case ID:
+						{
+						alt9=2;
+						}
+						break;
+					default:
+						int nvaeMark = input.mark();
+						try {
+							for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++) {
+								input.consume();
+							}
+							NoViableAltException nvae =
+								new NoViableAltException("", 9, 4, input);
+							throw nvae;
+						} finally {
+							input.rewind(nvaeMark);
+						}
+					}
+				}
+
+				else {
+					int nvaeMark = input.mark();
+					try {
+						input.consume();
+						NoViableAltException nvae =
+							new NoViableAltException("", 9, 2, input);
+						throw nvae;
+					} finally {
+						input.rewind(nvaeMark);
+					}
+				}
+
+				}
+				break;
+			case 39:
+				{
+				int LA9_3 = input.LA(2);
+				if ( (LA9_3==30) ) {
+					switch ( input.LA(3) ) {
+					case TYPEID:
+						{
+						alt9=1;
+						}
+						break;
+					case 31:
+						{
+						int LA9_8 = input.LA(4);
+						if ( (LA9_8==34) ) {
+							int LA9_11 = input.LA(5);
+							if ( (LA9_11==TYPEID) ) {
+								int LA9_13 = input.LA(6);
+								if ( (LA9_13==32||LA9_13==49) ) {
+									alt9=1;
+								}
+								else if ( (LA9_13==40) ) {
+									alt9=3;
+								}
+
+								else {
+									int nvaeMark = input.mark();
+									try {
+										for (int nvaeConsume = 0; nvaeConsume < 6 - 1; nvaeConsume++) {
+											input.consume();
+										}
+										NoViableAltException nvae =
+											new NoViableAltException("", 9, 13, input);
 										throw nvae;
 									} finally {
 										input.rewind(nvaeMark);
@@ -1525,7 +1311,6 @@ public class SneakersParser extends DebugParser {
 									}
 									NoViableAltException nvae =
 										new NoViableAltException("", 9, 11, input);
-									dbg.recognitionException(nvae);
 									throw nvae;
 								} finally {
 									input.rewind(nvaeMark);
@@ -1533,71 +1318,8 @@ public class SneakersParser extends DebugParser {
 							}
 
 						}
-						else if ( (LA9_7==40) ) {
-							alt9=2;
-						}
-
-						else {
-							int nvaeMark = input.mark();
-							try {
-								for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++) {
-									input.consume();
-								}
-								NoViableAltException nvae =
-									new NoViableAltException("", 9, 7, input);
-								dbg.recognitionException(nvae);
-								throw nvae;
-							} finally {
-								input.rewind(nvaeMark);
-							}
-						}
-
-					}
-
-					else {
-						int nvaeMark = input.mark();
-						try {
-							for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++) {
-								input.consume();
-							}
-							NoViableAltException nvae =
-								new NoViableAltException("", 9, 4, input);
-							dbg.recognitionException(nvae);
-							throw nvae;
-						} finally {
-							input.rewind(nvaeMark);
-						}
-					}
-
-				}
-
-				else {
-					int nvaeMark = input.mark();
-					try {
-						input.consume();
-						NoViableAltException nvae =
-							new NoViableAltException("", 9, 2, input);
-						dbg.recognitionException(nvae);
-						throw nvae;
-					} finally {
-						input.rewind(nvaeMark);
-					}
-				}
-
-				}
-				break;
-			case 39:
-				{
-				int LA9_3 = input.LA(2);
-				if ( (LA9_3==30) ) {
-					int LA9_5 = input.LA(3);
-					if ( (LA9_5==ID) ) {
-						int LA9_8 = input.LA(4);
-						if ( (LA9_8==34) ) {
+						else if ( (LA9_8==40) ) {
 							alt9=3;
-						}
-						else if ( ((LA9_8 >= 31 && LA9_8 <= 32)) ) {
-							alt9=1;
 						}
 
 						else {
@@ -1608,82 +1330,20 @@ public class SneakersParser extends DebugParser {
 								}
 								NoViableAltException nvae =
 									new NoViableAltException("", 9, 8, input);
-								dbg.recognitionException(nvae);
 								throw nvae;
 							} finally {
 								input.rewind(nvaeMark);
 							}
 						}
 
-					}
-					else if ( (LA9_5==31) ) {
-						int LA9_9 = input.LA(4);
-						if ( (LA9_9==34) ) {
-							int LA9_13 = input.LA(5);
-							if ( (LA9_13==ID) ) {
-								int LA9_15 = input.LA(6);
-								if ( (LA9_15==32||LA9_15==49) ) {
-									alt9=1;
-								}
-								else if ( (LA9_15==40) ) {
-									alt9=3;
-								}
-
-								else {
-									int nvaeMark = input.mark();
-									try {
-										for (int nvaeConsume = 0; nvaeConsume < 6 - 1; nvaeConsume++) {
-											input.consume();
-										}
-										NoViableAltException nvae =
-											new NoViableAltException("", 9, 15, input);
-										dbg.recognitionException(nvae);
-										throw nvae;
-									} finally {
-										input.rewind(nvaeMark);
-									}
-								}
-
-							}
-
-							else {
-								int nvaeMark = input.mark();
-								try {
-									for (int nvaeConsume = 0; nvaeConsume < 5 - 1; nvaeConsume++) {
-										input.consume();
-									}
-									NoViableAltException nvae =
-										new NoViableAltException("", 9, 13, input);
-									dbg.recognitionException(nvae);
-									throw nvae;
-								} finally {
-									input.rewind(nvaeMark);
-								}
-							}
-
 						}
-						else if ( (LA9_9==40) ) {
-							alt9=3;
+						break;
+					case ID:
+						{
+						alt9=3;
 						}
-
-						else {
-							int nvaeMark = input.mark();
-							try {
-								for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++) {
-									input.consume();
-								}
-								NoViableAltException nvae =
-									new NoViableAltException("", 9, 9, input);
-								dbg.recognitionException(nvae);
-								throw nvae;
-							} finally {
-								input.rewind(nvaeMark);
-							}
-						}
-
-					}
-
-					else {
+						break;
+					default:
 						int nvaeMark = input.mark();
 						try {
 							for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++) {
@@ -1691,13 +1351,11 @@ public class SneakersParser extends DebugParser {
 							}
 							NoViableAltException nvae =
 								new NoViableAltException("", 9, 5, input);
-							dbg.recognitionException(nvae);
 							throw nvae;
 						} finally {
 							input.rewind(nvaeMark);
 						}
 					}
-
 				}
 
 				else {
@@ -1706,7 +1364,6 @@ public class SneakersParser extends DebugParser {
 						input.consume();
 						NoViableAltException nvae =
 							new NoViableAltException("", 9, 3, input);
-						dbg.recognitionException(nvae);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -1718,22 +1375,16 @@ public class SneakersParser extends DebugParser {
 			default:
 				NoViableAltException nvae =
 					new NoViableAltException("", 9, 0, input);
-				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-			} finally {dbg.exitDecision(9);}
-
 			switch (alt9) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:81:11: paramtype
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:80:11: paramtype
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(81,11);
-					pushFollow(FOLLOW_paramtype_in_defable440);
+					pushFollow(FOLLOW_paramtype_in_defable438);
 					paramtype35=paramtype();
 					state._fsp--;
 
@@ -1742,15 +1393,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:82:4: fndecl
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:81:4: fndecl
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(82,4);
-					pushFollow(FOLLOW_fndecl_in_defable445);
+					pushFollow(FOLLOW_fndecl_in_defable443);
 					fndecl36=fndecl();
 					state._fsp--;
 
@@ -1759,15 +1407,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 3 :
-					dbg.enterAlt(3);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:83:4: mutdecl
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:82:4: mutdecl
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(83,4);
-					pushFollow(FOLLOW_mutdecl_in_defable450);
+					pushFollow(FOLLOW_mutdecl_in_defable448);
 					mutdecl37=mutdecl();
 					state._fsp--;
 
@@ -1779,82 +1424,65 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(84, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "defable");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "defable"
 
 
 	public static class fielddef_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "fielddef"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:86:1: fielddef : KEYWORD '=>' defable -> ^( FIELDDEF KEYWORD defable ) ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:85:1: fielddef : KEYWORD '=>' defable -> ^( FIELDDEF KEYWORD defable ) ;
 	public final SneakersParser.fielddef_return fielddef() throws RecognitionException {
 		SneakersParser.fielddef_return retval = new SneakersParser.fielddef_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token KEYWORD38=null;
 		Token string_literal39=null;
 		ParserRuleReturnScope defable40 =null;
 
-		CommonTree KEYWORD38_tree=null;
-		CommonTree string_literal39_tree=null;
+		SneakersAST KEYWORD38_tree=null;
+		SneakersAST string_literal39_tree=null;
 		RewriteRuleTokenStream stream_KEYWORD=new RewriteRuleTokenStream(adaptor,"token KEYWORD");
 		RewriteRuleTokenStream stream_37=new RewriteRuleTokenStream(adaptor,"token 37");
 		RewriteRuleSubtreeStream stream_defable=new RewriteRuleSubtreeStream(adaptor,"rule defable");
 
-		try { dbg.enterRule(getGrammarFileName(), "fielddef");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(86, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:87:2: ( KEYWORD '=>' defable -> ^( FIELDDEF KEYWORD defable ) )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:87:4: KEYWORD '=>' defable
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:86:2: ( KEYWORD '=>' defable -> ^( FIELDDEF KEYWORD defable ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:86:4: KEYWORD '=>' defable
 			{
-			dbg.location(87,4);
-			KEYWORD38=(Token)match(input,KEYWORD,FOLLOW_KEYWORD_in_fielddef462);  
+			KEYWORD38=(Token)match(input,KEYWORD,FOLLOW_KEYWORD_in_fielddef460);  
 			stream_KEYWORD.add(KEYWORD38);
-			dbg.location(87,12);
-			string_literal39=(Token)match(input,37,FOLLOW_37_in_fielddef464);  
+
+			string_literal39=(Token)match(input,37,FOLLOW_37_in_fielddef462);  
 			stream_37.add(string_literal39);
-			dbg.location(87,17);
-			pushFollow(FOLLOW_defable_in_fielddef466);
+
+			pushFollow(FOLLOW_defable_in_fielddef464);
 			defable40=defable();
 			state._fsp--;
 
 			stream_defable.add(defable40.getTree());
 			// AST REWRITE
-			// elements: KEYWORD, defable
+			// elements: defable, KEYWORD
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1863,17 +1491,14 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 87:25: -> ^( FIELDDEF KEYWORD defable )
+			root_0 = (SneakersAST)adaptor.nil();
+			// 86:25: -> ^( FIELDDEF KEYWORD defable )
 			{
-				dbg.location(87,28);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:87:28: ^( FIELDDEF KEYWORD defable )
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:86:28: ^( FIELDDEF KEYWORD defable )
 				{
-				CommonTree root_1 = (CommonTree)adaptor.nil();
-				dbg.location(87,30);
-				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(FIELDDEF, "FIELDDEF"), root_1);
-				dbg.location(87,39);
-				adaptor.addChild(root_1, stream_KEYWORD.nextNode());dbg.location(87,47);
+				SneakersAST root_1 = (SneakersAST)adaptor.nil();
+				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(FIELDDEF, "FIELDDEF"), root_1);
+				adaptor.addChild(root_1, stream_KEYWORD.nextNode());
 				adaptor.addChild(root_1, stream_defable.nextTree());
 				adaptor.addChild(root_0, root_1);
 				}
@@ -1887,46 +1512,37 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(88, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "fielddef");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "fielddef"
 
 
 	public static class nested_id_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "nested_id"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:91:1: nested_id : ( ANONVAR ( '.' any_id )* -> ANONVAR ( any_id )* | any_id ( '.' any_id )* -> ( any_id )* );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:90:1: nested_id : ( ANONVAR ( '.' any_id )* -> ANONVAR ( any_id )* | any_id ( '.' any_id )* -> ( any_id )* );
 	public final SneakersParser.nested_id_return nested_id() throws RecognitionException {
 		SneakersParser.nested_id_return retval = new SneakersParser.nested_id_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token ANONVAR41=null;
 		Token char_literal42=null;
@@ -1935,76 +1551,54 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope any_id44 =null;
 		ParserRuleReturnScope any_id46 =null;
 
-		CommonTree ANONVAR41_tree=null;
-		CommonTree char_literal42_tree=null;
-		CommonTree char_literal45_tree=null;
+		SneakersAST ANONVAR41_tree=null;
+		SneakersAST char_literal42_tree=null;
+		SneakersAST char_literal45_tree=null;
 		RewriteRuleTokenStream stream_ANONVAR=new RewriteRuleTokenStream(adaptor,"token ANONVAR");
 		RewriteRuleTokenStream stream_33=new RewriteRuleTokenStream(adaptor,"token 33");
 		RewriteRuleSubtreeStream stream_any_id=new RewriteRuleSubtreeStream(adaptor,"rule any_id");
 
-		try { dbg.enterRule(getGrammarFileName(), "nested_id");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(91, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:2: ( ANONVAR ( '.' any_id )* -> ANONVAR ( any_id )* | any_id ( '.' any_id )* -> ( any_id )* )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:91:2: ( ANONVAR ( '.' any_id )* -> ANONVAR ( any_id )* | any_id ( '.' any_id )* -> ( any_id )* )
 			int alt12=2;
-			try { dbg.enterDecision(12, decisionCanBacktrack[12]);
-
 			int LA12_0 = input.LA(1);
 			if ( (LA12_0==ANONVAR) ) {
 				alt12=1;
 			}
-			else if ( (LA12_0==ID||LA12_0==MUTID) ) {
+			else if ( (LA12_0==ID||LA12_0==MUTID||LA12_0==TYPEID) ) {
 				alt12=2;
 			}
 
 			else {
 				NoViableAltException nvae =
 					new NoViableAltException("", 12, 0, input);
-				dbg.recognitionException(nvae);
 				throw nvae;
 			}
 
-			} finally {dbg.exitDecision(12);}
-
 			switch (alt12) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:4: ANONVAR ( '.' any_id )*
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:91:4: ANONVAR ( '.' any_id )*
 					{
-					dbg.location(92,4);
-					ANONVAR41=(Token)match(input,ANONVAR,FOLLOW_ANONVAR_in_nested_id489);  
+					ANONVAR41=(Token)match(input,ANONVAR,FOLLOW_ANONVAR_in_nested_id487);  
 					stream_ANONVAR.add(ANONVAR41);
-					dbg.location(92,12);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:12: ( '.' any_id )*
-					try { dbg.enterSubRule(10);
 
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:91:12: ( '.' any_id )*
 					loop10:
 					while (true) {
 						int alt10=2;
-						try { dbg.enterDecision(10, decisionCanBacktrack[10]);
-
 						int LA10_0 = input.LA(1);
 						if ( (LA10_0==33) ) {
 							alt10=1;
 						}
 
-						} finally {dbg.exitDecision(10);}
-
 						switch (alt10) {
 						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:13: '.' any_id
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:91:13: '.' any_id
 							{
-							dbg.location(92,13);
-							char_literal42=(Token)match(input,33,FOLLOW_33_in_nested_id492);  
+							char_literal42=(Token)match(input,33,FOLLOW_33_in_nested_id490);  
 							stream_33.add(char_literal42);
-							dbg.location(92,17);
-							pushFollow(FOLLOW_any_id_in_nested_id494);
+
+							pushFollow(FOLLOW_any_id_in_nested_id492);
 							any_id43=any_id();
 							state._fsp--;
 
@@ -2016,7 +1610,6 @@ public class SneakersParser extends DebugParser {
 							break loop10;
 						}
 					}
-					} finally {dbg.exitSubRule(10);}
 
 					// AST REWRITE
 					// elements: any_id, ANONVAR
@@ -2028,14 +1621,12 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 92:26: -> ANONVAR ( any_id )*
+					root_0 = (SneakersAST)adaptor.nil();
+					// 91:26: -> ANONVAR ( any_id )*
 					{
-						dbg.location(92,29);
-						adaptor.addChild(root_0, stream_ANONVAR.nextNode());dbg.location(92,37);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:37: ( any_id )*
+						adaptor.addChild(root_0, stream_ANONVAR.nextNode());
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:91:37: ( any_id )*
 						while ( stream_any_id.hasNext() ) {
-							dbg.location(92,37);
 							adaptor.addChild(root_0, stream_any_id.nextTree());
 						}
 						stream_any_id.reset();
@@ -2048,42 +1639,30 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:93:4: any_id ( '.' any_id )*
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:4: any_id ( '.' any_id )*
 					{
-					dbg.location(93,4);
-					pushFollow(FOLLOW_any_id_in_nested_id508);
+					pushFollow(FOLLOW_any_id_in_nested_id506);
 					any_id44=any_id();
 					state._fsp--;
 
-					stream_any_id.add(any_id44.getTree());dbg.location(93,11);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:93:11: ( '.' any_id )*
-					try { dbg.enterSubRule(11);
-
+					stream_any_id.add(any_id44.getTree());
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:11: ( '.' any_id )*
 					loop11:
 					while (true) {
 						int alt11=2;
-						try { dbg.enterDecision(11, decisionCanBacktrack[11]);
-
 						int LA11_0 = input.LA(1);
 						if ( (LA11_0==33) ) {
 							alt11=1;
 						}
 
-						} finally {dbg.exitDecision(11);}
-
 						switch (alt11) {
 						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:93:12: '.' any_id
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:12: '.' any_id
 							{
-							dbg.location(93,12);
-							char_literal45=(Token)match(input,33,FOLLOW_33_in_nested_id511);  
+							char_literal45=(Token)match(input,33,FOLLOW_33_in_nested_id509);  
 							stream_33.add(char_literal45);
-							dbg.location(93,16);
-							pushFollow(FOLLOW_any_id_in_nested_id513);
+
+							pushFollow(FOLLOW_any_id_in_nested_id511);
 							any_id46=any_id();
 							state._fsp--;
 
@@ -2095,7 +1674,6 @@ public class SneakersParser extends DebugParser {
 							break loop11;
 						}
 					}
-					} finally {dbg.exitSubRule(11);}
 
 					// AST REWRITE
 					// elements: any_id
@@ -2107,13 +1685,11 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 93:25: -> ( any_id )*
+					root_0 = (SneakersAST)adaptor.nil();
+					// 92:25: -> ( any_id )*
 					{
-						dbg.location(93,28);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:93:28: ( any_id )*
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:28: ( any_id )*
 						while ( stream_any_id.hasNext() ) {
-							dbg.location(93,28);
 							adaptor.addChild(root_0, stream_any_id.nextTree());
 						}
 						stream_any_id.reset();
@@ -2129,129 +1705,94 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(94, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "nested_id");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "nested_id"
 
 
 	public static class fncall_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "fncall"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:96:1: fncall : nested_id param ( ( ',' )? param )* -> ^( FNCALL nested_id ( param )* ) ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:1: fncall : nested_id param ( ( ',' )? param )* -> ^( FNCALL nested_id ( param )* ) ;
 	public final SneakersParser.fncall_return fncall() throws RecognitionException {
 		SneakersParser.fncall_return retval = new SneakersParser.fncall_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal49=null;
 		ParserRuleReturnScope nested_id47 =null;
 		ParserRuleReturnScope param48 =null;
 		ParserRuleReturnScope param50 =null;
 
-		CommonTree char_literal49_tree=null;
+		SneakersAST char_literal49_tree=null;
 		RewriteRuleTokenStream stream_32=new RewriteRuleTokenStream(adaptor,"token 32");
 		RewriteRuleSubtreeStream stream_param=new RewriteRuleSubtreeStream(adaptor,"rule param");
 		RewriteRuleSubtreeStream stream_nested_id=new RewriteRuleSubtreeStream(adaptor,"rule nested_id");
 
-		try { dbg.enterRule(getGrammarFileName(), "fncall");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(96, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:96:8: ( nested_id param ( ( ',' )? param )* -> ^( FNCALL nested_id ( param )* ) )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:96:10: nested_id param ( ( ',' )? param )*
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:8: ( nested_id param ( ( ',' )? param )* -> ^( FNCALL nested_id ( param )* ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:10: nested_id param ( ( ',' )? param )*
 			{
-			dbg.location(96,10);
-			pushFollow(FOLLOW_nested_id_in_fncall530);
+			pushFollow(FOLLOW_nested_id_in_fncall528);
 			nested_id47=nested_id();
 			state._fsp--;
 
-			stream_nested_id.add(nested_id47.getTree());dbg.location(96,20);
-			pushFollow(FOLLOW_param_in_fncall532);
+			stream_nested_id.add(nested_id47.getTree());
+			pushFollow(FOLLOW_param_in_fncall530);
 			param48=param();
 			state._fsp--;
 
-			stream_param.add(param48.getTree());dbg.location(96,26);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:96:26: ( ( ',' )? param )*
-			try { dbg.enterSubRule(14);
-
+			stream_param.add(param48.getTree());
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:26: ( ( ',' )? param )*
 			loop14:
 			while (true) {
 				int alt14=2;
-				try { dbg.enterDecision(14, decisionCanBacktrack[14]);
-
 				int LA14_0 = input.LA(1);
-				if ( (LA14_0==ANONVAR||(LA14_0 >= ID && LA14_0 <= KEYWORD)||LA14_0==MUTID||LA14_0==STRING||(LA14_0 >= 29 && LA14_0 <= 30)||LA14_0==32||(LA14_0 >= 39 && LA14_0 <= 40)||LA14_0==48) ) {
+				if ( (LA14_0==ANONVAR||(LA14_0 >= ID && LA14_0 <= KEYWORD)||LA14_0==MUTID||(LA14_0 >= STRING && LA14_0 <= TYPEID)||(LA14_0 >= 29 && LA14_0 <= 30)||LA14_0==32||(LA14_0 >= 39 && LA14_0 <= 40)||LA14_0==48) ) {
 					alt14=1;
 				}
 
-				} finally {dbg.exitDecision(14);}
-
 				switch (alt14) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:96:27: ( ',' )? param
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:27: ( ',' )? param
 					{
-					dbg.location(96,27);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:96:27: ( ',' )?
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:27: ( ',' )?
 					int alt13=2;
-					try { dbg.enterSubRule(13);
-					try { dbg.enterDecision(13, decisionCanBacktrack[13]);
-
 					int LA13_0 = input.LA(1);
 					if ( (LA13_0==32) ) {
 						alt13=1;
 					}
-					} finally {dbg.exitDecision(13);}
-
 					switch (alt13) {
 						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:96:27: ','
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:27: ','
 							{
-							dbg.location(96,27);
-							char_literal49=(Token)match(input,32,FOLLOW_32_in_fncall535);  
+							char_literal49=(Token)match(input,32,FOLLOW_32_in_fncall533);  
 							stream_32.add(char_literal49);
 
 							}
 							break;
 
 					}
-					} finally {dbg.exitSubRule(13);}
-					dbg.location(96,32);
-					pushFollow(FOLLOW_param_in_fncall538);
+
+					pushFollow(FOLLOW_param_in_fncall536);
 					param50=param();
 					state._fsp--;
 
@@ -2263,10 +1804,9 @@ public class SneakersParser extends DebugParser {
 					break loop14;
 				}
 			}
-			} finally {dbg.exitSubRule(14);}
 
 			// AST REWRITE
-			// elements: param, nested_id
+			// elements: nested_id, param
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -2275,20 +1815,16 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 96:40: -> ^( FNCALL nested_id ( param )* )
+			root_0 = (SneakersAST)adaptor.nil();
+			// 95:40: -> ^( FNCALL nested_id ( param )* )
 			{
-				dbg.location(96,43);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:96:43: ^( FNCALL nested_id ( param )* )
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:43: ^( FNCALL nested_id ( param )* )
 				{
-				CommonTree root_1 = (CommonTree)adaptor.nil();
-				dbg.location(96,45);
-				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(FNCALL, "FNCALL"), root_1);
-				dbg.location(96,52);
-				adaptor.addChild(root_1, stream_nested_id.nextTree());dbg.location(96,62);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:96:62: ( param )*
+				SneakersAST root_1 = (SneakersAST)adaptor.nil();
+				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(FNCALL, "FNCALL"), root_1);
+				adaptor.addChild(root_1, stream_nested_id.nextTree());
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:62: ( param )*
 				while ( stream_param.hasNext() ) {
-					dbg.location(96,62);
 					adaptor.addChild(root_1, stream_param.nextTree());
 				}
 				stream_param.reset();
@@ -2305,75 +1841,59 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(97, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "fncall");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "fncall"
 
 
 	public static class param_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "param"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:99:1: param : ( ID ':' expr -> ^( PARAM ID expr ) | expr -> ^( PARAM expr ) );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:98:1: param : ( ID ':' expr -> ^( PARAM ID expr ) | expr -> ^( PARAM expr ) );
 	public final SneakersParser.param_return param() throws RecognitionException {
 		SneakersParser.param_return retval = new SneakersParser.param_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token ID51=null;
 		Token char_literal52=null;
 		ParserRuleReturnScope expr53 =null;
 		ParserRuleReturnScope expr54 =null;
 
-		CommonTree ID51_tree=null;
-		CommonTree char_literal52_tree=null;
+		SneakersAST ID51_tree=null;
+		SneakersAST char_literal52_tree=null;
 		RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 		RewriteRuleTokenStream stream_34=new RewriteRuleTokenStream(adaptor,"token 34");
 		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,"rule expr");
 
-		try { dbg.enterRule(getGrammarFileName(), "param");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(99, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:99:7: ( ID ':' expr -> ^( PARAM ID expr ) | expr -> ^( PARAM expr ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:98:7: ( ID ':' expr -> ^( PARAM ID expr ) | expr -> ^( PARAM expr ) )
 			int alt15=2;
-			try { dbg.enterDecision(15, decisionCanBacktrack[15]);
-
 			int LA15_0 = input.LA(1);
 			if ( (LA15_0==ID) ) {
 				int LA15_1 = input.LA(2);
 				if ( (LA15_1==34) ) {
 					alt15=1;
 				}
-				else if ( (LA15_1==ANONVAR||(LA15_1 >= ID && LA15_1 <= KEYWORD)||LA15_1==MUTID||LA15_1==STRING||(LA15_1 >= 29 && LA15_1 <= 33)||LA15_1==35||(LA15_1 >= 38 && LA15_1 <= 41)||LA15_1==48) ) {
+				else if ( (LA15_1==ANONVAR||(LA15_1 >= ID && LA15_1 <= KEYWORD)||LA15_1==MUTID||(LA15_1 >= STRING && LA15_1 <= TYPEID)||(LA15_1 >= 29 && LA15_1 <= 33)||LA15_1==35||(LA15_1 >= 38 && LA15_1 <= 41)||LA15_1==48) ) {
 					alt15=2;
 				}
 
@@ -2383,7 +1903,6 @@ public class SneakersParser extends DebugParser {
 						input.consume();
 						NoViableAltException nvae =
 							new NoViableAltException("", 15, 1, input);
-						dbg.recognitionException(nvae);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -2391,39 +1910,33 @@ public class SneakersParser extends DebugParser {
 				}
 
 			}
-			else if ( (LA15_0==ANONVAR||(LA15_0 >= INT && LA15_0 <= KEYWORD)||LA15_0==MUTID||LA15_0==STRING||(LA15_0 >= 29 && LA15_0 <= 30)||(LA15_0 >= 39 && LA15_0 <= 40)||LA15_0==48) ) {
+			else if ( (LA15_0==ANONVAR||(LA15_0 >= INT && LA15_0 <= KEYWORD)||LA15_0==MUTID||(LA15_0 >= STRING && LA15_0 <= TYPEID)||(LA15_0 >= 29 && LA15_0 <= 30)||(LA15_0 >= 39 && LA15_0 <= 40)||LA15_0==48) ) {
 				alt15=2;
 			}
 
 			else {
 				NoViableAltException nvae =
 					new NoViableAltException("", 15, 0, input);
-				dbg.recognitionException(nvae);
 				throw nvae;
 			}
 
-			} finally {dbg.exitDecision(15);}
-
 			switch (alt15) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:99:9: ID ':' expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:98:9: ID ':' expr
 					{
-					dbg.location(99,9);
-					ID51=(Token)match(input,ID,FOLLOW_ID_in_param561);  
+					ID51=(Token)match(input,ID,FOLLOW_ID_in_param559);  
 					stream_ID.add(ID51);
-					dbg.location(99,12);
-					char_literal52=(Token)match(input,34,FOLLOW_34_in_param563);  
+
+					char_literal52=(Token)match(input,34,FOLLOW_34_in_param561);  
 					stream_34.add(char_literal52);
-					dbg.location(99,16);
-					pushFollow(FOLLOW_expr_in_param565);
+
+					pushFollow(FOLLOW_expr_in_param563);
 					expr53=expr();
 					state._fsp--;
 
 					stream_expr.add(expr53.getTree());
 					// AST REWRITE
-					// elements: ID, expr
+					// elements: expr, ID
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -2432,17 +1945,14 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 99:21: -> ^( PARAM ID expr )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 98:21: -> ^( PARAM ID expr )
 					{
-						dbg.location(99,24);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:99:24: ^( PARAM ID expr )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:98:24: ^( PARAM ID expr )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(99,26);
-						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(PARAM, "PARAM"), root_1);
-						dbg.location(99,32);
-						adaptor.addChild(root_1, stream_ID.nextNode());dbg.location(99,35);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(PARAM, "PARAM"), root_1);
+						adaptor.addChild(root_1, stream_ID.nextNode());
 						adaptor.addChild(root_1, stream_expr.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -2455,12 +1965,9 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:100:4: expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:99:4: expr
 					{
-					dbg.location(100,4);
-					pushFollow(FOLLOW_expr_in_param580);
+					pushFollow(FOLLOW_expr_in_param578);
 					expr54=expr();
 					state._fsp--;
 
@@ -2475,16 +1982,13 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 100:9: -> ^( PARAM expr )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 99:9: -> ^( PARAM expr )
 					{
-						dbg.location(100,12);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:100:12: ^( PARAM expr )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:99:12: ^( PARAM expr )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(100,14);
-						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(PARAM, "PARAM"), root_1);
-						dbg.location(100,20);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(PARAM, "PARAM"), root_1);
 						adaptor.addChild(root_1, stream_expr.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -2500,90 +2004,74 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(101, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "param");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "param"
 
 
 	public static class blockparamtype_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "blockparamtype"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:103:1: blockparamtype : ( '(' ID ( ',' ID )* ')' ':' ID -> ( ID )+ | '(' ')' ':' ID -> ID );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:102:1: blockparamtype : ( '(' TYPEID ( ',' TYPEID )* ')' ':' TYPEID -> ( TYPEID )+ | '(' ')' ':' TYPEID -> TYPEID );
 	public final SneakersParser.blockparamtype_return blockparamtype() throws RecognitionException {
 		SneakersParser.blockparamtype_return retval = new SneakersParser.blockparamtype_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal55=null;
-		Token ID56=null;
+		Token TYPEID56=null;
 		Token char_literal57=null;
-		Token ID58=null;
+		Token TYPEID58=null;
 		Token char_literal59=null;
 		Token char_literal60=null;
-		Token ID61=null;
+		Token TYPEID61=null;
 		Token char_literal62=null;
 		Token char_literal63=null;
 		Token char_literal64=null;
-		Token ID65=null;
+		Token TYPEID65=null;
 
-		CommonTree char_literal55_tree=null;
-		CommonTree ID56_tree=null;
-		CommonTree char_literal57_tree=null;
-		CommonTree ID58_tree=null;
-		CommonTree char_literal59_tree=null;
-		CommonTree char_literal60_tree=null;
-		CommonTree ID61_tree=null;
-		CommonTree char_literal62_tree=null;
-		CommonTree char_literal63_tree=null;
-		CommonTree char_literal64_tree=null;
-		CommonTree ID65_tree=null;
+		SneakersAST char_literal55_tree=null;
+		SneakersAST TYPEID56_tree=null;
+		SneakersAST char_literal57_tree=null;
+		SneakersAST TYPEID58_tree=null;
+		SneakersAST char_literal59_tree=null;
+		SneakersAST char_literal60_tree=null;
+		SneakersAST TYPEID61_tree=null;
+		SneakersAST char_literal62_tree=null;
+		SneakersAST char_literal63_tree=null;
+		SneakersAST char_literal64_tree=null;
+		SneakersAST TYPEID65_tree=null;
 		RewriteRuleTokenStream stream_30=new RewriteRuleTokenStream(adaptor,"token 30");
 		RewriteRuleTokenStream stream_32=new RewriteRuleTokenStream(adaptor,"token 32");
 		RewriteRuleTokenStream stream_31=new RewriteRuleTokenStream(adaptor,"token 31");
-		RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 		RewriteRuleTokenStream stream_34=new RewriteRuleTokenStream(adaptor,"token 34");
-
-		try { dbg.enterRule(getGrammarFileName(), "blockparamtype");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(103, 0);
+		RewriteRuleTokenStream stream_TYPEID=new RewriteRuleTokenStream(adaptor,"token TYPEID");
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:104:2: ( '(' ID ( ',' ID )* ')' ':' ID -> ( ID )+ | '(' ')' ':' ID -> ID )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:103:2: ( '(' TYPEID ( ',' TYPEID )* ')' ':' TYPEID -> ( TYPEID )+ | '(' ')' ':' TYPEID -> TYPEID )
 			int alt17=2;
-			try { dbg.enterDecision(17, decisionCanBacktrack[17]);
-
 			int LA17_0 = input.LA(1);
 			if ( (LA17_0==30) ) {
 				int LA17_1 = input.LA(2);
-				if ( (LA17_1==ID) ) {
+				if ( (LA17_1==TYPEID) ) {
 					alt17=1;
 				}
 				else if ( (LA17_1==31) ) {
@@ -2596,7 +2084,6 @@ public class SneakersParser extends DebugParser {
 						input.consume();
 						NoViableAltException nvae =
 							new NoViableAltException("", 17, 1, input);
-						dbg.recognitionException(nvae);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -2608,52 +2095,37 @@ public class SneakersParser extends DebugParser {
 			else {
 				NoViableAltException nvae =
 					new NoViableAltException("", 17, 0, input);
-				dbg.recognitionException(nvae);
 				throw nvae;
 			}
 
-			} finally {dbg.exitDecision(17);}
-
 			switch (alt17) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:104:4: '(' ID ( ',' ID )* ')' ':' ID
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:103:4: '(' TYPEID ( ',' TYPEID )* ')' ':' TYPEID
 					{
-					dbg.location(104,4);
-					char_literal55=(Token)match(input,30,FOLLOW_30_in_blockparamtype600);  
+					char_literal55=(Token)match(input,30,FOLLOW_30_in_blockparamtype598);  
 					stream_30.add(char_literal55);
-					dbg.location(104,8);
-					ID56=(Token)match(input,ID,FOLLOW_ID_in_blockparamtype602);  
-					stream_ID.add(ID56);
-					dbg.location(104,11);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:104:11: ( ',' ID )*
-					try { dbg.enterSubRule(16);
 
+					TYPEID56=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_blockparamtype600);  
+					stream_TYPEID.add(TYPEID56);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:103:15: ( ',' TYPEID )*
 					loop16:
 					while (true) {
 						int alt16=2;
-						try { dbg.enterDecision(16, decisionCanBacktrack[16]);
-
 						int LA16_0 = input.LA(1);
 						if ( (LA16_0==32) ) {
 							alt16=1;
 						}
 
-						} finally {dbg.exitDecision(16);}
-
 						switch (alt16) {
 						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:104:12: ',' ID
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:103:16: ',' TYPEID
 							{
-							dbg.location(104,12);
-							char_literal57=(Token)match(input,32,FOLLOW_32_in_blockparamtype605);  
+							char_literal57=(Token)match(input,32,FOLLOW_32_in_blockparamtype603);  
 							stream_32.add(char_literal57);
-							dbg.location(104,16);
-							ID58=(Token)match(input,ID,FOLLOW_ID_in_blockparamtype607);  
-							stream_ID.add(ID58);
+
+							TYPEID58=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_blockparamtype605);  
+							stream_TYPEID.add(TYPEID58);
 
 							}
 							break;
@@ -2662,19 +2134,18 @@ public class SneakersParser extends DebugParser {
 							break loop16;
 						}
 					}
-					} finally {dbg.exitSubRule(16);}
-					dbg.location(104,21);
-					char_literal59=(Token)match(input,31,FOLLOW_31_in_blockparamtype611);  
+
+					char_literal59=(Token)match(input,31,FOLLOW_31_in_blockparamtype609);  
 					stream_31.add(char_literal59);
-					dbg.location(104,25);
-					char_literal60=(Token)match(input,34,FOLLOW_34_in_blockparamtype613);  
+
+					char_literal60=(Token)match(input,34,FOLLOW_34_in_blockparamtype611);  
 					stream_34.add(char_literal60);
-					dbg.location(104,29);
-					ID61=(Token)match(input,ID,FOLLOW_ID_in_blockparamtype615);  
-					stream_ID.add(ID61);
+
+					TYPEID61=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_blockparamtype613);  
+					stream_TYPEID.add(TYPEID61);
 
 					// AST REWRITE
-					// elements: ID
+					// elements: TYPEID
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -2683,18 +2154,16 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 104:32: -> ( ID )+
+					root_0 = (SneakersAST)adaptor.nil();
+					// 103:44: -> ( TYPEID )+
 					{
-						dbg.location(104,35);
-						if ( !(stream_ID.hasNext()) ) {
+						if ( !(stream_TYPEID.hasNext()) ) {
 							throw new RewriteEarlyExitException();
 						}
-						while ( stream_ID.hasNext() ) {
-							dbg.location(104,35);
-							adaptor.addChild(root_0, stream_ID.nextNode());
+						while ( stream_TYPEID.hasNext() ) {
+							adaptor.addChild(root_0, stream_TYPEID.nextNode());
 						}
-						stream_ID.reset();
+						stream_TYPEID.reset();
 
 					}
 
@@ -2704,25 +2173,22 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:105:4: '(' ')' ':' ID
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:104:4: '(' ')' ':' TYPEID
 					{
-					dbg.location(105,4);
-					char_literal62=(Token)match(input,30,FOLLOW_30_in_blockparamtype625);  
+					char_literal62=(Token)match(input,30,FOLLOW_30_in_blockparamtype623);  
 					stream_30.add(char_literal62);
-					dbg.location(105,8);
-					char_literal63=(Token)match(input,31,FOLLOW_31_in_blockparamtype627);  
+
+					char_literal63=(Token)match(input,31,FOLLOW_31_in_blockparamtype625);  
 					stream_31.add(char_literal63);
-					dbg.location(105,12);
-					char_literal64=(Token)match(input,34,FOLLOW_34_in_blockparamtype629);  
+
+					char_literal64=(Token)match(input,34,FOLLOW_34_in_blockparamtype627);  
 					stream_34.add(char_literal64);
-					dbg.location(105,16);
-					ID65=(Token)match(input,ID,FOLLOW_ID_in_blockparamtype631);  
-					stream_ID.add(ID65);
+
+					TYPEID65=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_blockparamtype629);  
+					stream_TYPEID.add(TYPEID65);
 
 					// AST REWRITE
-					// elements: ID
+					// elements: TYPEID
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -2731,11 +2197,10 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 105:19: -> ID
+					root_0 = (SneakersAST)adaptor.nil();
+					// 104:23: -> TYPEID
 					{
-						dbg.location(105,22);
-						adaptor.addChild(root_0, stream_ID.nextNode());
+						adaptor.addChild(root_0, stream_TYPEID.nextNode());
 					}
 
 
@@ -2747,72 +2212,56 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(106, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "blockparamtype");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "blockparamtype"
 
 
 	public static class paramtype_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "paramtype"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:108:1: paramtype : ( ID | '#' blockparamtype -> ^( PARAMTYPEFN blockparamtype ) | '@' blockparamtype -> ^( PARAMTYPEMUT blockparamtype ) );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:107:1: paramtype : ( TYPEID | '#' blockparamtype -> ^( PARAMTYPEFN blockparamtype ) | '@' blockparamtype -> ^( PARAMTYPEMUT blockparamtype ) );
 	public final SneakersParser.paramtype_return paramtype() throws RecognitionException {
 		SneakersParser.paramtype_return retval = new SneakersParser.paramtype_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
-		Token ID66=null;
+		Token TYPEID66=null;
 		Token char_literal67=null;
 		Token char_literal69=null;
 		ParserRuleReturnScope blockparamtype68 =null;
 		ParserRuleReturnScope blockparamtype70 =null;
 
-		CommonTree ID66_tree=null;
-		CommonTree char_literal67_tree=null;
-		CommonTree char_literal69_tree=null;
+		SneakersAST TYPEID66_tree=null;
+		SneakersAST char_literal67_tree=null;
+		SneakersAST char_literal69_tree=null;
 		RewriteRuleTokenStream stream_39=new RewriteRuleTokenStream(adaptor,"token 39");
 		RewriteRuleTokenStream stream_29=new RewriteRuleTokenStream(adaptor,"token 29");
 		RewriteRuleSubtreeStream stream_blockparamtype=new RewriteRuleSubtreeStream(adaptor,"rule blockparamtype");
 
-		try { dbg.enterRule(getGrammarFileName(), "paramtype");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(108, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:108:11: ( ID | '#' blockparamtype -> ^( PARAMTYPEFN blockparamtype ) | '@' blockparamtype -> ^( PARAMTYPEMUT blockparamtype ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:107:11: ( TYPEID | '#' blockparamtype -> ^( PARAMTYPEFN blockparamtype ) | '@' blockparamtype -> ^( PARAMTYPEMUT blockparamtype ) )
 			int alt18=3;
-			try { dbg.enterDecision(18, decisionCanBacktrack[18]);
-
 			switch ( input.LA(1) ) {
-			case ID:
+			case TYPEID:
 				{
 				alt18=1;
 				}
@@ -2830,37 +2279,28 @@ public class SneakersParser extends DebugParser {
 			default:
 				NoViableAltException nvae =
 					new NoViableAltException("", 18, 0, input);
-				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-			} finally {dbg.exitDecision(18);}
-
 			switch (alt18) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:108:14: ID
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:107:14: TYPEID
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(108,14);
-					ID66=(Token)match(input,ID,FOLLOW_ID_in_paramtype646); 
-					ID66_tree = (CommonTree)adaptor.create(ID66);
-					adaptor.addChild(root_0, ID66_tree);
+					TYPEID66=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_paramtype644); 
+					TYPEID66_tree = (SneakersAST)adaptor.create(TYPEID66);
+					adaptor.addChild(root_0, TYPEID66_tree);
 
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:109:4: '#' blockparamtype
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:108:4: '#' blockparamtype
 					{
-					dbg.location(109,4);
-					char_literal67=(Token)match(input,29,FOLLOW_29_in_paramtype651);  
+					char_literal67=(Token)match(input,29,FOLLOW_29_in_paramtype649);  
 					stream_29.add(char_literal67);
-					dbg.location(109,8);
-					pushFollow(FOLLOW_blockparamtype_in_paramtype653);
+
+					pushFollow(FOLLOW_blockparamtype_in_paramtype651);
 					blockparamtype68=blockparamtype();
 					state._fsp--;
 
@@ -2875,16 +2315,13 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 109:23: -> ^( PARAMTYPEFN blockparamtype )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 108:23: -> ^( PARAMTYPEFN blockparamtype )
 					{
-						dbg.location(109,26);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:109:26: ^( PARAMTYPEFN blockparamtype )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:108:26: ^( PARAMTYPEFN blockparamtype )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(109,28);
-						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(PARAMTYPEFN, "PARAMTYPEFN"), root_1);
-						dbg.location(109,40);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(PARAMTYPEFN, "PARAMTYPEFN"), root_1);
 						adaptor.addChild(root_1, stream_blockparamtype.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -2897,15 +2334,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 3 :
-					dbg.enterAlt(3);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:110:4: '@' blockparamtype
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:109:4: '@' blockparamtype
 					{
-					dbg.location(110,4);
-					char_literal69=(Token)match(input,39,FOLLOW_39_in_paramtype666);  
+					char_literal69=(Token)match(input,39,FOLLOW_39_in_paramtype664);  
 					stream_39.add(char_literal69);
-					dbg.location(110,8);
-					pushFollow(FOLLOW_blockparamtype_in_paramtype668);
+
+					pushFollow(FOLLOW_blockparamtype_in_paramtype666);
 					blockparamtype70=blockparamtype();
 					state._fsp--;
 
@@ -2920,16 +2354,13 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 110:23: -> ^( PARAMTYPEMUT blockparamtype )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 109:23: -> ^( PARAMTYPEMUT blockparamtype )
 					{
-						dbg.location(110,26);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:110:26: ^( PARAMTYPEMUT blockparamtype )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:109:26: ^( PARAMTYPEMUT blockparamtype )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(110,28);
-						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(PARAMTYPEMUT, "PARAMTYPEMUT"), root_1);
-						dbg.location(110,41);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(PARAMTYPEMUT, "PARAMTYPEMUT"), root_1);
 						adaptor.addChild(root_1, stream_blockparamtype.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -2945,76 +2376,59 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(111, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "paramtype");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "paramtype"
 
 
 	public static class fnparam_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "fnparam"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:113:1: fnparam : ID ':' paramtype -> ^( FNPARAM ID paramtype ) ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:112:1: fnparam : ID ':' paramtype -> ^( FNPARAM ID paramtype ) ;
 	public final SneakersParser.fnparam_return fnparam() throws RecognitionException {
 		SneakersParser.fnparam_return retval = new SneakersParser.fnparam_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token ID71=null;
 		Token char_literal72=null;
 		ParserRuleReturnScope paramtype73 =null;
 
-		CommonTree ID71_tree=null;
-		CommonTree char_literal72_tree=null;
+		SneakersAST ID71_tree=null;
+		SneakersAST char_literal72_tree=null;
 		RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 		RewriteRuleTokenStream stream_34=new RewriteRuleTokenStream(adaptor,"token 34");
 		RewriteRuleSubtreeStream stream_paramtype=new RewriteRuleSubtreeStream(adaptor,"rule paramtype");
 
-		try { dbg.enterRule(getGrammarFileName(), "fnparam");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(113, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:113:9: ( ID ':' paramtype -> ^( FNPARAM ID paramtype ) )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:113:11: ID ':' paramtype
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:112:9: ( ID ':' paramtype -> ^( FNPARAM ID paramtype ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:112:11: ID ':' paramtype
 			{
-			dbg.location(113,11);
-			ID71=(Token)match(input,ID,FOLLOW_ID_in_fnparam687);  
+			ID71=(Token)match(input,ID,FOLLOW_ID_in_fnparam685);  
 			stream_ID.add(ID71);
-			dbg.location(113,14);
-			char_literal72=(Token)match(input,34,FOLLOW_34_in_fnparam689);  
+
+			char_literal72=(Token)match(input,34,FOLLOW_34_in_fnparam687);  
 			stream_34.add(char_literal72);
-			dbg.location(113,18);
-			pushFollow(FOLLOW_paramtype_in_fnparam691);
+
+			pushFollow(FOLLOW_paramtype_in_fnparam689);
 			paramtype73=paramtype();
 			state._fsp--;
 
@@ -3029,17 +2443,14 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 113:28: -> ^( FNPARAM ID paramtype )
+			root_0 = (SneakersAST)adaptor.nil();
+			// 112:28: -> ^( FNPARAM ID paramtype )
 			{
-				dbg.location(113,31);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:113:31: ^( FNPARAM ID paramtype )
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:112:31: ^( FNPARAM ID paramtype )
 				{
-				CommonTree root_1 = (CommonTree)adaptor.nil();
-				dbg.location(113,33);
-				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(FNPARAM, "FNPARAM"), root_1);
-				dbg.location(113,41);
-				adaptor.addChild(root_1, stream_ID.nextNode());dbg.location(113,44);
+				SneakersAST root_1 = (SneakersAST)adaptor.nil();
+				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(FNPARAM, "FNPARAM"), root_1);
+				adaptor.addChild(root_1, stream_ID.nextNode());
 				adaptor.addChild(root_1, stream_paramtype.nextTree());
 				adaptor.addChild(root_0, root_1);
 				}
@@ -3053,46 +2464,37 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(114, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "fnparam");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "fnparam"
 
 
 	public static class anonfn_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "anonfn"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:116:1: anonfn : ( '#' '[' fncall ']' -> ^( ANONFN fncall ) | '#' '[' nested_id ']' -> ^( ANONFN nested_id ) );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:115:1: anonfn : ( '#' '[' fncall ']' -> ^( ANONFN fncall ) | '#' '[' nested_id ']' -> ^( ANONFN nested_id ) );
 	public final SneakersParser.anonfn_return anonfn() throws RecognitionException {
 		SneakersParser.anonfn_return retval = new SneakersParser.anonfn_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal74=null;
 		Token char_literal75=null;
@@ -3103,57 +2505,38 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope fncall76 =null;
 		ParserRuleReturnScope nested_id80 =null;
 
-		CommonTree char_literal74_tree=null;
-		CommonTree char_literal75_tree=null;
-		CommonTree char_literal77_tree=null;
-		CommonTree char_literal78_tree=null;
-		CommonTree char_literal79_tree=null;
-		CommonTree char_literal81_tree=null;
+		SneakersAST char_literal74_tree=null;
+		SneakersAST char_literal75_tree=null;
+		SneakersAST char_literal77_tree=null;
+		SneakersAST char_literal78_tree=null;
+		SneakersAST char_literal79_tree=null;
+		SneakersAST char_literal81_tree=null;
 		RewriteRuleTokenStream stream_41=new RewriteRuleTokenStream(adaptor,"token 41");
 		RewriteRuleTokenStream stream_40=new RewriteRuleTokenStream(adaptor,"token 40");
 		RewriteRuleTokenStream stream_29=new RewriteRuleTokenStream(adaptor,"token 29");
 		RewriteRuleSubtreeStream stream_fncall=new RewriteRuleSubtreeStream(adaptor,"rule fncall");
 		RewriteRuleSubtreeStream stream_nested_id=new RewriteRuleSubtreeStream(adaptor,"rule nested_id");
 
-		try { dbg.enterRule(getGrammarFileName(), "anonfn");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(116, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:116:8: ( '#' '[' fncall ']' -> ^( ANONFN fncall ) | '#' '[' nested_id ']' -> ^( ANONFN nested_id ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:115:8: ( '#' '[' fncall ']' -> ^( ANONFN fncall ) | '#' '[' nested_id ']' -> ^( ANONFN nested_id ) )
 			int alt19=2;
-			try { dbg.enterDecision(19, decisionCanBacktrack[19]);
-
-			try {
-				isCyclicDecision = true;
-				alt19 = dfa19.predict(input);
-			}
-			catch (NoViableAltException nvae) {
-				dbg.recognitionException(nvae);
-				throw nvae;
-			}
-			} finally {dbg.exitDecision(19);}
-
+			alt19 = dfa19.predict(input);
 			switch (alt19) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:116:10: '#' '[' fncall ']'
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:115:10: '#' '[' fncall ']'
 					{
-					dbg.location(116,10);
-					char_literal74=(Token)match(input,29,FOLLOW_29_in_anonfn711);  
+					char_literal74=(Token)match(input,29,FOLLOW_29_in_anonfn709);  
 					stream_29.add(char_literal74);
-					dbg.location(116,14);
-					char_literal75=(Token)match(input,40,FOLLOW_40_in_anonfn713);  
+
+					char_literal75=(Token)match(input,40,FOLLOW_40_in_anonfn711);  
 					stream_40.add(char_literal75);
-					dbg.location(116,18);
-					pushFollow(FOLLOW_fncall_in_anonfn715);
+
+					pushFollow(FOLLOW_fncall_in_anonfn713);
 					fncall76=fncall();
 					state._fsp--;
 
-					stream_fncall.add(fncall76.getTree());dbg.location(116,25);
-					char_literal77=(Token)match(input,41,FOLLOW_41_in_anonfn717);  
+					stream_fncall.add(fncall76.getTree());
+					char_literal77=(Token)match(input,41,FOLLOW_41_in_anonfn715);  
 					stream_41.add(char_literal77);
 
 					// AST REWRITE
@@ -3166,16 +2549,13 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 116:29: -> ^( ANONFN fncall )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 115:29: -> ^( ANONFN fncall )
 					{
-						dbg.location(116,32);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:116:32: ^( ANONFN fncall )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:115:32: ^( ANONFN fncall )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(116,34);
-						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(ANONFN, "ANONFN"), root_1);
-						dbg.location(116,41);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(ANONFN, "ANONFN"), root_1);
 						adaptor.addChild(root_1, stream_fncall.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -3188,23 +2568,20 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:117:4: '#' '[' nested_id ']'
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:116:4: '#' '[' nested_id ']'
 					{
-					dbg.location(117,4);
-					char_literal78=(Token)match(input,29,FOLLOW_29_in_anonfn730);  
+					char_literal78=(Token)match(input,29,FOLLOW_29_in_anonfn728);  
 					stream_29.add(char_literal78);
-					dbg.location(117,8);
-					char_literal79=(Token)match(input,40,FOLLOW_40_in_anonfn732);  
+
+					char_literal79=(Token)match(input,40,FOLLOW_40_in_anonfn730);  
 					stream_40.add(char_literal79);
-					dbg.location(117,12);
-					pushFollow(FOLLOW_nested_id_in_anonfn734);
+
+					pushFollow(FOLLOW_nested_id_in_anonfn732);
 					nested_id80=nested_id();
 					state._fsp--;
 
-					stream_nested_id.add(nested_id80.getTree());dbg.location(117,22);
-					char_literal81=(Token)match(input,41,FOLLOW_41_in_anonfn736);  
+					stream_nested_id.add(nested_id80.getTree());
+					char_literal81=(Token)match(input,41,FOLLOW_41_in_anonfn734);  
 					stream_41.add(char_literal81);
 
 					// AST REWRITE
@@ -3217,16 +2594,13 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 117:26: -> ^( ANONFN nested_id )
+					root_0 = (SneakersAST)adaptor.nil();
+					// 116:26: -> ^( ANONFN nested_id )
 					{
-						dbg.location(117,29);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:117:29: ^( ANONFN nested_id )
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:116:29: ^( ANONFN nested_id )
 						{
-						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(117,31);
-						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(ANONFN, "ANONFN"), root_1);
-						dbg.location(117,38);
+						SneakersAST root_1 = (SneakersAST)adaptor.nil();
+						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(ANONFN, "ANONFN"), root_1);
 						adaptor.addChild(root_1, stream_nested_id.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -3242,88 +2616,72 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(118, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "anonfn");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "anonfn"
 
 
 	public static class blockdecl_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "blockdecl"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:1: blockdecl : ( '(' ')' ( ':' ID )? contained_block -> ( ID )? contained_block | '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' ID )? contained_block -> ( fnparam )* ( ID )? contained_block );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:119:1: blockdecl : ( '(' ')' ( ':' TYPEID )? contained_block -> ( TYPEID )? contained_block | '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' TYPEID )? contained_block -> ( fnparam )* ( TYPEID )? contained_block );
 	public final SneakersParser.blockdecl_return blockdecl() throws RecognitionException {
 		SneakersParser.blockdecl_return retval = new SneakersParser.blockdecl_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal82=null;
 		Token char_literal83=null;
 		Token char_literal84=null;
-		Token ID85=null;
+		Token TYPEID85=null;
 		Token char_literal87=null;
 		Token char_literal89=null;
 		Token char_literal91=null;
 		Token char_literal92=null;
-		Token ID93=null;
+		Token TYPEID93=null;
 		ParserRuleReturnScope contained_block86 =null;
 		ParserRuleReturnScope fnparam88 =null;
 		ParserRuleReturnScope fnparam90 =null;
 		ParserRuleReturnScope contained_block94 =null;
 
-		CommonTree char_literal82_tree=null;
-		CommonTree char_literal83_tree=null;
-		CommonTree char_literal84_tree=null;
-		CommonTree ID85_tree=null;
-		CommonTree char_literal87_tree=null;
-		CommonTree char_literal89_tree=null;
-		CommonTree char_literal91_tree=null;
-		CommonTree char_literal92_tree=null;
-		CommonTree ID93_tree=null;
+		SneakersAST char_literal82_tree=null;
+		SneakersAST char_literal83_tree=null;
+		SneakersAST char_literal84_tree=null;
+		SneakersAST TYPEID85_tree=null;
+		SneakersAST char_literal87_tree=null;
+		SneakersAST char_literal89_tree=null;
+		SneakersAST char_literal91_tree=null;
+		SneakersAST char_literal92_tree=null;
+		SneakersAST TYPEID93_tree=null;
 		RewriteRuleTokenStream stream_30=new RewriteRuleTokenStream(adaptor,"token 30");
 		RewriteRuleTokenStream stream_32=new RewriteRuleTokenStream(adaptor,"token 32");
 		RewriteRuleTokenStream stream_31=new RewriteRuleTokenStream(adaptor,"token 31");
-		RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 		RewriteRuleTokenStream stream_34=new RewriteRuleTokenStream(adaptor,"token 34");
+		RewriteRuleTokenStream stream_TYPEID=new RewriteRuleTokenStream(adaptor,"token TYPEID");
 		RewriteRuleSubtreeStream stream_contained_block=new RewriteRuleSubtreeStream(adaptor,"rule contained_block");
 		RewriteRuleSubtreeStream stream_fnparam=new RewriteRuleSubtreeStream(adaptor,"rule fnparam");
 
-		try { dbg.enterRule(getGrammarFileName(), "blockdecl");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(120, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:2: ( '(' ')' ( ':' ID )? contained_block -> ( ID )? contained_block | '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' ID )? contained_block -> ( fnparam )* ( ID )? contained_block )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:2: ( '(' ')' ( ':' TYPEID )? contained_block -> ( TYPEID )? contained_block | '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' TYPEID )? contained_block -> ( fnparam )* ( TYPEID )? contained_block )
 			int alt24=2;
-			try { dbg.enterDecision(24, decisionCanBacktrack[24]);
-
 			int LA24_0 = input.LA(1);
 			if ( (LA24_0==30) ) {
 				int LA24_1 = input.LA(2);
@@ -3340,7 +2698,6 @@ public class SneakersParser extends DebugParser {
 						input.consume();
 						NoViableAltException nvae =
 							new NoViableAltException("", 24, 1, input);
-						dbg.recognitionException(nvae);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -3352,62 +2709,47 @@ public class SneakersParser extends DebugParser {
 			else {
 				NoViableAltException nvae =
 					new NoViableAltException("", 24, 0, input);
-				dbg.recognitionException(nvae);
 				throw nvae;
 			}
 
-			} finally {dbg.exitDecision(24);}
-
 			switch (alt24) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:4: '(' ')' ( ':' ID )? contained_block
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:4: '(' ')' ( ':' TYPEID )? contained_block
 					{
-					dbg.location(121,4);
-					char_literal82=(Token)match(input,30,FOLLOW_30_in_blockdecl755);  
+					char_literal82=(Token)match(input,30,FOLLOW_30_in_blockdecl753);  
 					stream_30.add(char_literal82);
-					dbg.location(121,8);
-					char_literal83=(Token)match(input,31,FOLLOW_31_in_blockdecl757);  
-					stream_31.add(char_literal83);
-					dbg.location(121,12);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:12: ( ':' ID )?
-					int alt20=2;
-					try { dbg.enterSubRule(20);
-					try { dbg.enterDecision(20, decisionCanBacktrack[20]);
 
+					char_literal83=(Token)match(input,31,FOLLOW_31_in_blockdecl755);  
+					stream_31.add(char_literal83);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:12: ( ':' TYPEID )?
+					int alt20=2;
 					int LA20_0 = input.LA(1);
 					if ( (LA20_0==34) ) {
 						alt20=1;
 					}
-					} finally {dbg.exitDecision(20);}
-
 					switch (alt20) {
 						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:13: ':' ID
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:13: ':' TYPEID
 							{
-							dbg.location(121,13);
-							char_literal84=(Token)match(input,34,FOLLOW_34_in_blockdecl760);  
+							char_literal84=(Token)match(input,34,FOLLOW_34_in_blockdecl758);  
 							stream_34.add(char_literal84);
-							dbg.location(121,17);
-							ID85=(Token)match(input,ID,FOLLOW_ID_in_blockdecl762);  
-							stream_ID.add(ID85);
+
+							TYPEID85=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_blockdecl760);  
+							stream_TYPEID.add(TYPEID85);
 
 							}
 							break;
 
 					}
-					} finally {dbg.exitSubRule(20);}
-					dbg.location(121,22);
-					pushFollow(FOLLOW_contained_block_in_blockdecl766);
+
+					pushFollow(FOLLOW_contained_block_in_blockdecl764);
 					contained_block86=contained_block();
 					state._fsp--;
 
 					stream_contained_block.add(contained_block86.getTree());
 					// AST REWRITE
-					// elements: ID, contained_block
+					// elements: contained_block, TYPEID
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -3416,17 +2758,15 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 121:38: -> ( ID )? contained_block
+					root_0 = (SneakersAST)adaptor.nil();
+					// 120:42: -> ( TYPEID )? contained_block
 					{
-						dbg.location(121,41);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:41: ( ID )?
-						if ( stream_ID.hasNext() ) {
-							dbg.location(121,41);
-							adaptor.addChild(root_0, stream_ID.nextNode());
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:45: ( TYPEID )?
+						if ( stream_TYPEID.hasNext() ) {
+							adaptor.addChild(root_0, stream_TYPEID.nextNode());
 						}
-						stream_ID.reset();
-						dbg.location(121,45);
+						stream_TYPEID.reset();
+
 						adaptor.addChild(root_0, stream_contained_block.nextTree());
 					}
 
@@ -3436,69 +2776,48 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:122:4: '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' ID )? contained_block
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:4: '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' TYPEID )? contained_block
 					{
-					dbg.location(122,4);
-					char_literal87=(Token)match(input,30,FOLLOW_30_in_blockdecl778);  
+					char_literal87=(Token)match(input,30,FOLLOW_30_in_blockdecl776);  
 					stream_30.add(char_literal87);
-					dbg.location(122,8);
-					pushFollow(FOLLOW_fnparam_in_blockdecl780);
+
+					pushFollow(FOLLOW_fnparam_in_blockdecl778);
 					fnparam88=fnparam();
 					state._fsp--;
 
-					stream_fnparam.add(fnparam88.getTree());dbg.location(122,16);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:122:16: ( ( ',' )? fnparam )*
-					try { dbg.enterSubRule(22);
-
+					stream_fnparam.add(fnparam88.getTree());
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:16: ( ( ',' )? fnparam )*
 					loop22:
 					while (true) {
 						int alt22=2;
-						try { dbg.enterDecision(22, decisionCanBacktrack[22]);
-
 						int LA22_0 = input.LA(1);
 						if ( (LA22_0==ID||LA22_0==32) ) {
 							alt22=1;
 						}
 
-						} finally {dbg.exitDecision(22);}
-
 						switch (alt22) {
 						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:122:17: ( ',' )? fnparam
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:17: ( ',' )? fnparam
 							{
-							dbg.location(122,17);
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:122:17: ( ',' )?
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:17: ( ',' )?
 							int alt21=2;
-							try { dbg.enterSubRule(21);
-							try { dbg.enterDecision(21, decisionCanBacktrack[21]);
-
 							int LA21_0 = input.LA(1);
 							if ( (LA21_0==32) ) {
 								alt21=1;
 							}
-							} finally {dbg.exitDecision(21);}
-
 							switch (alt21) {
 								case 1 :
-									dbg.enterAlt(1);
-
-									// /Users/eli/dev/Sneakers-Java/Sneakers.g:122:17: ','
+									// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:17: ','
 									{
-									dbg.location(122,17);
-									char_literal89=(Token)match(input,32,FOLLOW_32_in_blockdecl783);  
+									char_literal89=(Token)match(input,32,FOLLOW_32_in_blockdecl781);  
 									stream_32.add(char_literal89);
 
 									}
 									break;
 
 							}
-							} finally {dbg.exitSubRule(21);}
-							dbg.location(122,22);
-							pushFollow(FOLLOW_fnparam_in_blockdecl786);
+
+							pushFollow(FOLLOW_fnparam_in_blockdecl784);
 							fnparam90=fnparam();
 							state._fsp--;
 
@@ -3510,48 +2829,38 @@ public class SneakersParser extends DebugParser {
 							break loop22;
 						}
 					}
-					} finally {dbg.exitSubRule(22);}
-					dbg.location(122,32);
-					char_literal91=(Token)match(input,31,FOLLOW_31_in_blockdecl790);  
-					stream_31.add(char_literal91);
-					dbg.location(122,36);
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:122:36: ( ':' ID )?
-					int alt23=2;
-					try { dbg.enterSubRule(23);
-					try { dbg.enterDecision(23, decisionCanBacktrack[23]);
 
+					char_literal91=(Token)match(input,31,FOLLOW_31_in_blockdecl788);  
+					stream_31.add(char_literal91);
+
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:36: ( ':' TYPEID )?
+					int alt23=2;
 					int LA23_0 = input.LA(1);
 					if ( (LA23_0==34) ) {
 						alt23=1;
 					}
-					} finally {dbg.exitDecision(23);}
-
 					switch (alt23) {
 						case 1 :
-							dbg.enterAlt(1);
-
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:122:37: ':' ID
+							// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:37: ':' TYPEID
 							{
-							dbg.location(122,37);
-							char_literal92=(Token)match(input,34,FOLLOW_34_in_blockdecl793);  
+							char_literal92=(Token)match(input,34,FOLLOW_34_in_blockdecl791);  
 							stream_34.add(char_literal92);
-							dbg.location(122,41);
-							ID93=(Token)match(input,ID,FOLLOW_ID_in_blockdecl795);  
-							stream_ID.add(ID93);
+
+							TYPEID93=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_blockdecl793);  
+							stream_TYPEID.add(TYPEID93);
 
 							}
 							break;
 
 					}
-					} finally {dbg.exitSubRule(23);}
-					dbg.location(122,46);
-					pushFollow(FOLLOW_contained_block_in_blockdecl799);
+
+					pushFollow(FOLLOW_contained_block_in_blockdecl797);
 					contained_block94=contained_block();
 					state._fsp--;
 
 					stream_contained_block.add(contained_block94.getTree());
 					// AST REWRITE
-					// elements: ID, fnparam, contained_block
+					// elements: fnparam, contained_block, TYPEID
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -3560,24 +2869,21 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 122:62: -> ( fnparam )* ( ID )? contained_block
+					root_0 = (SneakersAST)adaptor.nil();
+					// 121:66: -> ( fnparam )* ( TYPEID )? contained_block
 					{
-						dbg.location(122,65);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:122:65: ( fnparam )*
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:69: ( fnparam )*
 						while ( stream_fnparam.hasNext() ) {
-							dbg.location(122,65);
 							adaptor.addChild(root_0, stream_fnparam.nextTree());
 						}
 						stream_fnparam.reset();
-						dbg.location(122,74);
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:122:74: ( ID )?
-						if ( stream_ID.hasNext() ) {
-							dbg.location(122,74);
-							adaptor.addChild(root_0, stream_ID.nextNode());
+
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:78: ( TYPEID )?
+						if ( stream_TYPEID.hasNext() ) {
+							adaptor.addChild(root_0, stream_TYPEID.nextNode());
 						}
-						stream_ID.reset();
-						dbg.location(122,78);
+						stream_TYPEID.reset();
+
 						adaptor.addChild(root_0, stream_contained_block.nextTree());
 					}
 
@@ -3590,70 +2896,53 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(123, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "blockdecl");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "blockdecl"
 
 
 	public static class fndecl_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "fndecl"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:125:1: fndecl : '#' blockdecl -> ^( FNDECL blockdecl ) ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:124:1: fndecl : '#' blockdecl -> ^( FNDECL blockdecl ) ;
 	public final SneakersParser.fndecl_return fndecl() throws RecognitionException {
 		SneakersParser.fndecl_return retval = new SneakersParser.fndecl_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal95=null;
 		ParserRuleReturnScope blockdecl96 =null;
 
-		CommonTree char_literal95_tree=null;
+		SneakersAST char_literal95_tree=null;
 		RewriteRuleTokenStream stream_29=new RewriteRuleTokenStream(adaptor,"token 29");
 		RewriteRuleSubtreeStream stream_blockdecl=new RewriteRuleSubtreeStream(adaptor,"rule blockdecl");
 
-		try { dbg.enterRule(getGrammarFileName(), "fndecl");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(125, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:125:8: ( '#' blockdecl -> ^( FNDECL blockdecl ) )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:125:10: '#' blockdecl
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:124:8: ( '#' blockdecl -> ^( FNDECL blockdecl ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:124:10: '#' blockdecl
 			{
-			dbg.location(125,10);
-			char_literal95=(Token)match(input,29,FOLLOW_29_in_fndecl819);  
+			char_literal95=(Token)match(input,29,FOLLOW_29_in_fndecl817);  
 			stream_29.add(char_literal95);
-			dbg.location(125,14);
-			pushFollow(FOLLOW_blockdecl_in_fndecl821);
+
+			pushFollow(FOLLOW_blockdecl_in_fndecl819);
 			blockdecl96=blockdecl();
 			state._fsp--;
 
@@ -3668,16 +2957,13 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 125:24: -> ^( FNDECL blockdecl )
+			root_0 = (SneakersAST)adaptor.nil();
+			// 124:24: -> ^( FNDECL blockdecl )
 			{
-				dbg.location(125,27);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:125:27: ^( FNDECL blockdecl )
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:124:27: ^( FNDECL blockdecl )
 				{
-				CommonTree root_1 = (CommonTree)adaptor.nil();
-				dbg.location(125,29);
-				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(FNDECL, "FNDECL"), root_1);
-				dbg.location(125,36);
+				SneakersAST root_1 = (SneakersAST)adaptor.nil();
+				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(FNDECL, "FNDECL"), root_1);
 				adaptor.addChild(root_1, stream_blockdecl.nextTree());
 				adaptor.addChild(root_0, root_1);
 				}
@@ -3691,70 +2977,53 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(126, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "fndecl");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "fndecl"
 
 
 	public static class mutdecl_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "mutdecl"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:128:1: mutdecl : '@' blockdecl -> ^( MUTDECL blockdecl ) ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:127:1: mutdecl : '@' blockdecl -> ^( MUTDECL blockdecl ) ;
 	public final SneakersParser.mutdecl_return mutdecl() throws RecognitionException {
 		SneakersParser.mutdecl_return retval = new SneakersParser.mutdecl_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal97=null;
 		ParserRuleReturnScope blockdecl98 =null;
 
-		CommonTree char_literal97_tree=null;
+		SneakersAST char_literal97_tree=null;
 		RewriteRuleTokenStream stream_39=new RewriteRuleTokenStream(adaptor,"token 39");
 		RewriteRuleSubtreeStream stream_blockdecl=new RewriteRuleSubtreeStream(adaptor,"rule blockdecl");
 
-		try { dbg.enterRule(getGrammarFileName(), "mutdecl");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(128, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:128:9: ( '@' blockdecl -> ^( MUTDECL blockdecl ) )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:128:11: '@' blockdecl
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:127:9: ( '@' blockdecl -> ^( MUTDECL blockdecl ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:127:11: '@' blockdecl
 			{
-			dbg.location(128,11);
-			char_literal97=(Token)match(input,39,FOLLOW_39_in_mutdecl839);  
+			char_literal97=(Token)match(input,39,FOLLOW_39_in_mutdecl837);  
 			stream_39.add(char_literal97);
-			dbg.location(128,15);
-			pushFollow(FOLLOW_blockdecl_in_mutdecl841);
+
+			pushFollow(FOLLOW_blockdecl_in_mutdecl839);
 			blockdecl98=blockdecl();
 			state._fsp--;
 
@@ -3769,16 +3038,13 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 128:25: -> ^( MUTDECL blockdecl )
+			root_0 = (SneakersAST)adaptor.nil();
+			// 127:25: -> ^( MUTDECL blockdecl )
 			{
-				dbg.location(128,28);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:128:28: ^( MUTDECL blockdecl )
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:127:28: ^( MUTDECL blockdecl )
 				{
-				CommonTree root_1 = (CommonTree)adaptor.nil();
-				dbg.location(128,30);
-				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(MUTDECL, "MUTDECL"), root_1);
-				dbg.location(128,38);
+				SneakersAST root_1 = (SneakersAST)adaptor.nil();
+				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(MUTDECL, "MUTDECL"), root_1);
 				adaptor.addChild(root_1, stream_blockdecl.nextTree());
 				adaptor.addChild(root_0, root_1);
 				}
@@ -3792,46 +3058,37 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(129, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "mutdecl");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "mutdecl"
 
 
 	public static class expr_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "expr"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:131:1: expr : ( index_expr | dict | fndecl | mutdecl | anonfn | array );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:130:1: expr : ( index_expr | dict | fndecl | mutdecl | anonfn | array );
 	public final SneakersParser.expr_return expr() throws RecognitionException {
 		SneakersParser.expr_return retval = new SneakersParser.expr_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		ParserRuleReturnScope index_expr99 =null;
 		ParserRuleReturnScope dict100 =null;
@@ -3841,16 +3098,9 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope array104 =null;
 
 
-		try { dbg.enterRule(getGrammarFileName(), "expr");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(131, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:131:6: ( index_expr | dict | fndecl | mutdecl | anonfn | array )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:130:6: ( index_expr | dict | fndecl | mutdecl | anonfn | array )
 			int alt25=6;
-			try { dbg.enterDecision(25, decisionCanBacktrack[25]);
-
 			switch ( input.LA(1) ) {
 			case ANONVAR:
 			case ID:
@@ -3858,6 +3108,7 @@ public class SneakersParser extends DebugParser {
 			case KEYWORD:
 			case MUTID:
 			case STRING:
+			case TYPEID:
 			case 30:
 				{
 				alt25=1;
@@ -3884,7 +3135,6 @@ public class SneakersParser extends DebugParser {
 						input.consume();
 						NoViableAltException nvae =
 							new NoViableAltException("", 25, 3, input);
-						dbg.recognitionException(nvae);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -3906,22 +3156,16 @@ public class SneakersParser extends DebugParser {
 			default:
 				NoViableAltException nvae =
 					new NoViableAltException("", 25, 0, input);
-				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-			} finally {dbg.exitDecision(25);}
-
 			switch (alt25) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:131:8: index_expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:130:8: index_expr
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(131,8);
-					pushFollow(FOLLOW_index_expr_in_expr859);
+					pushFollow(FOLLOW_index_expr_in_expr857);
 					index_expr99=index_expr();
 					state._fsp--;
 
@@ -3930,15 +3174,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:132:4: dict
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:131:4: dict
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(132,4);
-					pushFollow(FOLLOW_dict_in_expr864);
+					pushFollow(FOLLOW_dict_in_expr862);
 					dict100=dict();
 					state._fsp--;
 
@@ -3947,15 +3188,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 3 :
-					dbg.enterAlt(3);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:133:4: fndecl
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:132:4: fndecl
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(133,4);
-					pushFollow(FOLLOW_fndecl_in_expr869);
+					pushFollow(FOLLOW_fndecl_in_expr867);
 					fndecl101=fndecl();
 					state._fsp--;
 
@@ -3964,15 +3202,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 4 :
-					dbg.enterAlt(4);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:134:4: mutdecl
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:133:4: mutdecl
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(134,4);
-					pushFollow(FOLLOW_mutdecl_in_expr874);
+					pushFollow(FOLLOW_mutdecl_in_expr872);
 					mutdecl102=mutdecl();
 					state._fsp--;
 
@@ -3981,15 +3216,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 5 :
-					dbg.enterAlt(5);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:135:4: anonfn
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:134:4: anonfn
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(135,4);
-					pushFollow(FOLLOW_anonfn_in_expr879);
+					pushFollow(FOLLOW_anonfn_in_expr877);
 					anonfn103=anonfn();
 					state._fsp--;
 
@@ -3998,15 +3230,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 6 :
-					dbg.enterAlt(6);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:136:4: array
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:135:4: array
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(136,4);
-					pushFollow(FOLLOW_array_in_expr884);
+					pushFollow(FOLLOW_array_in_expr882);
 					array104=array();
 					state._fsp--;
 
@@ -4018,78 +3247,61 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(137, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "expr");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "expr"
 
 
 	public static class standalone_fncall_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "standalone_fncall"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:139:1: standalone_fncall : '(' fncall ')' -> fncall ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:138:1: standalone_fncall : '(' fncall ')' -> fncall ;
 	public final SneakersParser.standalone_fncall_return standalone_fncall() throws RecognitionException {
 		SneakersParser.standalone_fncall_return retval = new SneakersParser.standalone_fncall_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal105=null;
 		Token char_literal107=null;
 		ParserRuleReturnScope fncall106 =null;
 
-		CommonTree char_literal105_tree=null;
-		CommonTree char_literal107_tree=null;
+		SneakersAST char_literal105_tree=null;
+		SneakersAST char_literal107_tree=null;
 		RewriteRuleTokenStream stream_30=new RewriteRuleTokenStream(adaptor,"token 30");
 		RewriteRuleTokenStream stream_31=new RewriteRuleTokenStream(adaptor,"token 31");
 		RewriteRuleSubtreeStream stream_fncall=new RewriteRuleSubtreeStream(adaptor,"rule fncall");
 
-		try { dbg.enterRule(getGrammarFileName(), "standalone_fncall");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(139, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:140:2: ( '(' fncall ')' -> fncall )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:140:4: '(' fncall ')'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:139:2: ( '(' fncall ')' -> fncall )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:139:4: '(' fncall ')'
 			{
-			dbg.location(140,4);
-			char_literal105=(Token)match(input,30,FOLLOW_30_in_standalone_fncall895);  
+			char_literal105=(Token)match(input,30,FOLLOW_30_in_standalone_fncall893);  
 			stream_30.add(char_literal105);
-			dbg.location(140,8);
-			pushFollow(FOLLOW_fncall_in_standalone_fncall897);
+
+			pushFollow(FOLLOW_fncall_in_standalone_fncall895);
 			fncall106=fncall();
 			state._fsp--;
 
-			stream_fncall.add(fncall106.getTree());dbg.location(140,15);
-			char_literal107=(Token)match(input,31,FOLLOW_31_in_standalone_fncall899);  
+			stream_fncall.add(fncall106.getTree());
+			char_literal107=(Token)match(input,31,FOLLOW_31_in_standalone_fncall897);  
 			stream_31.add(char_literal107);
 
 			// AST REWRITE
@@ -4102,10 +3314,9 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 140:19: -> fncall
+			root_0 = (SneakersAST)adaptor.nil();
+			// 139:19: -> fncall
 			{
-				dbg.location(140,22);
 				adaptor.addChild(root_0, stream_fncall.nextTree());
 			}
 
@@ -4116,46 +3327,37 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(141, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "standalone_fncall");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "standalone_fncall"
 
 
 	public static class mutcall_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "mutcall"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:143:1: mutcall : ( '<' nested_id '>' -> nested_id | '<' fncall '>' -> fncall );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:142:1: mutcall : ( '<' nested_id '>' -> nested_id | '<' fncall '>' -> fncall );
 	public final SneakersParser.mutcall_return mutcall() throws RecognitionException {
 		SneakersParser.mutcall_return retval = new SneakersParser.mutcall_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal108=null;
 		Token char_literal110=null;
@@ -4164,51 +3366,32 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope nested_id109 =null;
 		ParserRuleReturnScope fncall112 =null;
 
-		CommonTree char_literal108_tree=null;
-		CommonTree char_literal110_tree=null;
-		CommonTree char_literal111_tree=null;
-		CommonTree char_literal113_tree=null;
+		SneakersAST char_literal108_tree=null;
+		SneakersAST char_literal110_tree=null;
+		SneakersAST char_literal111_tree=null;
+		SneakersAST char_literal113_tree=null;
 		RewriteRuleTokenStream stream_36=new RewriteRuleTokenStream(adaptor,"token 36");
 		RewriteRuleTokenStream stream_38=new RewriteRuleTokenStream(adaptor,"token 38");
 		RewriteRuleSubtreeStream stream_fncall=new RewriteRuleSubtreeStream(adaptor,"rule fncall");
 		RewriteRuleSubtreeStream stream_nested_id=new RewriteRuleSubtreeStream(adaptor,"rule nested_id");
 
-		try { dbg.enterRule(getGrammarFileName(), "mutcall");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(143, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:143:9: ( '<' nested_id '>' -> nested_id | '<' fncall '>' -> fncall )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:142:9: ( '<' nested_id '>' -> nested_id | '<' fncall '>' -> fncall )
 			int alt26=2;
-			try { dbg.enterDecision(26, decisionCanBacktrack[26]);
-
-			try {
-				isCyclicDecision = true;
-				alt26 = dfa26.predict(input);
-			}
-			catch (NoViableAltException nvae) {
-				dbg.recognitionException(nvae);
-				throw nvae;
-			}
-			} finally {dbg.exitDecision(26);}
-
+			alt26 = dfa26.predict(input);
 			switch (alt26) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:143:11: '<' nested_id '>'
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:142:11: '<' nested_id '>'
 					{
-					dbg.location(143,11);
-					char_literal108=(Token)match(input,36,FOLLOW_36_in_mutcall913);  
+					char_literal108=(Token)match(input,36,FOLLOW_36_in_mutcall911);  
 					stream_36.add(char_literal108);
-					dbg.location(143,15);
-					pushFollow(FOLLOW_nested_id_in_mutcall915);
+
+					pushFollow(FOLLOW_nested_id_in_mutcall913);
 					nested_id109=nested_id();
 					state._fsp--;
 
-					stream_nested_id.add(nested_id109.getTree());dbg.location(143,25);
-					char_literal110=(Token)match(input,38,FOLLOW_38_in_mutcall917);  
+					stream_nested_id.add(nested_id109.getTree());
+					char_literal110=(Token)match(input,38,FOLLOW_38_in_mutcall915);  
 					stream_38.add(char_literal110);
 
 					// AST REWRITE
@@ -4221,10 +3404,9 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 143:29: -> nested_id
+					root_0 = (SneakersAST)adaptor.nil();
+					// 142:29: -> nested_id
 					{
-						dbg.location(143,32);
 						adaptor.addChild(root_0, stream_nested_id.nextTree());
 					}
 
@@ -4234,20 +3416,17 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:144:4: '<' fncall '>'
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:143:4: '<' fncall '>'
 					{
-					dbg.location(144,4);
-					char_literal111=(Token)match(input,36,FOLLOW_36_in_mutcall926);  
+					char_literal111=(Token)match(input,36,FOLLOW_36_in_mutcall924);  
 					stream_36.add(char_literal111);
-					dbg.location(144,8);
-					pushFollow(FOLLOW_fncall_in_mutcall928);
+
+					pushFollow(FOLLOW_fncall_in_mutcall926);
 					fncall112=fncall();
 					state._fsp--;
 
-					stream_fncall.add(fncall112.getTree());dbg.location(144,15);
-					char_literal113=(Token)match(input,38,FOLLOW_38_in_mutcall930);  
+					stream_fncall.add(fncall112.getTree());
+					char_literal113=(Token)match(input,38,FOLLOW_38_in_mutcall928);  
 					stream_38.add(char_literal113);
 
 					// AST REWRITE
@@ -4260,10 +3439,9 @@ public class SneakersParser extends DebugParser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (CommonTree)adaptor.nil();
-					// 144:19: -> fncall
+					root_0 = (SneakersAST)adaptor.nil();
+					// 143:19: -> fncall
 					{
-						dbg.location(144,22);
 						adaptor.addChild(root_0, stream_fncall.nextTree());
 					}
 
@@ -4276,46 +3454,37 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(145, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "mutcall");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "mutcall"
 
 
 	public static class index_expr_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "index_expr"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:147:1: index_expr : ( KEYWORD | INT | STRING | nested_id | standalone_fncall );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:146:1: index_expr : ( KEYWORD | INT | STRING | nested_id | standalone_fncall );
 	public final SneakersParser.index_expr_return index_expr() throws RecognitionException {
 		SneakersParser.index_expr_return retval = new SneakersParser.index_expr_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token KEYWORD114=null;
 		Token INT115=null;
@@ -4323,20 +3492,13 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope nested_id117 =null;
 		ParserRuleReturnScope standalone_fncall118 =null;
 
-		CommonTree KEYWORD114_tree=null;
-		CommonTree INT115_tree=null;
-		CommonTree STRING116_tree=null;
-
-		try { dbg.enterRule(getGrammarFileName(), "index_expr");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(147, 0);
+		SneakersAST KEYWORD114_tree=null;
+		SneakersAST INT115_tree=null;
+		SneakersAST STRING116_tree=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:148:2: ( KEYWORD | INT | STRING | nested_id | standalone_fncall )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:147:2: ( KEYWORD | INT | STRING | nested_id | standalone_fncall )
 			int alt27=5;
-			try { dbg.enterDecision(27, decisionCanBacktrack[27]);
-
 			switch ( input.LA(1) ) {
 			case KEYWORD:
 				{
@@ -4356,6 +3518,7 @@ public class SneakersParser extends DebugParser {
 			case ANONVAR:
 			case ID:
 			case MUTID:
+			case TYPEID:
 				{
 				alt27=4;
 				}
@@ -4368,67 +3531,52 @@ public class SneakersParser extends DebugParser {
 			default:
 				NoViableAltException nvae =
 					new NoViableAltException("", 27, 0, input);
-				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-			} finally {dbg.exitDecision(27);}
-
 			switch (alt27) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:148:4: KEYWORD
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:147:4: KEYWORD
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(148,4);
-					KEYWORD114=(Token)match(input,KEYWORD,FOLLOW_KEYWORD_in_index_expr945); 
-					KEYWORD114_tree = (CommonTree)adaptor.create(KEYWORD114);
+					KEYWORD114=(Token)match(input,KEYWORD,FOLLOW_KEYWORD_in_index_expr943); 
+					KEYWORD114_tree = (SneakersAST)adaptor.create(KEYWORD114);
 					adaptor.addChild(root_0, KEYWORD114_tree);
 
 					}
 					break;
 				case 2 :
-					dbg.enterAlt(2);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:149:4: INT
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:148:4: INT
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(149,4);
-					INT115=(Token)match(input,INT,FOLLOW_INT_in_index_expr950); 
-					INT115_tree = (CommonTree)adaptor.create(INT115);
+					INT115=(Token)match(input,INT,FOLLOW_INT_in_index_expr948); 
+					INT115_tree = (SneakersAST)adaptor.create(INT115);
 					adaptor.addChild(root_0, INT115_tree);
 
 					}
 					break;
 				case 3 :
-					dbg.enterAlt(3);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:150:4: STRING
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:149:4: STRING
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(150,4);
-					STRING116=(Token)match(input,STRING,FOLLOW_STRING_in_index_expr955); 
-					STRING116_tree = (CommonTree)adaptor.create(STRING116);
+					STRING116=(Token)match(input,STRING,FOLLOW_STRING_in_index_expr953); 
+					STRING116_tree = (SneakersAST)adaptor.create(STRING116);
 					adaptor.addChild(root_0, STRING116_tree);
 
 					}
 					break;
 				case 4 :
-					dbg.enterAlt(4);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:151:4: nested_id
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:150:4: nested_id
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(151,4);
-					pushFollow(FOLLOW_nested_id_in_index_expr960);
+					pushFollow(FOLLOW_nested_id_in_index_expr958);
 					nested_id117=nested_id();
 					state._fsp--;
 
@@ -4437,15 +3585,12 @@ public class SneakersParser extends DebugParser {
 					}
 					break;
 				case 5 :
-					dbg.enterAlt(5);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:152:4: standalone_fncall
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:151:4: standalone_fncall
 					{
-					root_0 = (CommonTree)adaptor.nil();
+					root_0 = (SneakersAST)adaptor.nil();
 
 
-					dbg.location(152,4);
-					pushFollow(FOLLOW_standalone_fncall_in_index_expr965);
+					pushFollow(FOLLOW_standalone_fncall_in_index_expr963);
 					standalone_fncall118=standalone_fncall();
 					state._fsp--;
 
@@ -4457,77 +3602,60 @@ public class SneakersParser extends DebugParser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(153, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "index_expr");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "index_expr"
 
 
 	public static class dict_pair_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "dict_pair"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:155:1: dict_pair : index_expr '=>' expr -> index_expr expr ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:154:1: dict_pair : index_expr '=>' expr -> index_expr expr ;
 	public final SneakersParser.dict_pair_return dict_pair() throws RecognitionException {
 		SneakersParser.dict_pair_return retval = new SneakersParser.dict_pair_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token string_literal120=null;
 		ParserRuleReturnScope index_expr119 =null;
 		ParserRuleReturnScope expr121 =null;
 
-		CommonTree string_literal120_tree=null;
+		SneakersAST string_literal120_tree=null;
 		RewriteRuleTokenStream stream_37=new RewriteRuleTokenStream(adaptor,"token 37");
 		RewriteRuleSubtreeStream stream_index_expr=new RewriteRuleSubtreeStream(adaptor,"rule index_expr");
 		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,"rule expr");
 
-		try { dbg.enterRule(getGrammarFileName(), "dict_pair");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(155, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:156:2: ( index_expr '=>' expr -> index_expr expr )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:156:4: index_expr '=>' expr
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:155:2: ( index_expr '=>' expr -> index_expr expr )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:155:4: index_expr '=>' expr
 			{
-			dbg.location(156,4);
-			pushFollow(FOLLOW_index_expr_in_dict_pair977);
+			pushFollow(FOLLOW_index_expr_in_dict_pair975);
 			index_expr119=index_expr();
 			state._fsp--;
 
-			stream_index_expr.add(index_expr119.getTree());dbg.location(156,15);
-			string_literal120=(Token)match(input,37,FOLLOW_37_in_dict_pair979);  
+			stream_index_expr.add(index_expr119.getTree());
+			string_literal120=(Token)match(input,37,FOLLOW_37_in_dict_pair977);  
 			stream_37.add(string_literal120);
-			dbg.location(156,20);
-			pushFollow(FOLLOW_expr_in_dict_pair981);
+
+			pushFollow(FOLLOW_expr_in_dict_pair979);
 			expr121=expr();
 			state._fsp--;
 
@@ -4542,11 +3670,10 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 156:25: -> index_expr expr
+			root_0 = (SneakersAST)adaptor.nil();
+			// 155:25: -> index_expr expr
 			{
-				dbg.location(156,28);
-				adaptor.addChild(root_0, stream_index_expr.nextTree());dbg.location(156,39);
+				adaptor.addChild(root_0, stream_index_expr.nextTree());
 				adaptor.addChild(root_0, stream_expr.nextTree());
 			}
 
@@ -4557,46 +3684,37 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(157, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "dict_pair");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "dict_pair"
 
 
 	public static class dict_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "dict"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:159:1: dict : '{' ( dict_pair )? ( ',' dict_pair )* '}' -> ^( DICT ( dict_pair )* ) ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:1: dict : '{' ( dict_pair )? ( ',' dict_pair )* '}' -> ^( DICT ( dict_pair )* ) ;
 	public final SneakersParser.dict_return dict() throws RecognitionException {
 		SneakersParser.dict_return retval = new SneakersParser.dict_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal122=null;
 		Token char_literal124=null;
@@ -4604,48 +3722,32 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope dict_pair123 =null;
 		ParserRuleReturnScope dict_pair125 =null;
 
-		CommonTree char_literal122_tree=null;
-		CommonTree char_literal124_tree=null;
-		CommonTree char_literal126_tree=null;
+		SneakersAST char_literal122_tree=null;
+		SneakersAST char_literal124_tree=null;
+		SneakersAST char_literal126_tree=null;
 		RewriteRuleTokenStream stream_49=new RewriteRuleTokenStream(adaptor,"token 49");
 		RewriteRuleTokenStream stream_48=new RewriteRuleTokenStream(adaptor,"token 48");
 		RewriteRuleTokenStream stream_32=new RewriteRuleTokenStream(adaptor,"token 32");
 		RewriteRuleSubtreeStream stream_dict_pair=new RewriteRuleSubtreeStream(adaptor,"rule dict_pair");
 
-		try { dbg.enterRule(getGrammarFileName(), "dict");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(159, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:159:6: ( '{' ( dict_pair )? ( ',' dict_pair )* '}' -> ^( DICT ( dict_pair )* ) )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:159:8: '{' ( dict_pair )? ( ',' dict_pair )* '}'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:6: ( '{' ( dict_pair )? ( ',' dict_pair )* '}' -> ^( DICT ( dict_pair )* ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:8: '{' ( dict_pair )? ( ',' dict_pair )* '}'
 			{
-			dbg.location(159,8);
-			char_literal122=(Token)match(input,48,FOLLOW_48_in_dict997);  
+			char_literal122=(Token)match(input,48,FOLLOW_48_in_dict995);  
 			stream_48.add(char_literal122);
-			dbg.location(159,12);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:159:12: ( dict_pair )?
-			int alt28=2;
-			try { dbg.enterSubRule(28);
-			try { dbg.enterDecision(28, decisionCanBacktrack[28]);
 
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:12: ( dict_pair )?
+			int alt28=2;
 			int LA28_0 = input.LA(1);
-			if ( (LA28_0==ANONVAR||(LA28_0 >= ID && LA28_0 <= KEYWORD)||LA28_0==MUTID||LA28_0==STRING||LA28_0==30) ) {
+			if ( (LA28_0==ANONVAR||(LA28_0 >= ID && LA28_0 <= KEYWORD)||LA28_0==MUTID||(LA28_0 >= STRING && LA28_0 <= TYPEID)||LA28_0==30) ) {
 				alt28=1;
 			}
-			} finally {dbg.exitDecision(28);}
-
 			switch (alt28) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:159:13: dict_pair
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:13: dict_pair
 					{
-					dbg.location(159,13);
-					pushFollow(FOLLOW_dict_pair_in_dict1000);
+					pushFollow(FOLLOW_dict_pair_in_dict998);
 					dict_pair123=dict_pair();
 					state._fsp--;
 
@@ -4654,34 +3756,24 @@ public class SneakersParser extends DebugParser {
 					break;
 
 			}
-			} finally {dbg.exitSubRule(28);}
-			dbg.location(159,25);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:159:25: ( ',' dict_pair )*
-			try { dbg.enterSubRule(29);
 
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:25: ( ',' dict_pair )*
 			loop29:
 			while (true) {
 				int alt29=2;
-				try { dbg.enterDecision(29, decisionCanBacktrack[29]);
-
 				int LA29_0 = input.LA(1);
 				if ( (LA29_0==32) ) {
 					alt29=1;
 				}
 
-				} finally {dbg.exitDecision(29);}
-
 				switch (alt29) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:159:26: ',' dict_pair
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:26: ',' dict_pair
 					{
-					dbg.location(159,26);
-					char_literal124=(Token)match(input,32,FOLLOW_32_in_dict1005);  
+					char_literal124=(Token)match(input,32,FOLLOW_32_in_dict1003);  
 					stream_32.add(char_literal124);
-					dbg.location(159,30);
-					pushFollow(FOLLOW_dict_pair_in_dict1007);
+
+					pushFollow(FOLLOW_dict_pair_in_dict1005);
 					dict_pair125=dict_pair();
 					state._fsp--;
 
@@ -4693,9 +3785,8 @@ public class SneakersParser extends DebugParser {
 					break loop29;
 				}
 			}
-			} finally {dbg.exitSubRule(29);}
-			dbg.location(159,42);
-			char_literal126=(Token)match(input,49,FOLLOW_49_in_dict1011);  
+
+			char_literal126=(Token)match(input,49,FOLLOW_49_in_dict1009);  
 			stream_49.add(char_literal126);
 
 			// AST REWRITE
@@ -4708,19 +3799,15 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 159:46: -> ^( DICT ( dict_pair )* )
+			root_0 = (SneakersAST)adaptor.nil();
+			// 158:46: -> ^( DICT ( dict_pair )* )
 			{
-				dbg.location(159,49);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:159:49: ^( DICT ( dict_pair )* )
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:49: ^( DICT ( dict_pair )* )
 				{
-				CommonTree root_1 = (CommonTree)adaptor.nil();
-				dbg.location(159,51);
-				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(DICT, "DICT"), root_1);
-				dbg.location(159,56);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:159:56: ( dict_pair )*
+				SneakersAST root_1 = (SneakersAST)adaptor.nil();
+				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(DICT, "DICT"), root_1);
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:56: ( dict_pair )*
 				while ( stream_dict_pair.hasNext() ) {
-					dbg.location(159,56);
 					adaptor.addChild(root_1, stream_dict_pair.nextTree());
 				}
 				stream_dict_pair.reset();
@@ -4737,78 +3824,61 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(160, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "dict");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "dict"
 
 
 	public static class contained_block_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "contained_block"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:162:1: contained_block : '[' block ']' -> block ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:161:1: contained_block : '[' block ']' -> block ;
 	public final SneakersParser.contained_block_return contained_block() throws RecognitionException {
 		SneakersParser.contained_block_return retval = new SneakersParser.contained_block_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal127=null;
 		Token char_literal129=null;
 		ParserRuleReturnScope block128 =null;
 
-		CommonTree char_literal127_tree=null;
-		CommonTree char_literal129_tree=null;
+		SneakersAST char_literal127_tree=null;
+		SneakersAST char_literal129_tree=null;
 		RewriteRuleTokenStream stream_41=new RewriteRuleTokenStream(adaptor,"token 41");
 		RewriteRuleTokenStream stream_40=new RewriteRuleTokenStream(adaptor,"token 40");
 		RewriteRuleSubtreeStream stream_block=new RewriteRuleSubtreeStream(adaptor,"rule block");
 
-		try { dbg.enterRule(getGrammarFileName(), "contained_block");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(162, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:163:2: ( '[' block ']' -> block )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:163:4: '[' block ']'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:162:2: ( '[' block ']' -> block )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:162:4: '[' block ']'
 			{
-			dbg.location(163,4);
-			char_literal127=(Token)match(input,40,FOLLOW_40_in_contained_block1033);  
+			char_literal127=(Token)match(input,40,FOLLOW_40_in_contained_block1031);  
 			stream_40.add(char_literal127);
-			dbg.location(163,8);
-			pushFollow(FOLLOW_block_in_contained_block1035);
+
+			pushFollow(FOLLOW_block_in_contained_block1033);
 			block128=block();
 			state._fsp--;
 
-			stream_block.add(block128.getTree());dbg.location(163,14);
-			char_literal129=(Token)match(input,41,FOLLOW_41_in_contained_block1037);  
+			stream_block.add(block128.getTree());
+			char_literal129=(Token)match(input,41,FOLLOW_41_in_contained_block1035);  
 			stream_41.add(char_literal129);
 
 			// AST REWRITE
@@ -4821,10 +3891,9 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 163:18: -> block
+			root_0 = (SneakersAST)adaptor.nil();
+			// 162:18: -> block
 			{
-				dbg.location(163,21);
 				adaptor.addChild(root_0, stream_block.nextTree());
 			}
 
@@ -4835,46 +3904,37 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(164, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "contained_block");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "contained_block"
 
 
 	public static class array_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "array"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:166:1: array : '[' ( expr )? ( ',' expr )* ']' -> ^( ARRAY ( expr )* ) ;
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:1: array : '[' ( expr )? ( ',' expr )* ']' -> ^( ARRAY ( expr )* ) ;
 	public final SneakersParser.array_return array() throws RecognitionException {
 		SneakersParser.array_return retval = new SneakersParser.array_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token char_literal130=null;
 		Token char_literal132=null;
@@ -4882,48 +3942,32 @@ public class SneakersParser extends DebugParser {
 		ParserRuleReturnScope expr131 =null;
 		ParserRuleReturnScope expr133 =null;
 
-		CommonTree char_literal130_tree=null;
-		CommonTree char_literal132_tree=null;
-		CommonTree char_literal134_tree=null;
+		SneakersAST char_literal130_tree=null;
+		SneakersAST char_literal132_tree=null;
+		SneakersAST char_literal134_tree=null;
 		RewriteRuleTokenStream stream_41=new RewriteRuleTokenStream(adaptor,"token 41");
 		RewriteRuleTokenStream stream_32=new RewriteRuleTokenStream(adaptor,"token 32");
 		RewriteRuleTokenStream stream_40=new RewriteRuleTokenStream(adaptor,"token 40");
 		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,"rule expr");
 
-		try { dbg.enterRule(getGrammarFileName(), "array");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(166, 0);
-
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:166:7: ( '[' ( expr )? ( ',' expr )* ']' -> ^( ARRAY ( expr )* ) )
-			dbg.enterAlt(1);
-
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:166:9: '[' ( expr )? ( ',' expr )* ']'
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:7: ( '[' ( expr )? ( ',' expr )* ']' -> ^( ARRAY ( expr )* ) )
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:9: '[' ( expr )? ( ',' expr )* ']'
 			{
-			dbg.location(166,9);
-			char_literal130=(Token)match(input,40,FOLLOW_40_in_array1051);  
+			char_literal130=(Token)match(input,40,FOLLOW_40_in_array1049);  
 			stream_40.add(char_literal130);
-			dbg.location(166,13);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:166:13: ( expr )?
-			int alt30=2;
-			try { dbg.enterSubRule(30);
-			try { dbg.enterDecision(30, decisionCanBacktrack[30]);
 
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:13: ( expr )?
+			int alt30=2;
 			int LA30_0 = input.LA(1);
-			if ( (LA30_0==ANONVAR||(LA30_0 >= ID && LA30_0 <= KEYWORD)||LA30_0==MUTID||LA30_0==STRING||(LA30_0 >= 29 && LA30_0 <= 30)||(LA30_0 >= 39 && LA30_0 <= 40)||LA30_0==48) ) {
+			if ( (LA30_0==ANONVAR||(LA30_0 >= ID && LA30_0 <= KEYWORD)||LA30_0==MUTID||(LA30_0 >= STRING && LA30_0 <= TYPEID)||(LA30_0 >= 29 && LA30_0 <= 30)||(LA30_0 >= 39 && LA30_0 <= 40)||LA30_0==48) ) {
 				alt30=1;
 			}
-			} finally {dbg.exitDecision(30);}
-
 			switch (alt30) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:166:13: expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:13: expr
 					{
-					dbg.location(166,13);
-					pushFollow(FOLLOW_expr_in_array1053);
+					pushFollow(FOLLOW_expr_in_array1051);
 					expr131=expr();
 					state._fsp--;
 
@@ -4932,34 +3976,24 @@ public class SneakersParser extends DebugParser {
 					break;
 
 			}
-			} finally {dbg.exitSubRule(30);}
-			dbg.location(166,19);
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:166:19: ( ',' expr )*
-			try { dbg.enterSubRule(31);
 
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:19: ( ',' expr )*
 			loop31:
 			while (true) {
 				int alt31=2;
-				try { dbg.enterDecision(31, decisionCanBacktrack[31]);
-
 				int LA31_0 = input.LA(1);
 				if ( (LA31_0==32) ) {
 					alt31=1;
 				}
 
-				} finally {dbg.exitDecision(31);}
-
 				switch (alt31) {
 				case 1 :
-					dbg.enterAlt(1);
-
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:166:20: ',' expr
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:20: ',' expr
 					{
-					dbg.location(166,20);
-					char_literal132=(Token)match(input,32,FOLLOW_32_in_array1057);  
+					char_literal132=(Token)match(input,32,FOLLOW_32_in_array1055);  
 					stream_32.add(char_literal132);
-					dbg.location(166,24);
-					pushFollow(FOLLOW_expr_in_array1059);
+
+					pushFollow(FOLLOW_expr_in_array1057);
 					expr133=expr();
 					state._fsp--;
 
@@ -4971,9 +4005,8 @@ public class SneakersParser extends DebugParser {
 					break loop31;
 				}
 			}
-			} finally {dbg.exitSubRule(31);}
-			dbg.location(166,31);
-			char_literal134=(Token)match(input,41,FOLLOW_41_in_array1063);  
+
+			char_literal134=(Token)match(input,41,FOLLOW_41_in_array1061);  
 			stream_41.add(char_literal134);
 
 			// AST REWRITE
@@ -4986,19 +4019,15 @@ public class SneakersParser extends DebugParser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (CommonTree)adaptor.nil();
-			// 166:35: -> ^( ARRAY ( expr )* )
+			root_0 = (SneakersAST)adaptor.nil();
+			// 165:35: -> ^( ARRAY ( expr )* )
 			{
-				dbg.location(166,38);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:166:38: ^( ARRAY ( expr )* )
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:38: ^( ARRAY ( expr )* )
 				{
-				CommonTree root_1 = (CommonTree)adaptor.nil();
-				dbg.location(166,40);
-				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(ARRAY, "ARRAY"), root_1);
-				dbg.location(166,46);
-				// /Users/eli/dev/Sneakers-Java/Sneakers.g:166:46: ( expr )*
+				SneakersAST root_1 = (SneakersAST)adaptor.nil();
+				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(ARRAY, "ARRAY"), root_1);
+				// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:46: ( expr )*
 				while ( stream_expr.hasNext() ) {
-					dbg.location(166,46);
 					adaptor.addChild(root_1, stream_expr.nextTree());
 				}
 				stream_expr.reset();
@@ -5015,102 +4044,75 @@ public class SneakersParser extends DebugParser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(167, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "array");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "array"
 
 
 	public static class any_id_return extends ParserRuleReturnScope {
-		CommonTree tree;
+		SneakersAST tree;
 		@Override
-		public CommonTree getTree() { return tree; }
+		public SneakersAST getTree() { return tree; }
 	};
 
 
 	// $ANTLR start "any_id"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:186:1: any_id : ( ID | MUTID );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:184:1: any_id : ( ID | MUTID | TYPEID );
 	public final SneakersParser.any_id_return any_id() throws RecognitionException {
 		SneakersParser.any_id_return retval = new SneakersParser.any_id_return();
 		retval.start = input.LT(1);
 
-		CommonTree root_0 = null;
+		SneakersAST root_0 = null;
 
 		Token set135=null;
 
-		CommonTree set135_tree=null;
-
-		try { dbg.enterRule(getGrammarFileName(), "any_id");
-		if ( getRuleLevel()==0 ) {dbg.commence();}
-		incRuleLevel();
-		dbg.location(186, 0);
+		SneakersAST set135_tree=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:187:2: ( ID | MUTID )
-			dbg.enterAlt(1);
-
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:185:2: ( ID | MUTID | TYPEID )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:
 			{
-			root_0 = (CommonTree)adaptor.nil();
+			root_0 = (SneakersAST)adaptor.nil();
 
 
-			dbg.location(187,2);
 			set135=input.LT(1);
-			if ( input.LA(1)==ID||input.LA(1)==MUTID ) {
+			if ( input.LA(1)==ID||input.LA(1)==MUTID||input.LA(1)==TYPEID ) {
 				input.consume();
-				adaptor.addChild(root_0, (CommonTree)adaptor.create(set135));
+				adaptor.addChild(root_0, (SneakersAST)adaptor.create(set135));
 				state.errorRecovery=false;
 			}
 			else {
 				MismatchedSetException mse = new MismatchedSetException(null,input);
-				dbg.recognitionException(mse);
 				throw mse;
 			}
 			}
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(189, 1);
-
-		}
-		finally {
-			dbg.exitRule(getGrammarFileName(), "any_id");
-			decRuleLevel();
-			if ( getRuleLevel()==0 ) {dbg.terminate();}
-		}
-
 		return retval;
 	}
 	// $ANTLR end "any_id"
@@ -5129,26 +4131,26 @@ public class SneakersParser extends DebugParser {
 	static final String DFA3_minS =
 		"\1\57\3\5\1\uffff\1\21\1\uffff\1\21\2\5";
 	static final String DFA3_maxS =
-		"\1\57\3\60\1\uffff\1\26\1\uffff\1\26\2\60";
+		"\1\57\3\60\1\uffff\1\33\1\uffff\1\33\2\60";
 	static final String DFA3_acceptS =
 		"\4\uffff\1\2\1\uffff\1\1\3\uffff";
 	static final String DFA3_specialS =
 		"\12\uffff}>";
 	static final String[] DFA3_transitionS = {
 			"\1\1",
-			"\1\2\13\uffff\1\3\2\4\2\uffff\1\3\4\uffff\1\4\1\uffff\2\4\10\uffff\2"+
-			"\4\7\uffff\1\4",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\5\1"+
+			"\1\2\13\uffff\1\3\2\4\1\uffff\1\3\4\uffff\1\4\1\3\1\uffff\2\4\10\uffff"+
+			"\2\4\7\uffff\1\4",
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\5\1"+
 			"\uffff\1\4\3\uffff\2\6\7\uffff\1\6",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\7\1"+
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\7\1"+
 			"\uffff\1\4\3\uffff\2\6\7\uffff\1\6",
 			"",
-			"\1\10\4\uffff\1\10",
+			"\1\10\3\uffff\1\10\5\uffff\1\10",
 			"",
-			"\1\11\4\uffff\1\11",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\5\1"+
+			"\1\11\3\uffff\1\11\5\uffff\1\11",
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\5\1"+
 			"\uffff\1\4\3\uffff\2\6\7\uffff\1\6",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\7\1"+
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\7\1"+
 			"\uffff\1\4\3\uffff\2\6\7\uffff\1\6"
 	};
 
@@ -5183,10 +4185,7 @@ public class SneakersParser extends DebugParser {
 		}
 		@Override
 		public String getDescription() {
-			return "60:1: returnstat : ( 'return' fncall -> ^( RET fncall ) | 'return' expr -> ^( RET expr ) );";
-		}
-		public void error(NoViableAltException nvae) {
-			dbg.recognitionException(nvae);
+			return "59:1: returnstat : ( 'return' fncall -> ^( RET fncall ) | 'return' expr -> ^( RET expr ) );";
 		}
 	}
 
@@ -5197,35 +4196,35 @@ public class SneakersParser extends DebugParser {
 	static final String DFA8_minS =
 		"\1\21\2\7\2\5\1\uffff\1\5\1\uffff\2\5\1\21\1\uffff\2\21\1\uffff\2\5";
 	static final String DFA8_maxS =
-		"\1\26\2\7\2\60\1\uffff\1\60\1\uffff\2\60\1\54\1\uffff\2\26\1\uffff\2\60";
+		"\1\33\2\7\2\60\1\uffff\1\60\1\uffff\2\60\1\54\1\uffff\2\33\1\uffff\2\60";
 	static final String DFA8_acceptS =
 		"\5\uffff\1\1\1\uffff\1\3\3\uffff\1\4\2\uffff\1\2\2\uffff";
 	static final String DFA8_specialS =
 		"\21\uffff}>";
 	static final String[] DFA8_transitionS = {
-			"\1\1\4\uffff\1\2",
+			"\1\2\3\uffff\1\2\5\uffff\1\1",
 			"\1\3",
 			"\1\4",
-			"\1\10\4\uffff\1\5\6\uffff\1\6\2\7\2\uffff\1\11\4\uffff\1\7\1\uffff\2"+
-			"\7\10\uffff\2\7\7\uffff\1\7",
-			"\1\10\13\uffff\1\11\2\7\2\uffff\1\11\4\uffff\1\7\1\uffff\2\7\10\uffff"+
-			"\2\7\7\uffff\1\7",
+			"\1\10\4\uffff\1\5\6\uffff\1\11\2\7\1\uffff\1\11\4\uffff\1\7\1\6\1\uffff"+
+			"\2\7\10\uffff\2\7\7\uffff\1\7",
+			"\1\10\13\uffff\1\11\2\7\1\uffff\1\11\4\uffff\1\7\1\11\1\uffff\2\7\10"+
+			"\uffff\2\7\7\uffff\1\7",
 			"",
-			"\1\13\13\uffff\3\13\2\uffff\1\13\4\uffff\1\13\1\uffff\2\13\2\uffff\1"+
+			"\1\13\13\uffff\3\13\1\uffff\1\13\4\uffff\2\13\1\uffff\2\13\2\uffff\1"+
 			"\12\1\uffff\1\7\3\uffff\2\13\7\uffff\1\13",
 			"",
-			"\1\13\13\uffff\3\13\2\uffff\1\13\4\uffff\1\13\1\uffff\2\13\2\uffff\1"+
+			"\1\13\13\uffff\3\13\1\uffff\1\13\4\uffff\2\13\1\uffff\2\13\2\uffff\1"+
 			"\14\1\uffff\1\7\3\uffff\2\13\7\uffff\1\13",
-			"\1\13\13\uffff\3\13\2\uffff\1\13\4\uffff\1\13\1\uffff\2\13\2\uffff\1"+
+			"\1\13\13\uffff\3\13\1\uffff\1\13\4\uffff\2\13\1\uffff\2\13\2\uffff\1"+
 			"\15\1\uffff\1\7\3\uffff\2\13\7\uffff\1\13",
-			"\1\17\4\uffff\1\17\25\uffff\1\16",
+			"\1\17\3\uffff\1\17\5\uffff\1\17\20\uffff\1\16",
 			"",
-			"\1\20\4\uffff\1\20",
-			"\1\17\4\uffff\1\17",
+			"\1\20\3\uffff\1\20\5\uffff\1\20",
+			"\1\17\3\uffff\1\17\5\uffff\1\17",
 			"",
-			"\1\13\13\uffff\3\13\2\uffff\1\13\4\uffff\1\13\1\uffff\2\13\2\uffff\1"+
+			"\1\13\13\uffff\3\13\1\uffff\1\13\4\uffff\2\13\1\uffff\2\13\2\uffff\1"+
 			"\15\1\uffff\1\7\3\uffff\2\13\7\uffff\1\13",
-			"\1\13\13\uffff\3\13\2\uffff\1\13\4\uffff\1\13\1\uffff\2\13\2\uffff\1"+
+			"\1\13\13\uffff\3\13\1\uffff\1\13\4\uffff\2\13\1\uffff\2\13\2\uffff\1"+
 			"\14\1\uffff\1\7\3\uffff\2\13\7\uffff\1\13"
 	};
 
@@ -5260,10 +4259,7 @@ public class SneakersParser extends DebugParser {
 		}
 		@Override
 		public String getDescription() {
-			return "73:1: assignment : ( ID '=' 'class' classdef -> ^( 'class' ID classdef ) |newclass= ID '=' oldclass= ID '.' 'extend' classdef -> ^( 'extend' $newclass $oldclass classdef ) | any_id '=' expr -> ^( '=' any_id expr ) | any_id '=' fncall -> ^( '=' any_id fncall ) );";
-		}
-		public void error(NoViableAltException nvae) {
-			dbg.recognitionException(nvae);
+			return "72:1: assignment : ( TYPEID '=' 'class' classdef -> ^( 'class' TYPEID classdef ) |newclass= TYPEID '=' oldclass= TYPEID '.' 'extend' classdef -> ^( 'extend' $newclass $oldclass classdef ) | any_id '=' expr -> ^( '=' any_id expr ) | any_id '=' fncall -> ^( '=' any_id fncall ) );";
 		}
 	}
 
@@ -5274,7 +4270,7 @@ public class SneakersParser extends DebugParser {
 	static final String DFA19_minS =
 		"\1\35\1\50\3\5\1\21\2\uffff\1\21\2\5";
 	static final String DFA19_maxS =
-		"\1\35\1\50\1\26\2\60\1\26\2\uffff\1\26\2\60";
+		"\1\35\1\50\1\33\2\60\1\33\2\uffff\1\33\2\60";
 	static final String DFA19_acceptS =
 		"\6\uffff\1\1\1\2\3\uffff";
 	static final String DFA19_specialS =
@@ -5282,18 +4278,18 @@ public class SneakersParser extends DebugParser {
 	static final String[] DFA19_transitionS = {
 			"\1\1",
 			"\1\2",
-			"\1\3\13\uffff\1\4\4\uffff\1\4",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\5\5"+
+			"\1\3\13\uffff\1\4\3\uffff\1\4\5\uffff\1\4",
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\5\5"+
 			"\uffff\2\6\1\7\6\uffff\1\6",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\10\5"+
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\10\5"+
 			"\uffff\2\6\1\7\6\uffff\1\6",
-			"\1\11\4\uffff\1\11",
+			"\1\11\3\uffff\1\11\5\uffff\1\11",
 			"",
 			"",
-			"\1\12\4\uffff\1\12",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\5\5"+
+			"\1\12\3\uffff\1\12\5\uffff\1\12",
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\5\5"+
 			"\uffff\2\6\1\7\6\uffff\1\6",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\10\5"+
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\10\5"+
 			"\uffff\2\6\1\7\6\uffff\1\6"
 	};
 
@@ -5328,10 +4324,7 @@ public class SneakersParser extends DebugParser {
 		}
 		@Override
 		public String getDescription() {
-			return "116:1: anonfn : ( '#' '[' fncall ']' -> ^( ANONFN fncall ) | '#' '[' nested_id ']' -> ^( ANONFN nested_id ) );";
-		}
-		public void error(NoViableAltException nvae) {
-			dbg.recognitionException(nvae);
+			return "115:1: anonfn : ( '#' '[' fncall ']' -> ^( ANONFN fncall ) | '#' '[' nested_id ']' -> ^( ANONFN nested_id ) );";
 		}
 	}
 
@@ -5342,25 +4335,25 @@ public class SneakersParser extends DebugParser {
 	static final String DFA26_minS =
 		"\1\44\3\5\1\21\2\uffff\1\21\2\5";
 	static final String DFA26_maxS =
-		"\1\44\1\26\2\60\1\26\2\uffff\1\26\2\60";
+		"\1\44\1\33\2\60\1\33\2\uffff\1\33\2\60";
 	static final String DFA26_acceptS =
 		"\5\uffff\1\1\1\2\3\uffff";
 	static final String DFA26_specialS =
 		"\12\uffff}>";
 	static final String[] DFA26_transitionS = {
 			"\1\1",
-			"\1\2\13\uffff\1\3\4\uffff\1\3",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\4\4"+
+			"\1\2\13\uffff\1\3\3\uffff\1\3\5\uffff\1\3",
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\4\4"+
 			"\uffff\1\5\2\6\7\uffff\1\6",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\7\4"+
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\7\4"+
 			"\uffff\1\5\2\6\7\uffff\1\6",
-			"\1\10\4\uffff\1\10",
+			"\1\10\3\uffff\1\10\5\uffff\1\10",
 			"",
 			"",
-			"\1\11\4\uffff\1\11",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\4\4"+
+			"\1\11\3\uffff\1\11\5\uffff\1\11",
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\4\4"+
 			"\uffff\1\5\2\6\7\uffff\1\6",
-			"\1\6\13\uffff\3\6\2\uffff\1\6\4\uffff\1\6\1\uffff\2\6\2\uffff\1\7\4"+
+			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\7\4"+
 			"\uffff\1\5\2\6\7\uffff\1\6"
 	};
 
@@ -5395,152 +4388,149 @@ public class SneakersParser extends DebugParser {
 		}
 		@Override
 		public String getDescription() {
-			return "143:1: mutcall : ( '<' nested_id '>' -> nested_id | '<' fncall '>' -> fncall );";
-		}
-		public void error(NoViableAltException nvae) {
-			dbg.recognitionException(nvae);
+			return "142:1: mutcall : ( '<' nested_id '>' -> nested_id | '<' fncall '>' -> fncall );";
 		}
 	}
 
-	public static final BitSet FOLLOW_block_in_prog143 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_stat_in_block155 = new BitSet(new long[]{0x0000000800000000L});
-	public static final BitSet FOLLOW_35_in_block157 = new BitSet(new long[]{0x0000E01000420002L});
-	public static final BitSet FOLLOW_assignment_in_stat176 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ifstat_in_stat181 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_returnstat_in_stat186 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_mutcall_in_stat191 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_46_in_stat196 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_47_in_returnstat207 = new BitSet(new long[]{0x0000000000420020L});
-	public static final BitSet FOLLOW_fncall_in_returnstat209 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_47_in_returnstat222 = new BitSet(new long[]{0x00010180684E0020L});
-	public static final BitSet FOLLOW_expr_in_returnstat224 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_45_in_ifstat242 = new BitSet(new long[]{0x00010180684E0020L});
-	public static final BitSet FOLLOW_expr_in_ifstat246 = new BitSet(new long[]{0x0000010000000000L});
-	public static final BitSet FOLLOW_contained_block_in_ifstat250 = new BitSet(new long[]{0x00000C0000000002L});
-	public static final BitSet FOLLOW_43_in_ifstat256 = new BitSet(new long[]{0x00010180684E0020L});
-	public static final BitSet FOLLOW_expr_in_ifstat260 = new BitSet(new long[]{0x0000010000000000L});
-	public static final BitSet FOLLOW_contained_block_in_ifstat264 = new BitSet(new long[]{0x00000C0000000002L});
-	public static final BitSet FOLLOW_42_in_ifstat272 = new BitSet(new long[]{0x0000010000000000L});
-	public static final BitSet FOLLOW_contained_block_in_ifstat276 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_48_in_classdef312 = new BitSet(new long[]{0x0002000100080000L});
-	public static final BitSet FOLLOW_fielddef_in_classdef315 = new BitSet(new long[]{0x0002000100000000L});
-	public static final BitSet FOLLOW_32_in_classdef320 = new BitSet(new long[]{0x0000000000080000L});
-	public static final BitSet FOLLOW_fielddef_in_classdef322 = new BitSet(new long[]{0x0002000100000000L});
-	public static final BitSet FOLLOW_49_in_classdef326 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ID_in_assignment342 = new BitSet(new long[]{0x0000000000000080L});
-	public static final BitSet FOLLOW_ASSIGN_in_assignment344 = new BitSet(new long[]{0x0000000000000400L});
-	public static final BitSet FOLLOW_CLASSDEF_in_assignment346 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_classdef_in_assignment348 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ID_in_assignment365 = new BitSet(new long[]{0x0000000000000080L});
-	public static final BitSet FOLLOW_ASSIGN_in_assignment367 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_ID_in_assignment371 = new BitSet(new long[]{0x0000000200000000L});
-	public static final BitSet FOLLOW_33_in_assignment373 = new BitSet(new long[]{0x0000100000000000L});
-	public static final BitSet FOLLOW_44_in_assignment375 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_classdef_in_assignment377 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_any_id_in_assignment396 = new BitSet(new long[]{0x0000000000000080L});
-	public static final BitSet FOLLOW_ASSIGN_in_assignment398 = new BitSet(new long[]{0x00010180684E0020L});
-	public static final BitSet FOLLOW_expr_in_assignment400 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_any_id_in_assignment415 = new BitSet(new long[]{0x0000000000000080L});
-	public static final BitSet FOLLOW_ASSIGN_in_assignment417 = new BitSet(new long[]{0x0000000000420020L});
-	public static final BitSet FOLLOW_fncall_in_assignment419 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_paramtype_in_defable440 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_fndecl_in_defable445 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_mutdecl_in_defable450 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_KEYWORD_in_fielddef462 = new BitSet(new long[]{0x0000002000000000L});
-	public static final BitSet FOLLOW_37_in_fielddef464 = new BitSet(new long[]{0x0000008020020000L});
-	public static final BitSet FOLLOW_defable_in_fielddef466 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ANONVAR_in_nested_id489 = new BitSet(new long[]{0x0000000200000002L});
-	public static final BitSet FOLLOW_33_in_nested_id492 = new BitSet(new long[]{0x0000000000420000L});
-	public static final BitSet FOLLOW_any_id_in_nested_id494 = new BitSet(new long[]{0x0000000200000002L});
-	public static final BitSet FOLLOW_any_id_in_nested_id508 = new BitSet(new long[]{0x0000000200000002L});
-	public static final BitSet FOLLOW_33_in_nested_id511 = new BitSet(new long[]{0x0000000000420000L});
-	public static final BitSet FOLLOW_any_id_in_nested_id513 = new BitSet(new long[]{0x0000000200000002L});
-	public static final BitSet FOLLOW_nested_id_in_fncall530 = new BitSet(new long[]{0x00010180684E0020L});
-	public static final BitSet FOLLOW_param_in_fncall532 = new BitSet(new long[]{0x00010181684E0022L});
-	public static final BitSet FOLLOW_32_in_fncall535 = new BitSet(new long[]{0x00010180684E0020L});
-	public static final BitSet FOLLOW_param_in_fncall538 = new BitSet(new long[]{0x00010181684E0022L});
-	public static final BitSet FOLLOW_ID_in_param561 = new BitSet(new long[]{0x0000000400000000L});
-	public static final BitSet FOLLOW_34_in_param563 = new BitSet(new long[]{0x00010180684E0020L});
-	public static final BitSet FOLLOW_expr_in_param565 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expr_in_param580 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_30_in_blockparamtype600 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_ID_in_blockparamtype602 = new BitSet(new long[]{0x0000000180000000L});
-	public static final BitSet FOLLOW_32_in_blockparamtype605 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_ID_in_blockparamtype607 = new BitSet(new long[]{0x0000000180000000L});
-	public static final BitSet FOLLOW_31_in_blockparamtype611 = new BitSet(new long[]{0x0000000400000000L});
-	public static final BitSet FOLLOW_34_in_blockparamtype613 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_ID_in_blockparamtype615 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_30_in_blockparamtype625 = new BitSet(new long[]{0x0000000080000000L});
-	public static final BitSet FOLLOW_31_in_blockparamtype627 = new BitSet(new long[]{0x0000000400000000L});
-	public static final BitSet FOLLOW_34_in_blockparamtype629 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_ID_in_blockparamtype631 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ID_in_paramtype646 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_29_in_paramtype651 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_blockparamtype_in_paramtype653 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_39_in_paramtype666 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_blockparamtype_in_paramtype668 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ID_in_fnparam687 = new BitSet(new long[]{0x0000000400000000L});
-	public static final BitSet FOLLOW_34_in_fnparam689 = new BitSet(new long[]{0x0000008020020000L});
-	public static final BitSet FOLLOW_paramtype_in_fnparam691 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_29_in_anonfn711 = new BitSet(new long[]{0x0000010000000000L});
-	public static final BitSet FOLLOW_40_in_anonfn713 = new BitSet(new long[]{0x0000000000420020L});
-	public static final BitSet FOLLOW_fncall_in_anonfn715 = new BitSet(new long[]{0x0000020000000000L});
-	public static final BitSet FOLLOW_41_in_anonfn717 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_29_in_anonfn730 = new BitSet(new long[]{0x0000010000000000L});
-	public static final BitSet FOLLOW_40_in_anonfn732 = new BitSet(new long[]{0x0000000000420020L});
-	public static final BitSet FOLLOW_nested_id_in_anonfn734 = new BitSet(new long[]{0x0000020000000000L});
-	public static final BitSet FOLLOW_41_in_anonfn736 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_30_in_blockdecl755 = new BitSet(new long[]{0x0000000080000000L});
-	public static final BitSet FOLLOW_31_in_blockdecl757 = new BitSet(new long[]{0x0000010400000000L});
-	public static final BitSet FOLLOW_34_in_blockdecl760 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_ID_in_blockdecl762 = new BitSet(new long[]{0x0000010000000000L});
-	public static final BitSet FOLLOW_contained_block_in_blockdecl766 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_30_in_blockdecl778 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_fnparam_in_blockdecl780 = new BitSet(new long[]{0x0000000180020000L});
-	public static final BitSet FOLLOW_32_in_blockdecl783 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_fnparam_in_blockdecl786 = new BitSet(new long[]{0x0000000180020000L});
-	public static final BitSet FOLLOW_31_in_blockdecl790 = new BitSet(new long[]{0x0000010400000000L});
-	public static final BitSet FOLLOW_34_in_blockdecl793 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_ID_in_blockdecl795 = new BitSet(new long[]{0x0000010000000000L});
-	public static final BitSet FOLLOW_contained_block_in_blockdecl799 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_29_in_fndecl819 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_blockdecl_in_fndecl821 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_39_in_mutdecl839 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_blockdecl_in_mutdecl841 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_index_expr_in_expr859 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_dict_in_expr864 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_fndecl_in_expr869 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_mutdecl_in_expr874 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_anonfn_in_expr879 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_array_in_expr884 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_30_in_standalone_fncall895 = new BitSet(new long[]{0x0000000000420020L});
-	public static final BitSet FOLLOW_fncall_in_standalone_fncall897 = new BitSet(new long[]{0x0000000080000000L});
-	public static final BitSet FOLLOW_31_in_standalone_fncall899 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_36_in_mutcall913 = new BitSet(new long[]{0x0000000000420020L});
-	public static final BitSet FOLLOW_nested_id_in_mutcall915 = new BitSet(new long[]{0x0000004000000000L});
-	public static final BitSet FOLLOW_38_in_mutcall917 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_36_in_mutcall926 = new BitSet(new long[]{0x0000000000420020L});
-	public static final BitSet FOLLOW_fncall_in_mutcall928 = new BitSet(new long[]{0x0000004000000000L});
-	public static final BitSet FOLLOW_38_in_mutcall930 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_KEYWORD_in_index_expr945 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_INT_in_index_expr950 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STRING_in_index_expr955 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nested_id_in_index_expr960 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_standalone_fncall_in_index_expr965 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_index_expr_in_dict_pair977 = new BitSet(new long[]{0x0000002000000000L});
-	public static final BitSet FOLLOW_37_in_dict_pair979 = new BitSet(new long[]{0x00010180684E0020L});
-	public static final BitSet FOLLOW_expr_in_dict_pair981 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_48_in_dict997 = new BitSet(new long[]{0x00020001484E0020L});
-	public static final BitSet FOLLOW_dict_pair_in_dict1000 = new BitSet(new long[]{0x0002000100000000L});
-	public static final BitSet FOLLOW_32_in_dict1005 = new BitSet(new long[]{0x00000000484E0020L});
-	public static final BitSet FOLLOW_dict_pair_in_dict1007 = new BitSet(new long[]{0x0002000100000000L});
-	public static final BitSet FOLLOW_49_in_dict1011 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_40_in_contained_block1033 = new BitSet(new long[]{0x0000E01000420000L});
-	public static final BitSet FOLLOW_block_in_contained_block1035 = new BitSet(new long[]{0x0000020000000000L});
-	public static final BitSet FOLLOW_41_in_contained_block1037 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_40_in_array1051 = new BitSet(new long[]{0x00010381684E0020L});
-	public static final BitSet FOLLOW_expr_in_array1053 = new BitSet(new long[]{0x0000020100000000L});
-	public static final BitSet FOLLOW_32_in_array1057 = new BitSet(new long[]{0x00010180684E0020L});
-	public static final BitSet FOLLOW_expr_in_array1059 = new BitSet(new long[]{0x0000020100000000L});
-	public static final BitSet FOLLOW_41_in_array1063 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_block_in_prog141 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_stat_in_block153 = new BitSet(new long[]{0x0000000800000000L});
+	public static final BitSet FOLLOW_35_in_block155 = new BitSet(new long[]{0x0000E01008220002L});
+	public static final BitSet FOLLOW_assignment_in_stat174 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ifstat_in_stat179 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_returnstat_in_stat184 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_mutcall_in_stat189 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_46_in_stat194 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_47_in_returnstat205 = new BitSet(new long[]{0x0000000008220020L});
+	public static final BitSet FOLLOW_fncall_in_returnstat207 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_47_in_returnstat220 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_expr_in_returnstat222 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_45_in_ifstat240 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_expr_in_ifstat244 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_contained_block_in_ifstat248 = new BitSet(new long[]{0x00000C0000000002L});
+	public static final BitSet FOLLOW_43_in_ifstat254 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_expr_in_ifstat258 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_contained_block_in_ifstat262 = new BitSet(new long[]{0x00000C0000000002L});
+	public static final BitSet FOLLOW_42_in_ifstat270 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_contained_block_in_ifstat274 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_48_in_classdef310 = new BitSet(new long[]{0x0002000100080000L});
+	public static final BitSet FOLLOW_fielddef_in_classdef313 = new BitSet(new long[]{0x0002000100000000L});
+	public static final BitSet FOLLOW_32_in_classdef318 = new BitSet(new long[]{0x0000000000080000L});
+	public static final BitSet FOLLOW_fielddef_in_classdef320 = new BitSet(new long[]{0x0002000100000000L});
+	public static final BitSet FOLLOW_49_in_classdef324 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TYPEID_in_assignment340 = new BitSet(new long[]{0x0000000000000080L});
+	public static final BitSet FOLLOW_ASSIGN_in_assignment342 = new BitSet(new long[]{0x0000000000000400L});
+	public static final BitSet FOLLOW_CLASSDEF_in_assignment344 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_classdef_in_assignment346 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TYPEID_in_assignment363 = new BitSet(new long[]{0x0000000000000080L});
+	public static final BitSet FOLLOW_ASSIGN_in_assignment365 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_TYPEID_in_assignment369 = new BitSet(new long[]{0x0000000200000000L});
+	public static final BitSet FOLLOW_33_in_assignment371 = new BitSet(new long[]{0x0000100000000000L});
+	public static final BitSet FOLLOW_44_in_assignment373 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_classdef_in_assignment375 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_any_id_in_assignment394 = new BitSet(new long[]{0x0000000000000080L});
+	public static final BitSet FOLLOW_ASSIGN_in_assignment396 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_expr_in_assignment398 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_any_id_in_assignment413 = new BitSet(new long[]{0x0000000000000080L});
+	public static final BitSet FOLLOW_ASSIGN_in_assignment415 = new BitSet(new long[]{0x0000000008220020L});
+	public static final BitSet FOLLOW_fncall_in_assignment417 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_paramtype_in_defable438 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_fndecl_in_defable443 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_mutdecl_in_defable448 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_KEYWORD_in_fielddef460 = new BitSet(new long[]{0x0000002000000000L});
+	public static final BitSet FOLLOW_37_in_fielddef462 = new BitSet(new long[]{0x0000008028000000L});
+	public static final BitSet FOLLOW_defable_in_fielddef464 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ANONVAR_in_nested_id487 = new BitSet(new long[]{0x0000000200000002L});
+	public static final BitSet FOLLOW_33_in_nested_id490 = new BitSet(new long[]{0x0000000008220000L});
+	public static final BitSet FOLLOW_any_id_in_nested_id492 = new BitSet(new long[]{0x0000000200000002L});
+	public static final BitSet FOLLOW_any_id_in_nested_id506 = new BitSet(new long[]{0x0000000200000002L});
+	public static final BitSet FOLLOW_33_in_nested_id509 = new BitSet(new long[]{0x0000000008220000L});
+	public static final BitSet FOLLOW_any_id_in_nested_id511 = new BitSet(new long[]{0x0000000200000002L});
+	public static final BitSet FOLLOW_nested_id_in_fncall528 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_param_in_fncall530 = new BitSet(new long[]{0x000101816C2E0022L});
+	public static final BitSet FOLLOW_32_in_fncall533 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_param_in_fncall536 = new BitSet(new long[]{0x000101816C2E0022L});
+	public static final BitSet FOLLOW_ID_in_param559 = new BitSet(new long[]{0x0000000400000000L});
+	public static final BitSet FOLLOW_34_in_param561 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_expr_in_param563 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expr_in_param578 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_30_in_blockparamtype598 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_TYPEID_in_blockparamtype600 = new BitSet(new long[]{0x0000000180000000L});
+	public static final BitSet FOLLOW_32_in_blockparamtype603 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_TYPEID_in_blockparamtype605 = new BitSet(new long[]{0x0000000180000000L});
+	public static final BitSet FOLLOW_31_in_blockparamtype609 = new BitSet(new long[]{0x0000000400000000L});
+	public static final BitSet FOLLOW_34_in_blockparamtype611 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_TYPEID_in_blockparamtype613 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_30_in_blockparamtype623 = new BitSet(new long[]{0x0000000080000000L});
+	public static final BitSet FOLLOW_31_in_blockparamtype625 = new BitSet(new long[]{0x0000000400000000L});
+	public static final BitSet FOLLOW_34_in_blockparamtype627 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_TYPEID_in_blockparamtype629 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TYPEID_in_paramtype644 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_29_in_paramtype649 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_blockparamtype_in_paramtype651 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_39_in_paramtype664 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_blockparamtype_in_paramtype666 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ID_in_fnparam685 = new BitSet(new long[]{0x0000000400000000L});
+	public static final BitSet FOLLOW_34_in_fnparam687 = new BitSet(new long[]{0x0000008028000000L});
+	public static final BitSet FOLLOW_paramtype_in_fnparam689 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_29_in_anonfn709 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_40_in_anonfn711 = new BitSet(new long[]{0x0000000008220020L});
+	public static final BitSet FOLLOW_fncall_in_anonfn713 = new BitSet(new long[]{0x0000020000000000L});
+	public static final BitSet FOLLOW_41_in_anonfn715 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_29_in_anonfn728 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_40_in_anonfn730 = new BitSet(new long[]{0x0000000008220020L});
+	public static final BitSet FOLLOW_nested_id_in_anonfn732 = new BitSet(new long[]{0x0000020000000000L});
+	public static final BitSet FOLLOW_41_in_anonfn734 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_30_in_blockdecl753 = new BitSet(new long[]{0x0000000080000000L});
+	public static final BitSet FOLLOW_31_in_blockdecl755 = new BitSet(new long[]{0x0000010400000000L});
+	public static final BitSet FOLLOW_34_in_blockdecl758 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_TYPEID_in_blockdecl760 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_contained_block_in_blockdecl764 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_30_in_blockdecl776 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_fnparam_in_blockdecl778 = new BitSet(new long[]{0x0000000180020000L});
+	public static final BitSet FOLLOW_32_in_blockdecl781 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_fnparam_in_blockdecl784 = new BitSet(new long[]{0x0000000180020000L});
+	public static final BitSet FOLLOW_31_in_blockdecl788 = new BitSet(new long[]{0x0000010400000000L});
+	public static final BitSet FOLLOW_34_in_blockdecl791 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_TYPEID_in_blockdecl793 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_contained_block_in_blockdecl797 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_29_in_fndecl817 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_blockdecl_in_fndecl819 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_39_in_mutdecl837 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_blockdecl_in_mutdecl839 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_index_expr_in_expr857 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_dict_in_expr862 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_fndecl_in_expr867 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_mutdecl_in_expr872 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_anonfn_in_expr877 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_array_in_expr882 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_30_in_standalone_fncall893 = new BitSet(new long[]{0x0000000008220020L});
+	public static final BitSet FOLLOW_fncall_in_standalone_fncall895 = new BitSet(new long[]{0x0000000080000000L});
+	public static final BitSet FOLLOW_31_in_standalone_fncall897 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_36_in_mutcall911 = new BitSet(new long[]{0x0000000008220020L});
+	public static final BitSet FOLLOW_nested_id_in_mutcall913 = new BitSet(new long[]{0x0000004000000000L});
+	public static final BitSet FOLLOW_38_in_mutcall915 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_36_in_mutcall924 = new BitSet(new long[]{0x0000000008220020L});
+	public static final BitSet FOLLOW_fncall_in_mutcall926 = new BitSet(new long[]{0x0000004000000000L});
+	public static final BitSet FOLLOW_38_in_mutcall928 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_KEYWORD_in_index_expr943 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_INT_in_index_expr948 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STRING_in_index_expr953 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nested_id_in_index_expr958 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_standalone_fncall_in_index_expr963 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_index_expr_in_dict_pair975 = new BitSet(new long[]{0x0000002000000000L});
+	public static final BitSet FOLLOW_37_in_dict_pair977 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_expr_in_dict_pair979 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_48_in_dict995 = new BitSet(new long[]{0x000200014C2E0020L});
+	public static final BitSet FOLLOW_dict_pair_in_dict998 = new BitSet(new long[]{0x0002000100000000L});
+	public static final BitSet FOLLOW_32_in_dict1003 = new BitSet(new long[]{0x000000004C2E0020L});
+	public static final BitSet FOLLOW_dict_pair_in_dict1005 = new BitSet(new long[]{0x0002000100000000L});
+	public static final BitSet FOLLOW_49_in_dict1009 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_40_in_contained_block1031 = new BitSet(new long[]{0x0000E01008220000L});
+	public static final BitSet FOLLOW_block_in_contained_block1033 = new BitSet(new long[]{0x0000020000000000L});
+	public static final BitSet FOLLOW_41_in_contained_block1035 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_40_in_array1049 = new BitSet(new long[]{0x000103816C2E0020L});
+	public static final BitSet FOLLOW_expr_in_array1051 = new BitSet(new long[]{0x0000020100000000L});
+	public static final BitSet FOLLOW_32_in_array1055 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_expr_in_array1057 = new BitSet(new long[]{0x0000020100000000L});
+	public static final BitSet FOLLOW_41_in_array1061 = new BitSet(new long[]{0x0000000000000002L});
 }

@@ -233,12 +233,13 @@ public class ParseTests {
     public void testClassScope() {
 	ParseResult result = getNodes("Person = class {:a => Int};");
 	printTree(result.tree, 4);
-/*	SymbolTable symtab = new SymbolTable();
+	SymbolTable symtab = new SymbolTable();
 	Def def = new Def(result.stream, symtab);
 	def.downup(result.tree);
 	SneakersAST s = (SneakersAST) result.tree.getChild(0).getChild(0);
-	assertEquals(s.symbol.name, "f");*/
+	assertEquals(s.symbol.name, "Person");
     } 
+    
     @Test(expected=ParseException.class)
     public void testParseError() {
         this.getTree("a = ");

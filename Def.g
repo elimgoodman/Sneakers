@@ -47,7 +47,7 @@ exitBlock
 
 // START: class
 enterClass
-    :   ^('class' name=ID .)
+    :   ^('class' name=TYPEID .)
         { // def class but leave superclass blank until ref phase
         System.out.println("line "+$name.getLine()+
                            ": def class "+$name.text);

@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Def.g 2013-05-27 12:23:21
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Def.g 2013-05-27 12:43:53
  package sneakers; 
 
 import org.antlr.runtime.*;
@@ -14,11 +14,11 @@ public class Def extends TreeFilter {
 	public static final String[] tokenNames = new String[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ANONFN", "ANONVAR", "ARRAY", 
 		"ASSIGN", "BLOCK", "BLOCKDECL", "CLASSDEF", "DICT", "EXPR", "FIELDDEF", 
-		"FNCALL", "FNDECL", "FNPARAM", "ID", "INT", "KEYWORD", "LETTER", "MUTDECL", 
-		"MUTID", "PARAM", "PARAMTYPEFN", "PARAMTYPEMUT", "RET", "STRING", "WS", 
+		"FNCALL", "FNDECL", "FNPARAM", "ID", "INT", "KEYWORD", "MUTDECL", "MUTID", 
+		"PARAM", "PARAMTYPEFN", "PARAMTYPEMUT", "RET", "STRING", "TYPEID", "WS", 
 		"'#'", "'('", "')'", "','", "'.'", "':'", "';'", "'<'", "'=>'", "'>'", 
 		"'@'", "'['", "']'", "'else'", "'elseif'", "'extend'", "'if'", "'pass'", 
-		"'return'", "'{'", "'}'", "TYPEID", "'this'"
+		"'return'", "'{'", "'}'", "'this'"
 	};
 	public static final int EOF=-1;
 	public static final int T__29=29;
@@ -58,17 +58,16 @@ public class Def extends TreeFilter {
 	public static final int ID=17;
 	public static final int INT=18;
 	public static final int KEYWORD=19;
-	public static final int LETTER=20;
-	public static final int MUTDECL=21;
-	public static final int MUTID=22;
-	public static final int PARAM=23;
-	public static final int PARAMTYPEFN=24;
-	public static final int PARAMTYPEMUT=25;
-	public static final int RET=26;
-	public static final int STRING=27;
+	public static final int MUTDECL=20;
+	public static final int MUTID=21;
+	public static final int PARAM=22;
+	public static final int PARAMTYPEFN=23;
+	public static final int PARAMTYPEMUT=24;
+	public static final int RET=25;
+	public static final int STRING=26;
+	public static final int TYPEID=27;
 	public static final int WS=28;
-	public static final int T__51=51;
-	public static final int TYPEID=50;
+	public static final int T__50=50;
 
 	// delegates
 	public TreeFilter[] getDelegates() {
@@ -123,7 +122,7 @@ public class Def extends TreeFilter {
 				break;
 			case ID:
 			case TYPEID:
-			case 51:
+			case 50:
 				{
 				alt1=4;
 				}
@@ -309,17 +308,17 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "enterClass"
-	// /Users/eli/dev/Sneakers-Java/Def.g:49:1: enterClass : ^( 'class' name= ID . ) ;
+	// /Users/eli/dev/Sneakers-Java/Def.g:49:1: enterClass : ^( 'class' name= TYPEID . ) ;
 	public final void enterClass() throws RecognitionException {
 		SneakersAST name=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:50:5: ( ^( 'class' name= ID . ) )
-			// /Users/eli/dev/Sneakers-Java/Def.g:50:9: ^( 'class' name= ID . )
+			// /Users/eli/dev/Sneakers-Java/Def.g:50:5: ( ^( 'class' name= TYPEID . ) )
+			// /Users/eli/dev/Sneakers-Java/Def.g:50:9: ^( 'class' name= TYPEID . )
 			{
 			match(input,CLASSDEF,FOLLOW_CLASSDEF_in_enterClass203); if (state.failed) return;
 			match(input, Token.DOWN, null); if (state.failed) return;
-			name=(SneakersAST)match(input,ID,FOLLOW_ID_in_enterClass207); if (state.failed) return;
+			name=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_enterClass207); if (state.failed) return;
 			matchAny(input); if (state.failed) return;
 			match(input, Token.UP, null); if (state.failed) return;
 
@@ -416,7 +415,7 @@ public class Def extends TreeFilter {
 				if (state.backtracking>0) {state.failed=true; return;}
 				throw new FailedPredicateException(input, "atoms", "t.hasAncestor(EXPR)||t.hasAncestor(ASSIGN)");
 			}
-			if ( input.LA(1)==ID||(input.LA(1) >= TYPEID && input.LA(1) <= 51) ) {
+			if ( input.LA(1)==ID||input.LA(1)==TYPEID||input.LA(1)==50 ) {
 				input.consume();
 				state.errorRecovery=false;
 				state.failed=false;
@@ -461,7 +460,7 @@ public class Def extends TreeFilter {
 						if ( (LA5_3==FNDECL) ) {
 							alt5=1;
 						}
-						else if ( ((LA5_3 >= UP && LA5_3 <= FNCALL)||(LA5_3 >= FNPARAM && LA5_3 <= 51)) ) {
+						else if ( ((LA5_3 >= UP && LA5_3 <= FNCALL)||(LA5_3 >= FNPARAM && LA5_3 <= 50)) ) {
 							alt5=2;
 						}
 
@@ -536,7 +535,7 @@ public class Def extends TreeFilter {
 						while (true) {
 							int alt3=2;
 							int LA3_0 = input.LA(1);
-							if ( ((LA3_0 >= ANONFN && LA3_0 <= 51)) ) {
+							if ( ((LA3_0 >= ANONFN && LA3_0 <= 50)) ) {
 								alt3=1;
 							}
 							else if ( (LA3_0==UP) ) {
@@ -583,7 +582,7 @@ public class Def extends TreeFilter {
 					while (true) {
 						int alt4=2;
 						int LA4_0 = input.LA(1);
-						if ( ((LA4_0 >= ANONFN && LA4_0 <= FNCALL)||(LA4_0 >= FNPARAM && LA4_0 <= 51)) ) {
+						if ( ((LA4_0 >= ANONFN && LA4_0 <= FNCALL)||(LA4_0 >= FNPARAM && LA4_0 <= 50)) ) {
 							alt4=1;
 						}
 
@@ -591,7 +590,7 @@ public class Def extends TreeFilter {
 						case 1 :
 							// /Users/eli/dev/Sneakers-Java/Def.g:
 							{
-							if ( (input.LA(1) >= ANONFN && input.LA(1) <= FNCALL)||(input.LA(1) >= FNPARAM && input.LA(1) <= 51) ) {
+							if ( (input.LA(1) >= ANONFN && input.LA(1) <= FNCALL)||(input.LA(1) >= FNPARAM && input.LA(1) <= 50) ) {
 								input.consume();
 								state.errorRecovery=false;
 								state.failed=false;
@@ -649,7 +648,7 @@ public class Def extends TreeFilter {
 	public static final BitSet FOLLOW_BLOCK_in_enterBlock151 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_BLOCK_in_exitBlock172 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_CLASSDEF_in_enterClass203 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_enterClass207 = new BitSet(new long[]{0x000FFFFFFFFFFFF0L});
+	public static final BitSet FOLLOW_TYPEID_in_enterClass207 = new BitSet(new long[]{0x0007FFFFFFFFFFF0L});
 	public static final BitSet FOLLOW_CLASSDEF_in_exitClass240 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_FNDECL_in_exitMethod270 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_set_in_atoms308 = new BitSet(new long[]{0x0000000000000002L});
@@ -657,5 +656,5 @@ public class Def extends TreeFilter {
 	public static final BitSet FOLLOW_ID_in_varDeclaration343 = new BitSet(new long[]{0x0000000000008000L});
 	public static final BitSet FOLLOW_FNDECL_in_varDeclaration346 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_ASSIGN_in_varDeclaration367 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_varDeclaration369 = new BitSet(new long[]{0x000FFFFFFFFF7FF8L});
+	public static final BitSet FOLLOW_ID_in_varDeclaration369 = new BitSet(new long[]{0x0007FFFFFFFF7FF8L});
 }

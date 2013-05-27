@@ -2,8 +2,7 @@ grammar Sneakers;
 
 options {
 	output=AST;
-	//ASTLabelType=SneakersAST;
-	ASTLabelType=CommonTree;
+	ASTLabelType=SneakersAST;
 }
 
 
@@ -34,14 +33,14 @@ tokens {
 @parser::members {
   @Override
   public void reportError(RecognitionException e) {
-    //throw new ParseException(e); 
+    throw new ParseException(e); 
   }
 }
 
 @lexer::members {
   @Override
   public void reportError(RecognitionException e) {
-    //throw new LexException(e); 
+    throw new LexException(e); 
   }
 }
 
@@ -71,8 +70,8 @@ classdef:	'{' (fielddef)? (',' fielddef)* '}' -> fielddef*
 	;
 
 assignment
-	:	ID '=' 'class' classdef -> ^('class' ID classdef)
-	|	newclass=ID '=' oldclass=ID '.' 'extend' classdef -> ^('extend' $newclass $oldclass classdef)
+	:	TYPEID '=' 'class' classdef -> ^('class' TYPEID classdef)
+	|	newclass=TYPEID '=' oldclass=TYPEID '.' 'extend' classdef -> ^('extend' $newclass $oldclass classdef)
 	|	any_id '=' expr -> ^('=' any_id expr)
 	|	any_id '=' fncall -> ^('=' any_id fncall)
 	;
@@ -101,11 +100,11 @@ param	:	ID ':' expr -> ^(PARAM ID expr)
 	;
 
 blockparamtype 
-	:	'(' ID (',' ID)* ')' ':' ID -> ID+
-	|	'(' ')' ':' ID -> ID
+	:	'(' TYPEID (',' TYPEID)* ')' ':' TYPEID -> TYPEID+
+	|	'(' ')' ':' TYPEID -> TYPEID
 	;
 
-paramtype : 	ID
+paramtype : 	TYPEID
 	|	'#' blockparamtype -> ^(PARAMTYPEFN blockparamtype)
 	|	'@' blockparamtype -> ^(PARAMTYPEMUT blockparamtype)
 	;	
@@ -118,8 +117,8 @@ anonfn	:	'#' '[' fncall ']' -> ^(ANONFN fncall)
 	;
 
 blockdecl
-	:	'(' ')' (':' ID)? contained_block -> ID? contained_block
-	|	'(' fnparam (','? fnparam)* ')' (':' ID)? contained_block -> fnparam* ID? contained_block
+	:	'(' ')' (':' TYPEID)? contained_block -> TYPEID? contained_block
+	|	'(' fnparam (','? fnparam)* ')' (':' TYPEID)? contained_block -> fnparam* TYPEID? contained_block
 	;
 
 fndecl	:	'#' blockdecl -> ^(FNDECL blockdecl)
@@ -173,12 +172,11 @@ ANONVAR	:	'$' INT?
 KEYWORD	:	':' ID
 	;
 
-ID  :   LETTER (LETTER | '0' .. '9')*
+ID  :	('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'| '_'|'-' | '!' | '?' | '=' | '>' | '<')*
     ;
 
-fragment
-LETTER  :   ('a'..'z' | 'A'..'Z')
-    ;
+TYPEID	:	('A'..'Z') ('a'..'z' | 'A'..'Z')*
+	;
 
 MUTID	:	'@' ID
 	;
@@ -186,6 +184,7 @@ MUTID	:	'@' ID
 any_id
 	:	ID
 	|	MUTID
+	|	TYPEID
 	;
 
 INT :	'0'..'9'+
