@@ -5,6 +5,9 @@ options {
   ASTLabelType = SneakersAST;
   filter = true;
 }
+
+@header { package sneakers; }
+
 @members {
     SymbolTable symtab;
     public Ref(TreeNodeStream input, SymbolTable symtab) {
@@ -90,10 +93,10 @@ assignment  : ^( '=' expr expr ) ;
  *  Ignore actions for others; we don't need for this pattern example.
  */
 expr returns [Type type]
-    :   member {$type = $member.type;} // E.g., "a.b"
+    /*:   member {$type = $member.type;} // E.g., "a.b"
     |   ^(CALL expr)
-    |   ^('+' expr expr)
-    |   id     {$type = $id.type;}     // E.g., "a", "this"
+    |   ^('+' expr expr)*/
+    :	   id     {$type = $id.type;}     // E.g., "a", "this"
     |   INT
     ;
 // END: expr
@@ -106,12 +109,12 @@ id returns [Type type]
         $ID.symbol = SymbolTable.resolveID($ID);
         if ( $ID.symbol!=null ) $type = $ID.symbol.type;
         }
-    |   t='this'  {$type = SymbolTable.getEnclosingClass($t.scope);}
+    /*|   t='this'  {$type = SymbolTable.getEnclosingClass($t.scope);}*/
     ;
 // END:id
 
 // START: member
-member returns [Type type]
+/*member returns [Type type]
     :   ^('.' m=expr ID) // E.g., "a", "a.b", "a.b.c", ...
         {
         ClassSymbol scope = (ClassSymbol)$m.type;
@@ -121,5 +124,5 @@ member returns [Type type]
             ": resolve "+$m.text+"."+$ID.text+" to "+s);
         if ( s!=null ) $type = s.type;
         }
-    ;
+    ;*/
 // END: member
