@@ -21,16 +21,15 @@ options {
 
 topdown
     :   enterBlock
-    //|   enterMethod
-    //|   enterClass
+    |	enterClass
     |   varDeclaration
-//    |   atoms
+    |   atoms
     ;
 
 bottomup
     :   exitBlock
-    //|   exitMethod
-    //|   exitClass
+    |   exitMethod
+    |   exitClass
     ;
 
 // S C O P E S
@@ -47,13 +46,12 @@ exitBlock
     ;
 
 // START: class
-/*enterClass
-    :   ^('class' name=TYPEID .)
+enterClass
+    :   ^('class' name=ID .)
         { // def class but leave superclass blank until ref phase
         System.out.println("line "+$name.getLine()+
                            ": def class "+$name.text);
         // record scope in AST for next pass
-        //if ( $sup!=null ) $sup.scope = currentScope; 
         ClassSymbol cs = new ClassSymbol($name.text,currentScope,null);
         cs.def = $name;           // point from symbol table into AST
         $name.symbol = cs;        // point from AST into symbol table
@@ -61,48 +59,49 @@ exitBlock
         currentScope = cs;        // set current scope to class scope
         }
     ;
-// END: class
+// END: class*/
 
 exitClass
-    :   'class'
+    :   CLASSDEF
         {
+        System.out.println("OUT OF CLASS");
         System.out.println("members: "+currentScope);
         currentScope = currentScope.getEnclosingScope();    // pop scope
         }
     ;
 
-enterMethod
-    :   ^(METHOD_DECL type=. ID .*) // match method subtree with 0-or-more args
-        {
-        System.out.println("line "+$ID.getLine()+": def method "+$ID.text);
-        $type.scope = currentScope;
-        MethodSymbol ms = new MethodSymbol($ID.text,null,currentScope);
-        ms.def = $ID;            // track AST location of def's ID
-        $ID.symbol = ms;         // track in AST
-        currentScope.define(ms); // def method in globals
-        currentScope = ms;       // set current scope to method scope
-        }
-    ;
+
 exitMethod
-    :   METHOD_DECL
+    :   FNDECL
         {
+        System.out.println("OUT OF METHOD");
         System.out.println("args: "+currentScope);
         currentScope = currentScope.getEnclosingScope();    // pop arg scope
         }
     ;
-*/
+
 // START: atoms
 /** Set scope for any identifiers in expressions or assignments */
-/*atoms
-@init {CymbolAST t = (CymbolAST)input.LT(1);}
-    :  {t.hasAncestor(EXPR)||t.hasAncestor(ASSIGN)}? ('this'|ID)
+atoms
+@init {SneakersAST t = (SneakersAST)input.LT(1);}
+    :  {t.hasAncestor(EXPR)||t.hasAncestor(ASSIGN)}? ('this'|ID|TYPEID)
        {t.scope = currentScope;}
-    ;*/
+    ;
 //END: atoms
 
 // START: var
 varDeclaration // global, parameter, or local variable
-    :   ^('=' ID .?)
+	:	^('=' ID ^(FNDECL .*))
+	{
+		System.out.println("line "+$ID.getLine()+": def "+$ID.text);
+        
+        	MethodSymbol ms = new MethodSymbol($ID.text,null,currentScope);
+        	ms.def = $ID;            // track AST location of def's ID
+	        $ID.symbol = ms;         // track in AST
+        	currentScope.define(ms); // def method in globals
+	        currentScope = ms;       // set current scope to method scope
+	}
+    	|   	^('=' ID ~(FNDECL)* )
         {
         System.out.println("line "+$ID.getLine()+": def "+$ID.text);
         

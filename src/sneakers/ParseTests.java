@@ -15,6 +15,7 @@ import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeAdaptor;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 import org.antlr.runtime.tree.TreeAdaptor;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import sneakers.SneakersParser.prog_return;
@@ -133,6 +134,7 @@ public class ParseTests {
     public void testFnDef() {
         SneakersAST tree = this.getTree("a = #(x:Int, y:String):Int [return 1;];");
         
+        //printTree(tree, 4);
         assertEquals("FNDECL", tree.getChild(0).getChild(1).getText());
     }  
     
@@ -201,15 +203,42 @@ public class ParseTests {
         //printTree(tree, 4);
     }
     
+    public void p(Object o) {
+	System.out.println(o);
+    }
+    
     @Test
+    @Ignore
     public void testSimpleAssign() {
 	ParseResult result = getNodes("a = 1;b = 2;");
 	SymbolTable symtab = new SymbolTable();
 	Def def = new Def(result.stream, symtab);
 	def.downup(result.tree);
-	assertEquals(true, true);
+	SneakersAST s = (SneakersAST) result.tree.getChild(0).getChild(0);
+	assertEquals(s.symbol.name, "a");
     }
     
+    @Test
+    @Ignore
+    public void testFnScope() {
+	ParseResult result = getNodes("f = #(x:Int):Int [a = 1;];");
+	SymbolTable symtab = new SymbolTable();
+	Def def = new Def(result.stream, symtab);
+	def.downup(result.tree);
+	SneakersAST s = (SneakersAST) result.tree.getChild(0).getChild(0);
+	assertEquals(s.symbol.name, "f");
+    }
+    
+    @Test
+    public void testClassScope() {
+	ParseResult result = getNodes("Person = class {:a => Int};");
+	printTree(result.tree, 4);
+/*	SymbolTable symtab = new SymbolTable();
+	Def def = new Def(result.stream, symtab);
+	def.downup(result.tree);
+	SneakersAST s = (SneakersAST) result.tree.getChild(0).getChild(0);
+	assertEquals(s.symbol.name, "f");*/
+    } 
     @Test(expected=ParseException.class)
     public void testParseError() {
         this.getTree("a = ");

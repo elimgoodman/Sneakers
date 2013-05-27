@@ -2,7 +2,8 @@ grammar Sneakers;
 
 options {
 	output=AST;
-	ASTLabelType=SneakersAST;
+	//ASTLabelType=SneakersAST;
+	ASTLabelType=CommonTree;
 }
 
 
@@ -22,6 +23,9 @@ tokens {
 	DICT;
 	ANONFN;
 	FIELDDEF;
+	ASSIGN='=';
+	CLASSDEF='class';
+	EXPR;
 }
 
 @parser::header { package sneakers; }
@@ -30,14 +34,14 @@ tokens {
 @parser::members {
   @Override
   public void reportError(RecognitionException e) {
-    throw new ParseException(e); 
+    //throw new ParseException(e); 
   }
 }
 
 @lexer::members {
   @Override
   public void reportError(RecognitionException e) {
-    throw new LexException(e); 
+    //throw new LexException(e); 
   }
 }
 
@@ -67,8 +71,8 @@ classdef:	'{' (fielddef)? (',' fielddef)* '}' -> fielddef*
 	;
 
 assignment
-	:	TYPEID '=' 'class' classdef -> ^('class' TYPEID classdef)
-	|	newclass=TYPEID '=' oldclass=TYPEID '.' 'extend' classdef -> ^('extend' $newclass $oldclass classdef)
+	:	ID '=' 'class' classdef -> ^('class' ID classdef)
+	|	newclass=ID '=' oldclass=ID '.' 'extend' classdef -> ^('extend' $newclass $oldclass classdef)
 	|	any_id '=' expr -> ^('=' any_id expr)
 	|	any_id '=' fncall -> ^('=' any_id fncall)
 	;
@@ -97,11 +101,11 @@ param	:	ID ':' expr -> ^(PARAM ID expr)
 	;
 
 blockparamtype 
-	:	'(' TYPEID (',' TYPEID)* ')' ':' TYPEID -> TYPEID+
-	|	'(' ')' ':' TYPEID -> TYPEID
+	:	'(' ID (',' ID)* ')' ':' ID -> ID+
+	|	'(' ')' ':' ID -> ID
 	;
 
-paramtype : 	TYPEID
+paramtype : 	ID
 	|	'#' blockparamtype -> ^(PARAMTYPEFN blockparamtype)
 	|	'@' blockparamtype -> ^(PARAMTYPEMUT blockparamtype)
 	;	
@@ -114,8 +118,8 @@ anonfn	:	'#' '[' fncall ']' -> ^(ANONFN fncall)
 	;
 
 blockdecl
-	:	'(' ')' (':' TYPEID)? contained_block -> TYPEID? contained_block
-	|	'(' fnparam (','? fnparam)* ')' (':' TYPEID)? contained_block -> fnparam* TYPEID? contained_block
+	:	'(' ')' (':' ID)? contained_block -> ID? contained_block
+	|	'(' fnparam (','? fnparam)* ')' (':' ID)? contained_block -> fnparam* ID? contained_block
 	;
 
 fndecl	:	'#' blockdecl -> ^(FNDECL blockdecl)
@@ -169,18 +173,18 @@ ANONVAR	:	'$' INT?
 KEYWORD	:	':' ID
 	;
 
-ID  :	('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'| '_'|'-' | '!' | '?' | '=' | '>' | '<')*
+ID  :   LETTER (LETTER | '0' .. '9')*
     ;
 
-TYPEID	:	('A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9')*
-	;
+fragment
+LETTER  :   ('a'..'z' | 'A'..'Z')
+    ;
 
 MUTID	:	'@' ID
 	;
 
 any_id
 	:	ID
-	|	TYPEID
 	|	MUTID
 	;
 
@@ -202,4 +206,6 @@ STRING
 - member mutators (ie, things that are elements of a class but modify member variables)
 - parameterized types
 - ifstat can be an expression
+- 'this' keyword
+- !!! HOW IS EXPR SUPPOSED TO BE USED?? !!!!
 */
