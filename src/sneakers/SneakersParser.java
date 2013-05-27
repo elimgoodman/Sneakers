@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Sneakers.g 2013-05-27 12:43:32
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Sneakers.g 2013-05-27 13:25:41
  package sneakers; 
 
 import org.antlr.runtime.*;
@@ -658,7 +658,7 @@ public class SneakersParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: ifexpr, 45, elseblock, ifblock, elifexpr, elifblock
+			// elements: ifexpr, elseblock, elifexpr, elifblock, 45, ifblock
 			// token labels: 
 			// rule labels: ifblock, retval, ifexpr, elseblock
 			// token list labels: 
@@ -931,7 +931,7 @@ public class SneakersParser extends Parser {
 
 					stream_classdef.add(classdef24.getTree());
 					// AST REWRITE
-					// elements: CLASSDEF, classdef, TYPEID
+					// elements: CLASSDEF, TYPEID, classdef
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -983,7 +983,7 @@ public class SneakersParser extends Parser {
 
 					stream_classdef.add(classdef28.getTree());
 					// AST REWRITE
-					// elements: newclass, classdef, oldclass, 44
+					// elements: oldclass, newclass, classdef, 44
 					// token labels: oldclass, newclass
 					// rule labels: retval
 					// token list labels: 
@@ -1031,7 +1031,7 @@ public class SneakersParser extends Parser {
 
 					stream_expr.add(expr31.getTree());
 					// AST REWRITE
-					// elements: expr, any_id, ASSIGN
+					// elements: ASSIGN, any_id, expr
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1076,7 +1076,7 @@ public class SneakersParser extends Parser {
 
 					stream_fncall.add(fncall34.getTree());
 					// AST REWRITE
-					// elements: fncall, any_id, ASSIGN
+					// elements: fncall, ASSIGN, any_id
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1209,9 +1209,6 @@ public class SneakersParser extends Parser {
 							}
 
 						}
-						else if ( (LA9_6==40) ) {
-							alt9=2;
-						}
 
 						else {
 							int nvaeMark = input.mark();
@@ -1317,9 +1314,6 @@ public class SneakersParser extends Parser {
 								}
 							}
 
-						}
-						else if ( (LA9_8==40) ) {
-							alt9=3;
 						}
 
 						else {
@@ -1482,7 +1476,7 @@ public class SneakersParser extends Parser {
 
 			stream_defable.add(defable40.getTree());
 			// AST REWRITE
-			// elements: defable, KEYWORD
+			// elements: KEYWORD, defable
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1612,7 +1606,7 @@ public class SneakersParser extends Parser {
 					}
 
 					// AST REWRITE
-					// elements: any_id, ANONVAR
+					// elements: ANONVAR, any_id
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1806,7 +1800,7 @@ public class SneakersParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: nested_id, param
+			// elements: param, nested_id
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1936,7 +1930,7 @@ public class SneakersParser extends Parser {
 
 					stream_expr.add(expr53.getTree());
 					// AST REWRITE
-					// elements: expr, ID
+					// elements: ID, expr
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -2641,7 +2635,7 @@ public class SneakersParser extends Parser {
 
 
 	// $ANTLR start "blockdecl"
-	// /Users/eli/dev/Sneakers-Java/Sneakers.g:119:1: blockdecl : ( '(' ')' ( ':' TYPEID )? contained_block -> ( TYPEID )? contained_block | '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' TYPEID )? contained_block -> ( fnparam )* ( TYPEID )? contained_block );
+	// /Users/eli/dev/Sneakers-Java/Sneakers.g:119:1: blockdecl : ( '(' ')' ':' TYPEID contained_block -> TYPEID contained_block | '(' fnparam ( ( ',' )? fnparam )* ')' ':' TYPEID contained_block -> TYPEID ( fnparam )* contained_block );
 	public final SneakersParser.blockdecl_return blockdecl() throws RecognitionException {
 		SneakersParser.blockdecl_return retval = new SneakersParser.blockdecl_return();
 		retval.start = input.LT(1);
@@ -2680,16 +2674,16 @@ public class SneakersParser extends Parser {
 		RewriteRuleSubtreeStream stream_fnparam=new RewriteRuleSubtreeStream(adaptor,"rule fnparam");
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:2: ( '(' ')' ( ':' TYPEID )? contained_block -> ( TYPEID )? contained_block | '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' TYPEID )? contained_block -> ( fnparam )* ( TYPEID )? contained_block )
-			int alt24=2;
-			int LA24_0 = input.LA(1);
-			if ( (LA24_0==30) ) {
-				int LA24_1 = input.LA(2);
-				if ( (LA24_1==31) ) {
-					alt24=1;
+			// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:2: ( '(' ')' ':' TYPEID contained_block -> TYPEID contained_block | '(' fnparam ( ( ',' )? fnparam )* ')' ':' TYPEID contained_block -> TYPEID ( fnparam )* contained_block )
+			int alt22=2;
+			int LA22_0 = input.LA(1);
+			if ( (LA22_0==30) ) {
+				int LA22_1 = input.LA(2);
+				if ( (LA22_1==31) ) {
+					alt22=1;
 				}
-				else if ( (LA24_1==ID) ) {
-					alt24=2;
+				else if ( (LA22_1==ID) ) {
+					alt22=2;
 				}
 
 				else {
@@ -2697,7 +2691,7 @@ public class SneakersParser extends Parser {
 					try {
 						input.consume();
 						NoViableAltException nvae =
-							new NoViableAltException("", 24, 1, input);
+							new NoViableAltException("", 22, 1, input);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -2708,13 +2702,13 @@ public class SneakersParser extends Parser {
 
 			else {
 				NoViableAltException nvae =
-					new NoViableAltException("", 24, 0, input);
+					new NoViableAltException("", 22, 0, input);
 				throw nvae;
 			}
 
-			switch (alt24) {
+			switch (alt22) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:4: '(' ')' ( ':' TYPEID )? contained_block
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:4: '(' ')' ':' TYPEID contained_block
 					{
 					char_literal82=(Token)match(input,30,FOLLOW_30_in_blockdecl753);  
 					stream_30.add(char_literal82);
@@ -2722,28 +2716,13 @@ public class SneakersParser extends Parser {
 					char_literal83=(Token)match(input,31,FOLLOW_31_in_blockdecl755);  
 					stream_31.add(char_literal83);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:12: ( ':' TYPEID )?
-					int alt20=2;
-					int LA20_0 = input.LA(1);
-					if ( (LA20_0==34) ) {
-						alt20=1;
-					}
-					switch (alt20) {
-						case 1 :
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:13: ':' TYPEID
-							{
-							char_literal84=(Token)match(input,34,FOLLOW_34_in_blockdecl758);  
-							stream_34.add(char_literal84);
+					char_literal84=(Token)match(input,34,FOLLOW_34_in_blockdecl757);  
+					stream_34.add(char_literal84);
 
-							TYPEID85=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_blockdecl760);  
-							stream_TYPEID.add(TYPEID85);
+					TYPEID85=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_blockdecl759);  
+					stream_TYPEID.add(TYPEID85);
 
-							}
-							break;
-
-					}
-
-					pushFollow(FOLLOW_contained_block_in_blockdecl764);
+					pushFollow(FOLLOW_contained_block_in_blockdecl761);
 					contained_block86=contained_block();
 					state._fsp--;
 
@@ -2759,14 +2738,9 @@ public class SneakersParser extends Parser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (SneakersAST)adaptor.nil();
-					// 120:42: -> ( TYPEID )? contained_block
+					// 120:39: -> TYPEID contained_block
 					{
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:120:45: ( TYPEID )?
-						if ( stream_TYPEID.hasNext() ) {
-							adaptor.addChild(root_0, stream_TYPEID.nextNode());
-						}
-						stream_TYPEID.reset();
-
+						adaptor.addChild(root_0, stream_TYPEID.nextNode());
 						adaptor.addChild(root_0, stream_contained_block.nextTree());
 					}
 
@@ -2776,40 +2750,40 @@ public class SneakersParser extends Parser {
 					}
 					break;
 				case 2 :
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:4: '(' fnparam ( ( ',' )? fnparam )* ')' ( ':' TYPEID )? contained_block
+					// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:4: '(' fnparam ( ( ',' )? fnparam )* ')' ':' TYPEID contained_block
 					{
-					char_literal87=(Token)match(input,30,FOLLOW_30_in_blockdecl776);  
+					char_literal87=(Token)match(input,30,FOLLOW_30_in_blockdecl772);  
 					stream_30.add(char_literal87);
 
-					pushFollow(FOLLOW_fnparam_in_blockdecl778);
+					pushFollow(FOLLOW_fnparam_in_blockdecl774);
 					fnparam88=fnparam();
 					state._fsp--;
 
 					stream_fnparam.add(fnparam88.getTree());
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:16: ( ( ',' )? fnparam )*
-					loop22:
+					loop21:
 					while (true) {
-						int alt22=2;
-						int LA22_0 = input.LA(1);
-						if ( (LA22_0==ID||LA22_0==32) ) {
-							alt22=1;
+						int alt21=2;
+						int LA21_0 = input.LA(1);
+						if ( (LA21_0==ID||LA21_0==32) ) {
+							alt21=1;
 						}
 
-						switch (alt22) {
+						switch (alt21) {
 						case 1 :
 							// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:17: ( ',' )? fnparam
 							{
 							// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:17: ( ',' )?
-							int alt21=2;
-							int LA21_0 = input.LA(1);
-							if ( (LA21_0==32) ) {
-								alt21=1;
+							int alt20=2;
+							int LA20_0 = input.LA(1);
+							if ( (LA20_0==32) ) {
+								alt20=1;
 							}
-							switch (alt21) {
+							switch (alt20) {
 								case 1 :
 									// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:17: ','
 									{
-									char_literal89=(Token)match(input,32,FOLLOW_32_in_blockdecl781);  
+									char_literal89=(Token)match(input,32,FOLLOW_32_in_blockdecl777);  
 									stream_32.add(char_literal89);
 
 									}
@@ -2817,7 +2791,7 @@ public class SneakersParser extends Parser {
 
 							}
 
-							pushFollow(FOLLOW_fnparam_in_blockdecl784);
+							pushFollow(FOLLOW_fnparam_in_blockdecl780);
 							fnparam90=fnparam();
 							state._fsp--;
 
@@ -2826,35 +2800,20 @@ public class SneakersParser extends Parser {
 							break;
 
 						default :
-							break loop22;
+							break loop21;
 						}
 					}
 
-					char_literal91=(Token)match(input,31,FOLLOW_31_in_blockdecl788);  
+					char_literal91=(Token)match(input,31,FOLLOW_31_in_blockdecl784);  
 					stream_31.add(char_literal91);
 
-					// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:36: ( ':' TYPEID )?
-					int alt23=2;
-					int LA23_0 = input.LA(1);
-					if ( (LA23_0==34) ) {
-						alt23=1;
-					}
-					switch (alt23) {
-						case 1 :
-							// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:37: ':' TYPEID
-							{
-							char_literal92=(Token)match(input,34,FOLLOW_34_in_blockdecl791);  
-							stream_34.add(char_literal92);
+					char_literal92=(Token)match(input,34,FOLLOW_34_in_blockdecl786);  
+					stream_34.add(char_literal92);
 
-							TYPEID93=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_blockdecl793);  
-							stream_TYPEID.add(TYPEID93);
+					TYPEID93=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_blockdecl788);  
+					stream_TYPEID.add(TYPEID93);
 
-							}
-							break;
-
-					}
-
-					pushFollow(FOLLOW_contained_block_in_blockdecl797);
+					pushFollow(FOLLOW_contained_block_in_blockdecl790);
 					contained_block94=contained_block();
 					state._fsp--;
 
@@ -2870,19 +2829,14 @@ public class SneakersParser extends Parser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (SneakersAST)adaptor.nil();
-					// 121:66: -> ( fnparam )* ( TYPEID )? contained_block
+					// 121:63: -> TYPEID ( fnparam )* contained_block
 					{
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:69: ( fnparam )*
+						adaptor.addChild(root_0, stream_TYPEID.nextNode());
+						// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:73: ( fnparam )*
 						while ( stream_fnparam.hasNext() ) {
 							adaptor.addChild(root_0, stream_fnparam.nextTree());
 						}
 						stream_fnparam.reset();
-
-						// /Users/eli/dev/Sneakers-Java/Sneakers.g:121:78: ( TYPEID )?
-						if ( stream_TYPEID.hasNext() ) {
-							adaptor.addChild(root_0, stream_TYPEID.nextNode());
-						}
-						stream_TYPEID.reset();
 
 						adaptor.addChild(root_0, stream_contained_block.nextTree());
 					}
@@ -2939,10 +2893,10 @@ public class SneakersParser extends Parser {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:124:8: ( '#' blockdecl -> ^( FNDECL blockdecl ) )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:124:10: '#' blockdecl
 			{
-			char_literal95=(Token)match(input,29,FOLLOW_29_in_fndecl817);  
+			char_literal95=(Token)match(input,29,FOLLOW_29_in_fndecl809);  
 			stream_29.add(char_literal95);
 
-			pushFollow(FOLLOW_blockdecl_in_fndecl819);
+			pushFollow(FOLLOW_blockdecl_in_fndecl811);
 			blockdecl96=blockdecl();
 			state._fsp--;
 
@@ -3020,10 +2974,10 @@ public class SneakersParser extends Parser {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:127:9: ( '@' blockdecl -> ^( MUTDECL blockdecl ) )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:127:11: '@' blockdecl
 			{
-			char_literal97=(Token)match(input,39,FOLLOW_39_in_mutdecl837);  
+			char_literal97=(Token)match(input,39,FOLLOW_39_in_mutdecl829);  
 			stream_39.add(char_literal97);
 
-			pushFollow(FOLLOW_blockdecl_in_mutdecl839);
+			pushFollow(FOLLOW_blockdecl_in_mutdecl831);
 			blockdecl98=blockdecl();
 			state._fsp--;
 
@@ -3100,7 +3054,7 @@ public class SneakersParser extends Parser {
 
 		try {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:130:6: ( index_expr | dict | fndecl | mutdecl | anonfn | array )
-			int alt25=6;
+			int alt23=6;
 			switch ( input.LA(1) ) {
 			case ANONVAR:
 			case ID:
@@ -3111,22 +3065,22 @@ public class SneakersParser extends Parser {
 			case TYPEID:
 			case 30:
 				{
-				alt25=1;
+				alt23=1;
 				}
 				break;
 			case 48:
 				{
-				alt25=2;
+				alt23=2;
 				}
 				break;
 			case 29:
 				{
-				int LA25_3 = input.LA(2);
-				if ( (LA25_3==40) ) {
-					alt25=5;
+				int LA23_3 = input.LA(2);
+				if ( (LA23_3==40) ) {
+					alt23=5;
 				}
-				else if ( (LA25_3==30) ) {
-					alt25=3;
+				else if ( (LA23_3==30) ) {
+					alt23=3;
 				}
 
 				else {
@@ -3134,7 +3088,7 @@ public class SneakersParser extends Parser {
 					try {
 						input.consume();
 						NoViableAltException nvae =
-							new NoViableAltException("", 25, 3, input);
+							new NoViableAltException("", 23, 3, input);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -3145,27 +3099,27 @@ public class SneakersParser extends Parser {
 				break;
 			case 39:
 				{
-				alt25=4;
+				alt23=4;
 				}
 				break;
 			case 40:
 				{
-				alt25=6;
+				alt23=6;
 				}
 				break;
 			default:
 				NoViableAltException nvae =
-					new NoViableAltException("", 25, 0, input);
+					new NoViableAltException("", 23, 0, input);
 				throw nvae;
 			}
-			switch (alt25) {
+			switch (alt23) {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:130:8: index_expr
 					{
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					pushFollow(FOLLOW_index_expr_in_expr857);
+					pushFollow(FOLLOW_index_expr_in_expr849);
 					index_expr99=index_expr();
 					state._fsp--;
 
@@ -3179,7 +3133,7 @@ public class SneakersParser extends Parser {
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					pushFollow(FOLLOW_dict_in_expr862);
+					pushFollow(FOLLOW_dict_in_expr854);
 					dict100=dict();
 					state._fsp--;
 
@@ -3193,7 +3147,7 @@ public class SneakersParser extends Parser {
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					pushFollow(FOLLOW_fndecl_in_expr867);
+					pushFollow(FOLLOW_fndecl_in_expr859);
 					fndecl101=fndecl();
 					state._fsp--;
 
@@ -3207,7 +3161,7 @@ public class SneakersParser extends Parser {
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					pushFollow(FOLLOW_mutdecl_in_expr872);
+					pushFollow(FOLLOW_mutdecl_in_expr864);
 					mutdecl102=mutdecl();
 					state._fsp--;
 
@@ -3221,7 +3175,7 @@ public class SneakersParser extends Parser {
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					pushFollow(FOLLOW_anonfn_in_expr877);
+					pushFollow(FOLLOW_anonfn_in_expr869);
 					anonfn103=anonfn();
 					state._fsp--;
 
@@ -3235,7 +3189,7 @@ public class SneakersParser extends Parser {
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					pushFollow(FOLLOW_array_in_expr882);
+					pushFollow(FOLLOW_array_in_expr874);
 					array104=array();
 					state._fsp--;
 
@@ -3293,15 +3247,15 @@ public class SneakersParser extends Parser {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:139:2: ( '(' fncall ')' -> fncall )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:139:4: '(' fncall ')'
 			{
-			char_literal105=(Token)match(input,30,FOLLOW_30_in_standalone_fncall893);  
+			char_literal105=(Token)match(input,30,FOLLOW_30_in_standalone_fncall885);  
 			stream_30.add(char_literal105);
 
-			pushFollow(FOLLOW_fncall_in_standalone_fncall895);
+			pushFollow(FOLLOW_fncall_in_standalone_fncall887);
 			fncall106=fncall();
 			state._fsp--;
 
 			stream_fncall.add(fncall106.getTree());
-			char_literal107=(Token)match(input,31,FOLLOW_31_in_standalone_fncall897);  
+			char_literal107=(Token)match(input,31,FOLLOW_31_in_standalone_fncall889);  
 			stream_31.add(char_literal107);
 
 			// AST REWRITE
@@ -3377,21 +3331,21 @@ public class SneakersParser extends Parser {
 
 		try {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:142:9: ( '<' nested_id '>' -> nested_id | '<' fncall '>' -> fncall )
-			int alt26=2;
-			alt26 = dfa26.predict(input);
-			switch (alt26) {
+			int alt24=2;
+			alt24 = dfa24.predict(input);
+			switch (alt24) {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:142:11: '<' nested_id '>'
 					{
-					char_literal108=(Token)match(input,36,FOLLOW_36_in_mutcall911);  
+					char_literal108=(Token)match(input,36,FOLLOW_36_in_mutcall903);  
 					stream_36.add(char_literal108);
 
-					pushFollow(FOLLOW_nested_id_in_mutcall913);
+					pushFollow(FOLLOW_nested_id_in_mutcall905);
 					nested_id109=nested_id();
 					state._fsp--;
 
 					stream_nested_id.add(nested_id109.getTree());
-					char_literal110=(Token)match(input,38,FOLLOW_38_in_mutcall915);  
+					char_literal110=(Token)match(input,38,FOLLOW_38_in_mutcall907);  
 					stream_38.add(char_literal110);
 
 					// AST REWRITE
@@ -3418,15 +3372,15 @@ public class SneakersParser extends Parser {
 				case 2 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:143:4: '<' fncall '>'
 					{
-					char_literal111=(Token)match(input,36,FOLLOW_36_in_mutcall924);  
+					char_literal111=(Token)match(input,36,FOLLOW_36_in_mutcall916);  
 					stream_36.add(char_literal111);
 
-					pushFollow(FOLLOW_fncall_in_mutcall926);
+					pushFollow(FOLLOW_fncall_in_mutcall918);
 					fncall112=fncall();
 					state._fsp--;
 
 					stream_fncall.add(fncall112.getTree());
-					char_literal113=(Token)match(input,38,FOLLOW_38_in_mutcall928);  
+					char_literal113=(Token)match(input,38,FOLLOW_38_in_mutcall920);  
 					stream_38.add(char_literal113);
 
 					// AST REWRITE
@@ -3498,21 +3452,21 @@ public class SneakersParser extends Parser {
 
 		try {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:147:2: ( KEYWORD | INT | STRING | nested_id | standalone_fncall )
-			int alt27=5;
+			int alt25=5;
 			switch ( input.LA(1) ) {
 			case KEYWORD:
 				{
-				alt27=1;
+				alt25=1;
 				}
 				break;
 			case INT:
 				{
-				alt27=2;
+				alt25=2;
 				}
 				break;
 			case STRING:
 				{
-				alt27=3;
+				alt25=3;
 				}
 				break;
 			case ANONVAR:
@@ -3520,27 +3474,27 @@ public class SneakersParser extends Parser {
 			case MUTID:
 			case TYPEID:
 				{
-				alt27=4;
+				alt25=4;
 				}
 				break;
 			case 30:
 				{
-				alt27=5;
+				alt25=5;
 				}
 				break;
 			default:
 				NoViableAltException nvae =
-					new NoViableAltException("", 27, 0, input);
+					new NoViableAltException("", 25, 0, input);
 				throw nvae;
 			}
-			switch (alt27) {
+			switch (alt25) {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:147:4: KEYWORD
 					{
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					KEYWORD114=(Token)match(input,KEYWORD,FOLLOW_KEYWORD_in_index_expr943); 
+					KEYWORD114=(Token)match(input,KEYWORD,FOLLOW_KEYWORD_in_index_expr935); 
 					KEYWORD114_tree = (SneakersAST)adaptor.create(KEYWORD114);
 					adaptor.addChild(root_0, KEYWORD114_tree);
 
@@ -3552,7 +3506,7 @@ public class SneakersParser extends Parser {
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					INT115=(Token)match(input,INT,FOLLOW_INT_in_index_expr948); 
+					INT115=(Token)match(input,INT,FOLLOW_INT_in_index_expr940); 
 					INT115_tree = (SneakersAST)adaptor.create(INT115);
 					adaptor.addChild(root_0, INT115_tree);
 
@@ -3564,7 +3518,7 @@ public class SneakersParser extends Parser {
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					STRING116=(Token)match(input,STRING,FOLLOW_STRING_in_index_expr953); 
+					STRING116=(Token)match(input,STRING,FOLLOW_STRING_in_index_expr945); 
 					STRING116_tree = (SneakersAST)adaptor.create(STRING116);
 					adaptor.addChild(root_0, STRING116_tree);
 
@@ -3576,7 +3530,7 @@ public class SneakersParser extends Parser {
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					pushFollow(FOLLOW_nested_id_in_index_expr958);
+					pushFollow(FOLLOW_nested_id_in_index_expr950);
 					nested_id117=nested_id();
 					state._fsp--;
 
@@ -3590,7 +3544,7 @@ public class SneakersParser extends Parser {
 					root_0 = (SneakersAST)adaptor.nil();
 
 
-					pushFollow(FOLLOW_standalone_fncall_in_index_expr963);
+					pushFollow(FOLLOW_standalone_fncall_in_index_expr955);
 					standalone_fncall118=standalone_fncall();
 					state._fsp--;
 
@@ -3647,21 +3601,21 @@ public class SneakersParser extends Parser {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:155:2: ( index_expr '=>' expr -> index_expr expr )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:155:4: index_expr '=>' expr
 			{
-			pushFollow(FOLLOW_index_expr_in_dict_pair975);
+			pushFollow(FOLLOW_index_expr_in_dict_pair967);
 			index_expr119=index_expr();
 			state._fsp--;
 
 			stream_index_expr.add(index_expr119.getTree());
-			string_literal120=(Token)match(input,37,FOLLOW_37_in_dict_pair977);  
+			string_literal120=(Token)match(input,37,FOLLOW_37_in_dict_pair969);  
 			stream_37.add(string_literal120);
 
-			pushFollow(FOLLOW_expr_in_dict_pair979);
+			pushFollow(FOLLOW_expr_in_dict_pair971);
 			expr121=expr();
 			state._fsp--;
 
 			stream_expr.add(expr121.getTree());
 			// AST REWRITE
-			// elements: expr, index_expr
+			// elements: index_expr, expr
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -3734,20 +3688,20 @@ public class SneakersParser extends Parser {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:6: ( '{' ( dict_pair )? ( ',' dict_pair )* '}' -> ^( DICT ( dict_pair )* ) )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:8: '{' ( dict_pair )? ( ',' dict_pair )* '}'
 			{
-			char_literal122=(Token)match(input,48,FOLLOW_48_in_dict995);  
+			char_literal122=(Token)match(input,48,FOLLOW_48_in_dict987);  
 			stream_48.add(char_literal122);
 
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:12: ( dict_pair )?
-			int alt28=2;
-			int LA28_0 = input.LA(1);
-			if ( (LA28_0==ANONVAR||(LA28_0 >= ID && LA28_0 <= KEYWORD)||LA28_0==MUTID||(LA28_0 >= STRING && LA28_0 <= TYPEID)||LA28_0==30) ) {
-				alt28=1;
+			int alt26=2;
+			int LA26_0 = input.LA(1);
+			if ( (LA26_0==ANONVAR||(LA26_0 >= ID && LA26_0 <= KEYWORD)||LA26_0==MUTID||(LA26_0 >= STRING && LA26_0 <= TYPEID)||LA26_0==30) ) {
+				alt26=1;
 			}
-			switch (alt28) {
+			switch (alt26) {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:13: dict_pair
 					{
-					pushFollow(FOLLOW_dict_pair_in_dict998);
+					pushFollow(FOLLOW_dict_pair_in_dict990);
 					dict_pair123=dict_pair();
 					state._fsp--;
 
@@ -3758,22 +3712,22 @@ public class SneakersParser extends Parser {
 			}
 
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:25: ( ',' dict_pair )*
-			loop29:
+			loop27:
 			while (true) {
-				int alt29=2;
-				int LA29_0 = input.LA(1);
-				if ( (LA29_0==32) ) {
-					alt29=1;
+				int alt27=2;
+				int LA27_0 = input.LA(1);
+				if ( (LA27_0==32) ) {
+					alt27=1;
 				}
 
-				switch (alt29) {
+				switch (alt27) {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:26: ',' dict_pair
 					{
-					char_literal124=(Token)match(input,32,FOLLOW_32_in_dict1003);  
+					char_literal124=(Token)match(input,32,FOLLOW_32_in_dict995);  
 					stream_32.add(char_literal124);
 
-					pushFollow(FOLLOW_dict_pair_in_dict1005);
+					pushFollow(FOLLOW_dict_pair_in_dict997);
 					dict_pair125=dict_pair();
 					state._fsp--;
 
@@ -3782,11 +3736,11 @@ public class SneakersParser extends Parser {
 					break;
 
 				default :
-					break loop29;
+					break loop27;
 				}
 			}
 
-			char_literal126=(Token)match(input,49,FOLLOW_49_in_dict1009);  
+			char_literal126=(Token)match(input,49,FOLLOW_49_in_dict1001);  
 			stream_49.add(char_literal126);
 
 			// AST REWRITE
@@ -3870,15 +3824,15 @@ public class SneakersParser extends Parser {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:162:2: ( '[' block ']' -> block )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:162:4: '[' block ']'
 			{
-			char_literal127=(Token)match(input,40,FOLLOW_40_in_contained_block1031);  
+			char_literal127=(Token)match(input,40,FOLLOW_40_in_contained_block1023);  
 			stream_40.add(char_literal127);
 
-			pushFollow(FOLLOW_block_in_contained_block1033);
+			pushFollow(FOLLOW_block_in_contained_block1025);
 			block128=block();
 			state._fsp--;
 
 			stream_block.add(block128.getTree());
-			char_literal129=(Token)match(input,41,FOLLOW_41_in_contained_block1035);  
+			char_literal129=(Token)match(input,41,FOLLOW_41_in_contained_block1027);  
 			stream_41.add(char_literal129);
 
 			// AST REWRITE
@@ -3954,20 +3908,20 @@ public class SneakersParser extends Parser {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:7: ( '[' ( expr )? ( ',' expr )* ']' -> ^( ARRAY ( expr )* ) )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:9: '[' ( expr )? ( ',' expr )* ']'
 			{
-			char_literal130=(Token)match(input,40,FOLLOW_40_in_array1049);  
+			char_literal130=(Token)match(input,40,FOLLOW_40_in_array1041);  
 			stream_40.add(char_literal130);
 
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:13: ( expr )?
-			int alt30=2;
-			int LA30_0 = input.LA(1);
-			if ( (LA30_0==ANONVAR||(LA30_0 >= ID && LA30_0 <= KEYWORD)||LA30_0==MUTID||(LA30_0 >= STRING && LA30_0 <= TYPEID)||(LA30_0 >= 29 && LA30_0 <= 30)||(LA30_0 >= 39 && LA30_0 <= 40)||LA30_0==48) ) {
-				alt30=1;
+			int alt28=2;
+			int LA28_0 = input.LA(1);
+			if ( (LA28_0==ANONVAR||(LA28_0 >= ID && LA28_0 <= KEYWORD)||LA28_0==MUTID||(LA28_0 >= STRING && LA28_0 <= TYPEID)||(LA28_0 >= 29 && LA28_0 <= 30)||(LA28_0 >= 39 && LA28_0 <= 40)||LA28_0==48) ) {
+				alt28=1;
 			}
-			switch (alt30) {
+			switch (alt28) {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:13: expr
 					{
-					pushFollow(FOLLOW_expr_in_array1051);
+					pushFollow(FOLLOW_expr_in_array1043);
 					expr131=expr();
 					state._fsp--;
 
@@ -3978,22 +3932,22 @@ public class SneakersParser extends Parser {
 			}
 
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:19: ( ',' expr )*
-			loop31:
+			loop29:
 			while (true) {
-				int alt31=2;
-				int LA31_0 = input.LA(1);
-				if ( (LA31_0==32) ) {
-					alt31=1;
+				int alt29=2;
+				int LA29_0 = input.LA(1);
+				if ( (LA29_0==32) ) {
+					alt29=1;
 				}
 
-				switch (alt31) {
+				switch (alt29) {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:20: ',' expr
 					{
-					char_literal132=(Token)match(input,32,FOLLOW_32_in_array1055);  
+					char_literal132=(Token)match(input,32,FOLLOW_32_in_array1047);  
 					stream_32.add(char_literal132);
 
-					pushFollow(FOLLOW_expr_in_array1057);
+					pushFollow(FOLLOW_expr_in_array1049);
 					expr133=expr();
 					state._fsp--;
 
@@ -4002,11 +3956,11 @@ public class SneakersParser extends Parser {
 					break;
 
 				default :
-					break loop31;
+					break loop29;
 				}
 			}
 
-			char_literal134=(Token)match(input,41,FOLLOW_41_in_array1061);  
+			char_literal134=(Token)match(input,41,FOLLOW_41_in_array1053);  
 			stream_41.add(char_literal134);
 
 			// AST REWRITE
@@ -4123,7 +4077,7 @@ public class SneakersParser extends Parser {
 	protected DFA3 dfa3 = new DFA3(this);
 	protected DFA8 dfa8 = new DFA8(this);
 	protected DFA19 dfa19 = new DFA19(this);
-	protected DFA26 dfa26 = new DFA26(this);
+	protected DFA24 dfa24 = new DFA24(this);
 	static final String DFA3_eotS =
 		"\12\uffff";
 	static final String DFA3_eofS =
@@ -4328,19 +4282,19 @@ public class SneakersParser extends Parser {
 		}
 	}
 
-	static final String DFA26_eotS =
+	static final String DFA24_eotS =
 		"\12\uffff";
-	static final String DFA26_eofS =
+	static final String DFA24_eofS =
 		"\12\uffff";
-	static final String DFA26_minS =
+	static final String DFA24_minS =
 		"\1\44\3\5\1\21\2\uffff\1\21\2\5";
-	static final String DFA26_maxS =
+	static final String DFA24_maxS =
 		"\1\44\1\33\2\60\1\33\2\uffff\1\33\2\60";
-	static final String DFA26_acceptS =
+	static final String DFA24_acceptS =
 		"\5\uffff\1\1\1\2\3\uffff";
-	static final String DFA26_specialS =
+	static final String DFA24_specialS =
 		"\12\uffff}>";
-	static final String[] DFA26_transitionS = {
+	static final String[] DFA24_transitionS = {
 			"\1\1",
 			"\1\2\13\uffff\1\3\3\uffff\1\3\5\uffff\1\3",
 			"\1\6\13\uffff\3\6\1\uffff\1\6\4\uffff\2\6\1\uffff\2\6\2\uffff\1\4\4"+
@@ -4357,34 +4311,34 @@ public class SneakersParser extends Parser {
 			"\uffff\1\5\2\6\7\uffff\1\6"
 	};
 
-	static final short[] DFA26_eot = DFA.unpackEncodedString(DFA26_eotS);
-	static final short[] DFA26_eof = DFA.unpackEncodedString(DFA26_eofS);
-	static final char[] DFA26_min = DFA.unpackEncodedStringToUnsignedChars(DFA26_minS);
-	static final char[] DFA26_max = DFA.unpackEncodedStringToUnsignedChars(DFA26_maxS);
-	static final short[] DFA26_accept = DFA.unpackEncodedString(DFA26_acceptS);
-	static final short[] DFA26_special = DFA.unpackEncodedString(DFA26_specialS);
-	static final short[][] DFA26_transition;
+	static final short[] DFA24_eot = DFA.unpackEncodedString(DFA24_eotS);
+	static final short[] DFA24_eof = DFA.unpackEncodedString(DFA24_eofS);
+	static final char[] DFA24_min = DFA.unpackEncodedStringToUnsignedChars(DFA24_minS);
+	static final char[] DFA24_max = DFA.unpackEncodedStringToUnsignedChars(DFA24_maxS);
+	static final short[] DFA24_accept = DFA.unpackEncodedString(DFA24_acceptS);
+	static final short[] DFA24_special = DFA.unpackEncodedString(DFA24_specialS);
+	static final short[][] DFA24_transition;
 
 	static {
-		int numStates = DFA26_transitionS.length;
-		DFA26_transition = new short[numStates][];
+		int numStates = DFA24_transitionS.length;
+		DFA24_transition = new short[numStates][];
 		for (int i=0; i<numStates; i++) {
-			DFA26_transition[i] = DFA.unpackEncodedString(DFA26_transitionS[i]);
+			DFA24_transition[i] = DFA.unpackEncodedString(DFA24_transitionS[i]);
 		}
 	}
 
-	protected class DFA26 extends DFA {
+	protected class DFA24 extends DFA {
 
-		public DFA26(BaseRecognizer recognizer) {
+		public DFA24(BaseRecognizer recognizer) {
 			this.recognizer = recognizer;
-			this.decisionNumber = 26;
-			this.eot = DFA26_eot;
-			this.eof = DFA26_eof;
-			this.min = DFA26_min;
-			this.max = DFA26_max;
-			this.accept = DFA26_accept;
-			this.special = DFA26_special;
-			this.transition = DFA26_transition;
+			this.decisionNumber = 24;
+			this.eot = DFA24_eot;
+			this.eof = DFA24_eof;
+			this.min = DFA24_min;
+			this.max = DFA24_max;
+			this.accept = DFA24_accept;
+			this.special = DFA24_special;
+			this.transition = DFA24_transition;
 		}
 		@Override
 		public String getDescription() {
@@ -4481,56 +4435,56 @@ public class SneakersParser extends Parser {
 	public static final BitSet FOLLOW_nested_id_in_anonfn732 = new BitSet(new long[]{0x0000020000000000L});
 	public static final BitSet FOLLOW_41_in_anonfn734 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_30_in_blockdecl753 = new BitSet(new long[]{0x0000000080000000L});
-	public static final BitSet FOLLOW_31_in_blockdecl755 = new BitSet(new long[]{0x0000010400000000L});
-	public static final BitSet FOLLOW_34_in_blockdecl758 = new BitSet(new long[]{0x0000000008000000L});
-	public static final BitSet FOLLOW_TYPEID_in_blockdecl760 = new BitSet(new long[]{0x0000010000000000L});
-	public static final BitSet FOLLOW_contained_block_in_blockdecl764 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_30_in_blockdecl776 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_fnparam_in_blockdecl778 = new BitSet(new long[]{0x0000000180020000L});
-	public static final BitSet FOLLOW_32_in_blockdecl781 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_fnparam_in_blockdecl784 = new BitSet(new long[]{0x0000000180020000L});
-	public static final BitSet FOLLOW_31_in_blockdecl788 = new BitSet(new long[]{0x0000010400000000L});
-	public static final BitSet FOLLOW_34_in_blockdecl791 = new BitSet(new long[]{0x0000000008000000L});
-	public static final BitSet FOLLOW_TYPEID_in_blockdecl793 = new BitSet(new long[]{0x0000010000000000L});
-	public static final BitSet FOLLOW_contained_block_in_blockdecl797 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_29_in_fndecl817 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_blockdecl_in_fndecl819 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_39_in_mutdecl837 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_blockdecl_in_mutdecl839 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_index_expr_in_expr857 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_dict_in_expr862 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_fndecl_in_expr867 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_mutdecl_in_expr872 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_anonfn_in_expr877 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_array_in_expr882 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_30_in_standalone_fncall893 = new BitSet(new long[]{0x0000000008220020L});
-	public static final BitSet FOLLOW_fncall_in_standalone_fncall895 = new BitSet(new long[]{0x0000000080000000L});
-	public static final BitSet FOLLOW_31_in_standalone_fncall897 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_36_in_mutcall911 = new BitSet(new long[]{0x0000000008220020L});
-	public static final BitSet FOLLOW_nested_id_in_mutcall913 = new BitSet(new long[]{0x0000004000000000L});
-	public static final BitSet FOLLOW_38_in_mutcall915 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_36_in_mutcall924 = new BitSet(new long[]{0x0000000008220020L});
-	public static final BitSet FOLLOW_fncall_in_mutcall926 = new BitSet(new long[]{0x0000004000000000L});
-	public static final BitSet FOLLOW_38_in_mutcall928 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_KEYWORD_in_index_expr943 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_INT_in_index_expr948 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STRING_in_index_expr953 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nested_id_in_index_expr958 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_standalone_fncall_in_index_expr963 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_index_expr_in_dict_pair975 = new BitSet(new long[]{0x0000002000000000L});
-	public static final BitSet FOLLOW_37_in_dict_pair977 = new BitSet(new long[]{0x000101806C2E0020L});
-	public static final BitSet FOLLOW_expr_in_dict_pair979 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_48_in_dict995 = new BitSet(new long[]{0x000200014C2E0020L});
-	public static final BitSet FOLLOW_dict_pair_in_dict998 = new BitSet(new long[]{0x0002000100000000L});
-	public static final BitSet FOLLOW_32_in_dict1003 = new BitSet(new long[]{0x000000004C2E0020L});
-	public static final BitSet FOLLOW_dict_pair_in_dict1005 = new BitSet(new long[]{0x0002000100000000L});
-	public static final BitSet FOLLOW_49_in_dict1009 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_40_in_contained_block1031 = new BitSet(new long[]{0x0000E01008220000L});
-	public static final BitSet FOLLOW_block_in_contained_block1033 = new BitSet(new long[]{0x0000020000000000L});
-	public static final BitSet FOLLOW_41_in_contained_block1035 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_40_in_array1049 = new BitSet(new long[]{0x000103816C2E0020L});
-	public static final BitSet FOLLOW_expr_in_array1051 = new BitSet(new long[]{0x0000020100000000L});
-	public static final BitSet FOLLOW_32_in_array1055 = new BitSet(new long[]{0x000101806C2E0020L});
-	public static final BitSet FOLLOW_expr_in_array1057 = new BitSet(new long[]{0x0000020100000000L});
-	public static final BitSet FOLLOW_41_in_array1061 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_31_in_blockdecl755 = new BitSet(new long[]{0x0000000400000000L});
+	public static final BitSet FOLLOW_34_in_blockdecl757 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_TYPEID_in_blockdecl759 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_contained_block_in_blockdecl761 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_30_in_blockdecl772 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_fnparam_in_blockdecl774 = new BitSet(new long[]{0x0000000180020000L});
+	public static final BitSet FOLLOW_32_in_blockdecl777 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_fnparam_in_blockdecl780 = new BitSet(new long[]{0x0000000180020000L});
+	public static final BitSet FOLLOW_31_in_blockdecl784 = new BitSet(new long[]{0x0000000400000000L});
+	public static final BitSet FOLLOW_34_in_blockdecl786 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_TYPEID_in_blockdecl788 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_contained_block_in_blockdecl790 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_29_in_fndecl809 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_blockdecl_in_fndecl811 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_39_in_mutdecl829 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_blockdecl_in_mutdecl831 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_index_expr_in_expr849 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_dict_in_expr854 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_fndecl_in_expr859 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_mutdecl_in_expr864 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_anonfn_in_expr869 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_array_in_expr874 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_30_in_standalone_fncall885 = new BitSet(new long[]{0x0000000008220020L});
+	public static final BitSet FOLLOW_fncall_in_standalone_fncall887 = new BitSet(new long[]{0x0000000080000000L});
+	public static final BitSet FOLLOW_31_in_standalone_fncall889 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_36_in_mutcall903 = new BitSet(new long[]{0x0000000008220020L});
+	public static final BitSet FOLLOW_nested_id_in_mutcall905 = new BitSet(new long[]{0x0000004000000000L});
+	public static final BitSet FOLLOW_38_in_mutcall907 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_36_in_mutcall916 = new BitSet(new long[]{0x0000000008220020L});
+	public static final BitSet FOLLOW_fncall_in_mutcall918 = new BitSet(new long[]{0x0000004000000000L});
+	public static final BitSet FOLLOW_38_in_mutcall920 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_KEYWORD_in_index_expr935 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_INT_in_index_expr940 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STRING_in_index_expr945 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nested_id_in_index_expr950 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_standalone_fncall_in_index_expr955 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_index_expr_in_dict_pair967 = new BitSet(new long[]{0x0000002000000000L});
+	public static final BitSet FOLLOW_37_in_dict_pair969 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_expr_in_dict_pair971 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_48_in_dict987 = new BitSet(new long[]{0x000200014C2E0020L});
+	public static final BitSet FOLLOW_dict_pair_in_dict990 = new BitSet(new long[]{0x0002000100000000L});
+	public static final BitSet FOLLOW_32_in_dict995 = new BitSet(new long[]{0x000000004C2E0020L});
+	public static final BitSet FOLLOW_dict_pair_in_dict997 = new BitSet(new long[]{0x0002000100000000L});
+	public static final BitSet FOLLOW_49_in_dict1001 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_40_in_contained_block1023 = new BitSet(new long[]{0x0000E01008220000L});
+	public static final BitSet FOLLOW_block_in_contained_block1025 = new BitSet(new long[]{0x0000020000000000L});
+	public static final BitSet FOLLOW_41_in_contained_block1027 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_40_in_array1041 = new BitSet(new long[]{0x000103816C2E0020L});
+	public static final BitSet FOLLOW_expr_in_array1043 = new BitSet(new long[]{0x0000020100000000L});
+	public static final BitSet FOLLOW_32_in_array1047 = new BitSet(new long[]{0x000101806C2E0020L});
+	public static final BitSet FOLLOW_expr_in_array1049 = new BitSet(new long[]{0x0000020100000000L});
+	public static final BitSet FOLLOW_41_in_array1053 = new BitSet(new long[]{0x0000000000000002L});
 }

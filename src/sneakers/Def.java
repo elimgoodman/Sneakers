@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Def.g 2013-05-27 12:43:53
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Def.g 2013-05-27 13:30:30
  package sneakers; 
 
 import org.antlr.runtime.*;
@@ -116,6 +116,7 @@ public class Def extends TreeFilter {
 				}
 				break;
 			case ASSIGN:
+			case FNPARAM:
 				{
 				alt1=3;
 				}
@@ -442,25 +443,28 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "varDeclaration"
-	// /Users/eli/dev/Sneakers-Java/Def.g:93:1: varDeclaration : ( ^( '=' ID ^( FNDECL ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) );
+	// /Users/eli/dev/Sneakers-Java/Def.g:93:1: varDeclaration : ( ^( '=' ID ^( FNDECL TYPEID ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) | ^( FNPARAM ID TYPEID ) );
 	public final void varDeclaration() throws RecognitionException {
 		SneakersAST ID1=null;
-		SneakersAST ID2=null;
+		SneakersAST TYPEID2=null;
+		SneakersAST ID3=null;
+		SneakersAST ID4=null;
+		SneakersAST TYPEID5=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:94:2: ( ^( '=' ID ^( FNDECL ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) )
-			int alt5=2;
+			// /Users/eli/dev/Sneakers-Java/Def.g:94:2: ( ^( '=' ID ^( FNDECL TYPEID ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) | ^( FNPARAM ID TYPEID ) )
+			int alt5=3;
 			int LA5_0 = input.LA(1);
 			if ( (LA5_0==ASSIGN) ) {
 				int LA5_1 = input.LA(2);
 				if ( (LA5_1==DOWN) ) {
-					int LA5_2 = input.LA(3);
-					if ( (LA5_2==ID) ) {
-						int LA5_3 = input.LA(4);
-						if ( (LA5_3==FNDECL) ) {
+					int LA5_3 = input.LA(3);
+					if ( (LA5_3==ID) ) {
+						int LA5_4 = input.LA(4);
+						if ( (LA5_4==FNDECL) ) {
 							alt5=1;
 						}
-						else if ( ((LA5_3 >= UP && LA5_3 <= FNCALL)||(LA5_3 >= FNPARAM && LA5_3 <= 50)) ) {
+						else if ( ((LA5_4 >= UP && LA5_4 <= FNCALL)||(LA5_4 >= FNPARAM && LA5_4 <= 50)) ) {
 							alt5=2;
 						}
 
@@ -472,7 +476,7 @@ public class Def extends TreeFilter {
 									input.consume();
 								}
 								NoViableAltException nvae =
-									new NoViableAltException("", 5, 3, input);
+									new NoViableAltException("", 5, 4, input);
 								throw nvae;
 							} finally {
 								input.rewind(nvaeMark);
@@ -489,7 +493,7 @@ public class Def extends TreeFilter {
 								input.consume();
 							}
 							NoViableAltException nvae =
-								new NoViableAltException("", 5, 2, input);
+								new NoViableAltException("", 5, 3, input);
 							throw nvae;
 						} finally {
 							input.rewind(nvaeMark);
@@ -512,6 +516,9 @@ public class Def extends TreeFilter {
 				}
 
 			}
+			else if ( (LA5_0==FNPARAM) ) {
+				alt5=3;
+			}
 
 			else {
 				if (state.backtracking>0) {state.failed=true; return;}
@@ -522,41 +529,40 @@ public class Def extends TreeFilter {
 
 			switch (alt5) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:94:4: ^( '=' ID ^( FNDECL ( . )* ) )
+					// /Users/eli/dev/Sneakers-Java/Def.g:94:4: ^( '=' ID ^( FNDECL TYPEID ( . )* ) )
 					{
 					match(input,ASSIGN,FOLLOW_ASSIGN_in_varDeclaration341); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
 					ID1=(SneakersAST)match(input,ID,FOLLOW_ID_in_varDeclaration343); if (state.failed) return;
 					match(input,FNDECL,FOLLOW_FNDECL_in_varDeclaration346); if (state.failed) return;
-					if ( input.LA(1)==Token.DOWN ) {
-						match(input, Token.DOWN, null); if (state.failed) return;
-						// /Users/eli/dev/Sneakers-Java/Def.g:94:22: ( . )*
-						loop3:
-						while (true) {
-							int alt3=2;
-							int LA3_0 = input.LA(1);
-							if ( ((LA3_0 >= ANONFN && LA3_0 <= 50)) ) {
-								alt3=1;
-							}
-							else if ( (LA3_0==UP) ) {
-								alt3=2;
-							}
-
-							switch (alt3) {
-							case 1 :
-								// /Users/eli/dev/Sneakers-Java/Def.g:94:22: .
-								{
-								matchAny(input); if (state.failed) return;
-								}
-								break;
-
-							default :
-								break loop3;
-							}
+					match(input, Token.DOWN, null); if (state.failed) return;
+					TYPEID2=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_varDeclaration348); if (state.failed) return;
+					// /Users/eli/dev/Sneakers-Java/Def.g:94:29: ( . )*
+					loop3:
+					while (true) {
+						int alt3=2;
+						int LA3_0 = input.LA(1);
+						if ( ((LA3_0 >= ANONFN && LA3_0 <= 50)) ) {
+							alt3=1;
+						}
+						else if ( (LA3_0==UP) ) {
+							alt3=2;
 						}
 
-						match(input, Token.UP, null); if (state.failed) return;
+						switch (alt3) {
+						case 1 :
+							// /Users/eli/dev/Sneakers-Java/Def.g:94:29: .
+							{
+							matchAny(input); if (state.failed) return;
+							}
+							break;
+
+						default :
+							break loop3;
+						}
 					}
+
+					match(input, Token.UP, null); if (state.failed) return;
 
 					match(input, Token.UP, null); if (state.failed) return;
 
@@ -564,6 +570,8 @@ public class Def extends TreeFilter {
 							System.out.println("line "+ID1.getLine()+": def "+(ID1!=null?ID1.getText():null));
 					        
 					        	MethodSymbol ms = new MethodSymbol((ID1!=null?ID1.getText():null),null,currentScope);
+					        	
+					        	TYPEID2.scope = currentScope;
 					        	ms.def = ID1;            // track AST location of def's ID
 						        ID1.symbol = ms;         // track in AST
 					        	currentScope.define(ms); // def method in globals
@@ -572,12 +580,12 @@ public class Def extends TreeFilter {
 					}
 					break;
 				case 2 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:104:11: ^( '=' ID (~ ( FNDECL ) )* )
+					// /Users/eli/dev/Sneakers-Java/Def.g:106:11: ^( '=' ID (~ ( FNDECL ) )* )
 					{
-					match(input,ASSIGN,FOLLOW_ASSIGN_in_varDeclaration367); if (state.failed) return;
+					match(input,ASSIGN,FOLLOW_ASSIGN_in_varDeclaration369); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
-					ID2=(SneakersAST)match(input,ID,FOLLOW_ID_in_varDeclaration369); if (state.failed) return;
-					// /Users/eli/dev/Sneakers-Java/Def.g:104:20: (~ ( FNDECL ) )*
+					ID3=(SneakersAST)match(input,ID,FOLLOW_ID_in_varDeclaration371); if (state.failed) return;
+					// /Users/eli/dev/Sneakers-Java/Def.g:106:20: (~ ( FNDECL ) )*
 					loop4:
 					while (true) {
 						int alt4=2;
@@ -611,13 +619,35 @@ public class Def extends TreeFilter {
 					match(input, Token.UP, null); if (state.failed) return;
 
 					if ( state.backtracking==1 ) {
-					        System.out.println("line "+ID2.getLine()+": def "+(ID2!=null?ID2.getText():null));
+					        	System.out.println("line "+ID3.getLine()+": def "+(ID3!=null?ID3.getText():null));
 					        
-					        VariableSymbol vs = new VariableSymbol((ID2!=null?ID2.getText():null),null);
-					        vs.scope = currentScope;
-					        vs.def = ID2;            // track AST location of def's ID
-					        ID2.symbol = vs;         // track in AST
-					        currentScope.define(vs);
+						        VariableSymbol vs = new VariableSymbol((ID3!=null?ID3.getText():null),null);
+						        vs.scope = currentScope;
+					        	vs.def = ID3;            // track AST location of def's ID
+						        ID3.symbol = vs;         // track in AST
+					        	currentScope.define(vs);
+					        }
+					}
+					break;
+				case 3 :
+					// /Users/eli/dev/Sneakers-Java/Def.g:116:11: ^( FNPARAM ID TYPEID )
+					{
+					match(input,FNPARAM,FOLLOW_FNPARAM_in_varDeclaration402); if (state.failed) return;
+					match(input, Token.DOWN, null); if (state.failed) return;
+					ID4=(SneakersAST)match(input,ID,FOLLOW_ID_in_varDeclaration404); if (state.failed) return;
+					TYPEID5=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_varDeclaration406); if (state.failed) return;
+					match(input, Token.UP, null); if (state.failed) return;
+
+					if ( state.backtracking==1 ) {
+					        	System.out.println("fn param line "+ID4.getLine()+": def "+(ID4!=null?ID4.getText():null));
+					        
+						        VariableSymbol vs = new VariableSymbol((ID4!=null?ID4.getText():null),null);
+						        
+						        TYPEID5.scope = currentScope;
+						        vs.scope = currentScope;
+					        	vs.def = ID4;            // track AST location of def's ID
+						        ID4.symbol = vs;         // track in AST
+					        	currentScope.define(vs);
 					        }
 					}
 					break;
@@ -655,6 +685,10 @@ public class Def extends TreeFilter {
 	public static final BitSet FOLLOW_ASSIGN_in_varDeclaration341 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_ID_in_varDeclaration343 = new BitSet(new long[]{0x0000000000008000L});
 	public static final BitSet FOLLOW_FNDECL_in_varDeclaration346 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ASSIGN_in_varDeclaration367 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_varDeclaration369 = new BitSet(new long[]{0x0007FFFFFFFF7FF8L});
+	public static final BitSet FOLLOW_TYPEID_in_varDeclaration348 = new BitSet(new long[]{0x0007FFFFFFFFFFF8L});
+	public static final BitSet FOLLOW_ASSIGN_in_varDeclaration369 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_ID_in_varDeclaration371 = new BitSet(new long[]{0x0007FFFFFFFF7FF8L});
+	public static final BitSet FOLLOW_FNPARAM_in_varDeclaration402 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_ID_in_varDeclaration404 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_TYPEID_in_varDeclaration406 = new BitSet(new long[]{0x0000000000000008L});
 }

@@ -208,6 +208,7 @@ public class ParseTests {
     }
     
     @Test
+    @Ignore
     public void testSimpleAssign() {
 	ParseResult result = getNodes("a = 1;b = 2;");
 	SymbolTable symtab = new SymbolTable();
@@ -220,6 +221,7 @@ public class ParseTests {
     @Test
     public void testFnScope() {
 	ParseResult result = getNodes("f = #(x:Int):Int [a = 1;];");
+    printTree(result.tree, 4);
 	SymbolTable symtab = new SymbolTable();
 	Def def = new Def(result.stream, symtab);
 	def.downup(result.tree);
@@ -228,6 +230,7 @@ public class ParseTests {
     }
     
     @Test
+    @Ignore
     public void testClassScope() {
 	ParseResult result = getNodes("Person = class {:a => Int};");
 	//printTree(result.tree, 4);
@@ -239,6 +242,7 @@ public class ParseTests {
     } 
     
     @Test
+    @Ignore
     public void testSimpleRef() {
 	ParseResult result = getNodes("a = 1;");
 	//printTree(result.tree, 4);
@@ -251,6 +255,7 @@ public class ParseTests {
 	Ref ref = new Ref(result.stream, symtab);
 	ref.downup(result.tree);
 	
+	assertEquals(true, true);
 	//SneakersAST s = (SneakersAST) result.tree.getChild(0).getChild(0);
 	//assertEquals(s.symbol.name, "Person");
     } 

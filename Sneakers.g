@@ -117,8 +117,8 @@ anonfn	:	'#' '[' fncall ']' -> ^(ANONFN fncall)
 	;
 
 blockdecl
-	:	'(' ')' (':' TYPEID)? contained_block -> TYPEID? contained_block
-	|	'(' fnparam (','? fnparam)* ')' (':' TYPEID)? contained_block -> fnparam* TYPEID? contained_block
+	:	'(' ')' ':' TYPEID contained_block -> TYPEID contained_block
+	|	'(' fnparam (','? fnparam)* ')' ':' TYPEID contained_block -> TYPEID fnparam* contained_block
 	;
 
 fndecl	:	'#' blockdecl -> ^(FNDECL blockdecl)

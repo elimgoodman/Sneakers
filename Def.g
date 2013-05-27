@@ -91,11 +91,13 @@ atoms
 
 // START: var
 varDeclaration // global, parameter, or local variable
-	:	^('=' ID ^(FNDECL .*))
+	:	^('=' ID ^(FNDECL TYPEID .*))
 	{
 		System.out.println("line "+$ID.getLine()+": def "+$ID.text);
         
         	MethodSymbol ms = new MethodSymbol($ID.text,null,currentScope);
+        	
+        	$TYPEID.scope = currentScope;
         	ms.def = $ID;            // track AST location of def's ID
 	        $ID.symbol = ms;         // track in AST
         	currentScope.define(ms); // def method in globals
@@ -103,13 +105,25 @@ varDeclaration // global, parameter, or local variable
 	}
     	|   	^('=' ID ~(FNDECL)* )
         {
-        System.out.println("line "+$ID.getLine()+": def "+$ID.text);
+        	System.out.println("line "+$ID.getLine()+": def "+$ID.text);
         
-        VariableSymbol vs = new VariableSymbol($ID.text,null);
-        vs.scope = currentScope;
-        vs.def = $ID;            // track AST location of def's ID
-        $ID.symbol = vs;         // track in AST
-        currentScope.define(vs);
+	        VariableSymbol vs = new VariableSymbol($ID.text,null);
+	        vs.scope = currentScope;
+        	vs.def = $ID;            // track AST location of def's ID
+	        $ID.symbol = vs;         // track in AST
+        	currentScope.define(vs);
+        }
+        |	^(FNPARAM ID TYPEID)
+        {
+        	System.out.println("fn param line "+$ID.getLine()+": def "+$ID.text);
+        
+	        VariableSymbol vs = new VariableSymbol($ID.text,null);
+	        
+	        $TYPEID.scope = currentScope;
+	        vs.scope = currentScope;
+        	vs.def = $ID;            // track AST location of def's ID
+	        $ID.symbol = vs;         // track in AST
+        	currentScope.define(vs);
         }
     ;
 // END: field

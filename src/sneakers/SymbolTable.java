@@ -25,9 +25,13 @@ public class SymbolTable {
         globals.define(objectRoot);
 */
         // define predefined atomic types
-        globals.define(new BuiltInTypeSymbol("int"));
-        globals.define(new BuiltInTypeSymbol("float"));
-        globals.define(new BuiltInTypeSymbol("void")); // pseudo-type
+        globals.define(new BuiltInTypeSymbol("Int"));
+        globals.define(new BuiltInTypeSymbol("Float"));
+        globals.define(new BuiltInTypeSymbol("String"));
+        globals.define(new BuiltInTypeSymbol("Boolean"));
+        globals.define(new BuiltInTypeSymbol("List"));
+        globals.define(new BuiltInTypeSymbol("Map"));
+        globals.define(new BuiltInTypeSymbol("None")); // pseudo-type
     }
 
     public static Symbol resolveID(SneakersAST idAST) {
