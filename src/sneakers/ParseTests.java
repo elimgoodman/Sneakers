@@ -208,7 +208,7 @@ public class ParseTests {
     }
     
     @Test
-    @Ignore
+    //@Ignore
     public void testSimpleAssign() {
 	ParseResult result = getNodes("a = 1;b = 2;");
 	SymbolTable symtab = new SymbolTable();
@@ -219,7 +219,7 @@ public class ParseTests {
     }
     
     @Test
-    @Ignore
+    //@Ignore
     public void testFnScope() {
 	ParseResult result = getNodes("f = #(x:Int):Int [a = 1;];");
 	SymbolTable symtab = new SymbolTable();
@@ -230,7 +230,7 @@ public class ParseTests {
     }
     
     @Test
-    @Ignore
+    //@Ignore
     public void testClassScope() {
 	ParseResult result = getNodes("Person = class {:a => Int};");
 	//printTree(result.tree, 4);
@@ -244,7 +244,7 @@ public class ParseTests {
     @Test
     public void testClassScopeComplex() {
 	ParseResult result = getNodes("Person = class {:a => Int, :b => String, :foo => #(Int):String, :bar => #(x:Int, y:String):String[pass;]};");
-printTree(result.tree, 4);
+//printTree(result.tree, 4);
 	SymbolTable symtab = new SymbolTable();
 	Def def = new Def(result.stream, symtab);
 	def.downup(result.tree);
@@ -253,7 +253,7 @@ printTree(result.tree, 4);
     } 
     
     @Test
-    @Ignore
+    //@Ignore
     public void testSimpleRef() {
 	ParseResult result = getNodes("a = 1;");
 	//printTree(result.tree, 4);

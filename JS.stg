@@ -1,0 +1,6 @@
+group JS;
+
+// START: file
+file(stats) ::= <<
+<stats; separator="\n">
+>>

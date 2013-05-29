@@ -16,6 +16,11 @@ options {
         this.symtab = symtab;
         currentScope = symtab.globals;
     }
+    
+    private void print(String s) {
+    	//System.out.println(s);
+    }
+    
 }
 // END: header
 
@@ -38,17 +43,17 @@ bottomup
 enterBlock
     :   BLOCK 
     	{
-    		System.out.println("enter block");
-    		System.out.println("PUSH SCOPE");
+    		print("enter block");
+    		print("PUSH SCOPE");
     		currentScope = new LocalScope(currentScope);
     	} // push scope
     ;
 exitBlock
     :   BLOCK
         {
-        	System.out.println("OUT OF BLOCK");
-        	System.out.println("locals: "+currentScope);
-        	System.out.println("POP SCOPE");
+        	print("OUT OF BLOCK");
+        	print("locals: "+currentScope);
+        	print("POP SCOPE");
 	        currentScope = currentScope.getEnclosingScope();    // pop scope
         }
     ;
@@ -57,14 +62,14 @@ exitBlock
 enterClass
     :   ^('class' name=TYPEID .*)
         { // def class but leave superclass blank until ref phase
-        System.out.println("line "+$name.getLine()+
+        print("line "+$name.getLine()+
                            ": def class "+$name.text);
         // record scope in AST for next pass
         ClassSymbol cs = new ClassSymbol($name.text,currentScope,null);
         cs.def = $name;           // point from symbol table into AST
         $name.symbol = cs;        // point from AST into symbol table
         currentScope.define(cs);  // def class in current scope
-        System.out.println("PUSH SCOPE");
+        print("PUSH SCOPE");
         currentScope = cs;        // set current scope to class scope
         }
     ;
@@ -73,9 +78,9 @@ enterClass
 exitClass
     :   CLASSDEF
         {
-        System.out.println("OUT OF CLASS");
-        System.out.println("members: "+currentScope);
-        System.out.println("POP SCOPE");
+        print("OUT OF CLASS");
+        print("members: "+currentScope);
+        print("POP SCOPE");
         currentScope = currentScope.getEnclosingScope();    // pop scope
         }
     ;
@@ -84,9 +89,9 @@ exitClass
 exitMethod
     :   FNDECL
         {
-        System.out.println("OUT OF METHOD");
-        System.out.println("args: "+currentScope);
-        System.out.println("POP SCOPE");
+        print("OUT OF METHOD");
+        print("args: "+currentScope);
+        print("POP SCOPE");
         currentScope = currentScope.getEnclosingScope();    // pop arg scope
         }
     ;
@@ -104,7 +109,7 @@ atoms
 varDeclaration // global, parameter, or local variable
 	:	^('=' ID ^(FNDECL TYPEID .*))
 	{
-		System.out.println("line "+$ID.getLine()+": def "+$ID.text);
+		print("line "+$ID.getLine()+": def "+$ID.text);
         
         	MethodSymbol ms = new MethodSymbol($ID.text,null,currentScope);
         	
@@ -113,12 +118,12 @@ varDeclaration // global, parameter, or local variable
 	        $ID.symbol = ms;         // track in AST
         	currentScope.define(ms); // def method in globals
         	
-        	System.out.println("PUSH SCOPE");
+        	print("PUSH SCOPE");
 	        currentScope = ms;       // set current scope to method scope
 	}
     	|   	^('=' ID ~(FNDECL)* )
         {
-        	System.out.println("line "+$ID.getLine()+": def "+$ID.text);
+        	print("line "+$ID.getLine()+": def "+$ID.text);
         
 	        VariableSymbol vs = new VariableSymbol($ID.text,null);
 	        vs.scope = currentScope;
@@ -128,7 +133,7 @@ varDeclaration // global, parameter, or local variable
         }
         |	^(FNPARAM ID TYPEID)
         {
-        	System.out.println("fn param line "+$ID.getLine()+": def "+$ID.text);
+        	print("fn param line "+$ID.getLine()+": def "+$ID.text);
         
 	        VariableSymbol vs = new VariableSymbol($ID.text,null);
 	        
@@ -140,7 +145,7 @@ varDeclaration // global, parameter, or local variable
         }
         |	^(FIELDDEF KEYWORD ^(~FNDECL .*))
         {
-        	System.out.println("class var line "+$KEYWORD.getLine()+": def "+$KEYWORD.text);
+        	print("class var line "+$KEYWORD.getLine()+": def "+$KEYWORD.text);
         	
         	String text = $KEYWORD.text.substring(1);
 	        VariableSymbol vs = new VariableSymbol(text, null);
@@ -152,7 +157,7 @@ varDeclaration // global, parameter, or local variable
         }
         |	^(FIELDDEF KEYWORD ^(FNDECL .+))
         {
-        	System.out.println("class method line "+$KEYWORD.getLine()+": def "+$KEYWORD.text);
+        	print("class method line "+$KEYWORD.getLine()+": def "+$KEYWORD.text);
         	
         	String text = $KEYWORD.text.substring(1);
         	MethodSymbol ms = new MethodSymbol(text,null,currentScope);
@@ -162,7 +167,7 @@ varDeclaration // global, parameter, or local variable
 	        $KEYWORD.symbol = ms;         // track in AST
         	currentScope.define(ms);
         	
-        	System.out.println("PUSH SCOPE");
+        	print("PUSH SCOPE");
 	        currentScope = ms;
         }
     ;

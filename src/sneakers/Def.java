@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Def.g 2013-05-28 22:44:05
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Def.g 2013-05-28 22:47:04
  package sneakers; 
 
 import org.antlr.runtime.*;
@@ -95,14 +95,19 @@ public class Def extends TreeFilter {
 	        this.symtab = symtab;
 	        currentScope = symtab.globals;
 	    }
+	    
+	    private void print(String s) {
+	    	//System.out.println(s);
+	    }
+	    
 
 
 
 	// $ANTLR start "topdown"
-	// /Users/eli/dev/Sneakers-Java/Def.g:22:1: topdown : ( enterBlock | enterClass | varDeclaration | atoms );
+	// /Users/eli/dev/Sneakers-Java/Def.g:27:1: topdown : ( enterBlock | enterClass | varDeclaration | atoms );
 	public final void topdown() throws RecognitionException {
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:23:5: ( enterBlock | enterClass | varDeclaration | atoms )
+			// /Users/eli/dev/Sneakers-Java/Def.g:28:5: ( enterBlock | enterClass | varDeclaration | atoms )
 			int alt1=4;
 			switch ( input.LA(1) ) {
 			case BLOCK:
@@ -137,7 +142,7 @@ public class Def extends TreeFilter {
 			}
 			switch (alt1) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:23:9: enterBlock
+					// /Users/eli/dev/Sneakers-Java/Def.g:28:9: enterBlock
 					{
 					pushFollow(FOLLOW_enterBlock_in_topdown63);
 					enterBlock();
@@ -146,7 +151,7 @@ public class Def extends TreeFilter {
 					}
 					break;
 				case 2 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:25:7: enterClass
+					// /Users/eli/dev/Sneakers-Java/Def.g:30:7: enterClass
 					{
 					pushFollow(FOLLOW_enterClass_in_topdown76);
 					enterClass();
@@ -155,7 +160,7 @@ public class Def extends TreeFilter {
 					}
 					break;
 				case 3 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:26:9: varDeclaration
+					// /Users/eli/dev/Sneakers-Java/Def.g:31:9: varDeclaration
 					{
 					pushFollow(FOLLOW_varDeclaration_in_topdown86);
 					varDeclaration();
@@ -164,7 +169,7 @@ public class Def extends TreeFilter {
 					}
 					break;
 				case 4 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:27:9: atoms
+					// /Users/eli/dev/Sneakers-Java/Def.g:32:9: atoms
 					{
 					pushFollow(FOLLOW_atoms_in_topdown96);
 					atoms();
@@ -188,10 +193,10 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "bottomup"
-	// /Users/eli/dev/Sneakers-Java/Def.g:30:1: bottomup : ( exitBlock | exitMethod | exitClass );
+	// /Users/eli/dev/Sneakers-Java/Def.g:35:1: bottomup : ( exitBlock | exitMethod | exitClass );
 	public final void bottomup() throws RecognitionException {
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:31:5: ( exitBlock | exitMethod | exitClass )
+			// /Users/eli/dev/Sneakers-Java/Def.g:36:5: ( exitBlock | exitMethod | exitClass )
 			int alt2=3;
 			switch ( input.LA(1) ) {
 			case BLOCK:
@@ -217,7 +222,7 @@ public class Def extends TreeFilter {
 			}
 			switch (alt2) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:31:9: exitBlock
+					// /Users/eli/dev/Sneakers-Java/Def.g:36:9: exitBlock
 					{
 					pushFollow(FOLLOW_exitBlock_in_bottomup115);
 					exitBlock();
@@ -226,7 +231,7 @@ public class Def extends TreeFilter {
 					}
 					break;
 				case 2 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:32:9: exitMethod
+					// /Users/eli/dev/Sneakers-Java/Def.g:37:9: exitMethod
 					{
 					pushFollow(FOLLOW_exitMethod_in_bottomup125);
 					exitMethod();
@@ -235,7 +240,7 @@ public class Def extends TreeFilter {
 					}
 					break;
 				case 3 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:33:9: exitClass
+					// /Users/eli/dev/Sneakers-Java/Def.g:38:9: exitClass
 					{
 					pushFollow(FOLLOW_exitClass_in_bottomup135);
 					exitClass();
@@ -259,16 +264,16 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "enterBlock"
-	// /Users/eli/dev/Sneakers-Java/Def.g:38:1: enterBlock : BLOCK ;
+	// /Users/eli/dev/Sneakers-Java/Def.g:43:1: enterBlock : BLOCK ;
 	public final void enterBlock() throws RecognitionException {
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:39:5: ( BLOCK )
-			// /Users/eli/dev/Sneakers-Java/Def.g:39:9: BLOCK
+			// /Users/eli/dev/Sneakers-Java/Def.g:44:5: ( BLOCK )
+			// /Users/eli/dev/Sneakers-Java/Def.g:44:9: BLOCK
 			{
 			match(input,BLOCK,FOLLOW_BLOCK_in_enterBlock156); if (state.failed) return;
 			if ( state.backtracking==1 ) {
-			    		System.out.println("enter block");
-			    		System.out.println("PUSH SCOPE");
+			    		print("enter block");
+			    		print("PUSH SCOPE");
 			    		currentScope = new LocalScope(currentScope);
 			    	}
 			}
@@ -287,17 +292,17 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "exitBlock"
-	// /Users/eli/dev/Sneakers-Java/Def.g:46:1: exitBlock : BLOCK ;
+	// /Users/eli/dev/Sneakers-Java/Def.g:51:1: exitBlock : BLOCK ;
 	public final void exitBlock() throws RecognitionException {
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:47:5: ( BLOCK )
-			// /Users/eli/dev/Sneakers-Java/Def.g:47:9: BLOCK
+			// /Users/eli/dev/Sneakers-Java/Def.g:52:5: ( BLOCK )
+			// /Users/eli/dev/Sneakers-Java/Def.g:52:9: BLOCK
 			{
 			match(input,BLOCK,FOLLOW_BLOCK_in_exitBlock183); if (state.failed) return;
 			if ( state.backtracking==1 ) {
-			        	System.out.println("OUT OF BLOCK");
-			        	System.out.println("locals: "+currentScope);
-			        	System.out.println("POP SCOPE");
+			        	print("OUT OF BLOCK");
+			        	print("locals: "+currentScope);
+			        	print("POP SCOPE");
 				        currentScope = currentScope.getEnclosingScope();    // pop scope
 			        }
 			}
@@ -316,18 +321,18 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "enterClass"
-	// /Users/eli/dev/Sneakers-Java/Def.g:57:1: enterClass : ^( 'class' name= TYPEID ( . )* ) ;
+	// /Users/eli/dev/Sneakers-Java/Def.g:62:1: enterClass : ^( 'class' name= TYPEID ( . )* ) ;
 	public final void enterClass() throws RecognitionException {
 		SneakersAST name=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:58:5: ( ^( 'class' name= TYPEID ( . )* ) )
-			// /Users/eli/dev/Sneakers-Java/Def.g:58:9: ^( 'class' name= TYPEID ( . )* )
+			// /Users/eli/dev/Sneakers-Java/Def.g:63:5: ( ^( 'class' name= TYPEID ( . )* ) )
+			// /Users/eli/dev/Sneakers-Java/Def.g:63:9: ^( 'class' name= TYPEID ( . )* )
 			{
 			match(input,CLASSDEF,FOLLOW_CLASSDEF_in_enterClass214); if (state.failed) return;
 			match(input, Token.DOWN, null); if (state.failed) return;
 			name=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_enterClass218); if (state.failed) return;
-			// /Users/eli/dev/Sneakers-Java/Def.g:58:31: ( . )*
+			// /Users/eli/dev/Sneakers-Java/Def.g:63:31: ( . )*
 			loop3:
 			while (true) {
 				int alt3=2;
@@ -341,7 +346,7 @@ public class Def extends TreeFilter {
 
 				switch (alt3) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:58:31: .
+					// /Users/eli/dev/Sneakers-Java/Def.g:63:31: .
 					{
 					matchAny(input); if (state.failed) return;
 					}
@@ -355,14 +360,14 @@ public class Def extends TreeFilter {
 			match(input, Token.UP, null); if (state.failed) return;
 
 			if ( state.backtracking==1 ) { // def class but leave superclass blank until ref phase
-			        System.out.println("line "+name.getLine()+
+			        print("line "+name.getLine()+
 			                           ": def class "+(name!=null?name.getText():null));
 			        // record scope in AST for next pass
 			        ClassSymbol cs = new ClassSymbol((name!=null?name.getText():null),currentScope,null);
 			        cs.def = name;           // point from symbol table into AST
 			        name.symbol = cs;        // point from AST into symbol table
 			        currentScope.define(cs);  // def class in current scope
-			        System.out.println("PUSH SCOPE");
+			        print("PUSH SCOPE");
 			        currentScope = cs;        // set current scope to class scope
 			        }
 			}
@@ -381,17 +386,17 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "exitClass"
-	// /Users/eli/dev/Sneakers-Java/Def.g:73:1: exitClass : CLASSDEF ;
+	// /Users/eli/dev/Sneakers-Java/Def.g:78:1: exitClass : CLASSDEF ;
 	public final void exitClass() throws RecognitionException {
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:74:5: ( CLASSDEF )
-			// /Users/eli/dev/Sneakers-Java/Def.g:74:9: CLASSDEF
+			// /Users/eli/dev/Sneakers-Java/Def.g:79:5: ( CLASSDEF )
+			// /Users/eli/dev/Sneakers-Java/Def.g:79:9: CLASSDEF
 			{
 			match(input,CLASSDEF,FOLLOW_CLASSDEF_in_exitClass252); if (state.failed) return;
 			if ( state.backtracking==1 ) {
-			        System.out.println("OUT OF CLASS");
-			        System.out.println("members: "+currentScope);
-			        System.out.println("POP SCOPE");
+			        print("OUT OF CLASS");
+			        print("members: "+currentScope);
+			        print("POP SCOPE");
 			        currentScope = currentScope.getEnclosingScope();    // pop scope
 			        }
 			}
@@ -410,17 +415,17 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "exitMethod"
-	// /Users/eli/dev/Sneakers-Java/Def.g:84:1: exitMethod : FNDECL ;
+	// /Users/eli/dev/Sneakers-Java/Def.g:89:1: exitMethod : FNDECL ;
 	public final void exitMethod() throws RecognitionException {
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:85:5: ( FNDECL )
-			// /Users/eli/dev/Sneakers-Java/Def.g:85:9: FNDECL
+			// /Users/eli/dev/Sneakers-Java/Def.g:90:5: ( FNDECL )
+			// /Users/eli/dev/Sneakers-Java/Def.g:90:9: FNDECL
 			{
 			match(input,FNDECL,FOLLOW_FNDECL_in_exitMethod282); if (state.failed) return;
 			if ( state.backtracking==1 ) {
-			        System.out.println("OUT OF METHOD");
-			        System.out.println("args: "+currentScope);
-			        System.out.println("POP SCOPE");
+			        print("OUT OF METHOD");
+			        print("args: "+currentScope);
+			        print("POP SCOPE");
 			        currentScope = currentScope.getEnclosingScope();    // pop arg scope
 			        }
 			}
@@ -439,12 +444,12 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "atoms"
-	// /Users/eli/dev/Sneakers-Java/Def.g:96:1: atoms :{...}? ( 'this' | ID | TYPEID ) ;
+	// /Users/eli/dev/Sneakers-Java/Def.g:101:1: atoms :{...}? ( 'this' | ID | TYPEID ) ;
 	public final void atoms() throws RecognitionException {
 		SneakersAST t = (SneakersAST)input.LT(1);
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:98:5: ({...}? ( 'this' | ID | TYPEID ) )
-			// /Users/eli/dev/Sneakers-Java/Def.g:98:8: {...}? ( 'this' | ID | TYPEID )
+			// /Users/eli/dev/Sneakers-Java/Def.g:103:5: ({...}? ( 'this' | ID | TYPEID ) )
+			// /Users/eli/dev/Sneakers-Java/Def.g:103:8: {...}? ( 'this' | ID | TYPEID )
 			{
 			if ( !((t.hasAncestor(EXPR)||t.hasAncestor(ASSIGN))) ) {
 				if (state.backtracking>0) {state.failed=true; return;}
@@ -477,7 +482,7 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "varDeclaration"
-	// /Users/eli/dev/Sneakers-Java/Def.g:104:1: varDeclaration : ( ^( '=' ID ^( FNDECL TYPEID ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) | ^( FNPARAM ID TYPEID ) | ^( FIELDDEF KEYWORD ^(~ FNDECL ( . )* ) ) | ^( FIELDDEF KEYWORD ^( FNDECL ( . )+ ) ) );
+	// /Users/eli/dev/Sneakers-Java/Def.g:109:1: varDeclaration : ( ^( '=' ID ^( FNDECL TYPEID ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) | ^( FNPARAM ID TYPEID ) | ^( FIELDDEF KEYWORD ^(~ FNDECL ( . )* ) ) | ^( FIELDDEF KEYWORD ^( FNDECL ( . )+ ) ) );
 	public final void varDeclaration() throws RecognitionException {
 		SneakersAST ID1=null;
 		SneakersAST TYPEID2=null;
@@ -488,7 +493,7 @@ public class Def extends TreeFilter {
 		SneakersAST KEYWORD7=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:105:2: ( ^( '=' ID ^( FNDECL TYPEID ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) | ^( FNPARAM ID TYPEID ) | ^( FIELDDEF KEYWORD ^(~ FNDECL ( . )* ) ) | ^( FIELDDEF KEYWORD ^( FNDECL ( . )+ ) ) )
+			// /Users/eli/dev/Sneakers-Java/Def.g:110:2: ( ^( '=' ID ^( FNDECL TYPEID ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) | ^( FNPARAM ID TYPEID ) | ^( FIELDDEF KEYWORD ^(~ FNDECL ( . )* ) ) | ^( FIELDDEF KEYWORD ^( FNDECL ( . )+ ) ) )
 			int alt8=5;
 			switch ( input.LA(1) ) {
 			case ASSIGN:
@@ -630,7 +635,7 @@ public class Def extends TreeFilter {
 			}
 			switch (alt8) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:105:4: ^( '=' ID ^( FNDECL TYPEID ( . )* ) )
+					// /Users/eli/dev/Sneakers-Java/Def.g:110:4: ^( '=' ID ^( FNDECL TYPEID ( . )* ) )
 					{
 					match(input,ASSIGN,FOLLOW_ASSIGN_in_varDeclaration353); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
@@ -638,7 +643,7 @@ public class Def extends TreeFilter {
 					match(input,FNDECL,FOLLOW_FNDECL_in_varDeclaration358); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
 					TYPEID2=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_varDeclaration360); if (state.failed) return;
-					// /Users/eli/dev/Sneakers-Java/Def.g:105:29: ( . )*
+					// /Users/eli/dev/Sneakers-Java/Def.g:110:29: ( . )*
 					loop4:
 					while (true) {
 						int alt4=2;
@@ -652,7 +657,7 @@ public class Def extends TreeFilter {
 
 						switch (alt4) {
 						case 1 :
-							// /Users/eli/dev/Sneakers-Java/Def.g:105:29: .
+							// /Users/eli/dev/Sneakers-Java/Def.g:110:29: .
 							{
 							matchAny(input); if (state.failed) return;
 							}
@@ -668,7 +673,7 @@ public class Def extends TreeFilter {
 					match(input, Token.UP, null); if (state.failed) return;
 
 					if ( state.backtracking==1 ) {
-							System.out.println("line "+ID1.getLine()+": def "+(ID1!=null?ID1.getText():null));
+							print("line "+ID1.getLine()+": def "+(ID1!=null?ID1.getText():null));
 					        
 					        	MethodSymbol ms = new MethodSymbol((ID1!=null?ID1.getText():null),null,currentScope);
 					        	
@@ -677,18 +682,18 @@ public class Def extends TreeFilter {
 						        ID1.symbol = ms;         // track in AST
 					        	currentScope.define(ms); // def method in globals
 					        	
-					        	System.out.println("PUSH SCOPE");
+					        	print("PUSH SCOPE");
 						        currentScope = ms;       // set current scope to method scope
 						}
 					}
 					break;
 				case 2 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:119:11: ^( '=' ID (~ ( FNDECL ) )* )
+					// /Users/eli/dev/Sneakers-Java/Def.g:124:11: ^( '=' ID (~ ( FNDECL ) )* )
 					{
 					match(input,ASSIGN,FOLLOW_ASSIGN_in_varDeclaration381); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
 					ID3=(SneakersAST)match(input,ID,FOLLOW_ID_in_varDeclaration383); if (state.failed) return;
-					// /Users/eli/dev/Sneakers-Java/Def.g:119:20: (~ ( FNDECL ) )*
+					// /Users/eli/dev/Sneakers-Java/Def.g:124:20: (~ ( FNDECL ) )*
 					loop5:
 					while (true) {
 						int alt5=2;
@@ -722,7 +727,7 @@ public class Def extends TreeFilter {
 					match(input, Token.UP, null); if (state.failed) return;
 
 					if ( state.backtracking==1 ) {
-					        	System.out.println("line "+ID3.getLine()+": def "+(ID3!=null?ID3.getText():null));
+					        	print("line "+ID3.getLine()+": def "+(ID3!=null?ID3.getText():null));
 					        
 						        VariableSymbol vs = new VariableSymbol((ID3!=null?ID3.getText():null),null);
 						        vs.scope = currentScope;
@@ -733,7 +738,7 @@ public class Def extends TreeFilter {
 					}
 					break;
 				case 3 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:129:11: ^( FNPARAM ID TYPEID )
+					// /Users/eli/dev/Sneakers-Java/Def.g:134:11: ^( FNPARAM ID TYPEID )
 					{
 					match(input,FNPARAM,FOLLOW_FNPARAM_in_varDeclaration414); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
@@ -742,7 +747,7 @@ public class Def extends TreeFilter {
 					match(input, Token.UP, null); if (state.failed) return;
 
 					if ( state.backtracking==1 ) {
-					        	System.out.println("fn param line "+ID4.getLine()+": def "+(ID4!=null?ID4.getText():null));
+					        	print("fn param line "+ID4.getLine()+": def "+(ID4!=null?ID4.getText():null));
 					        
 						        VariableSymbol vs = new VariableSymbol((ID4!=null?ID4.getText():null),null);
 						        
@@ -755,7 +760,7 @@ public class Def extends TreeFilter {
 					}
 					break;
 				case 4 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:141:11: ^( FIELDDEF KEYWORD ^(~ FNDECL ( . )* ) )
+					// /Users/eli/dev/Sneakers-Java/Def.g:146:11: ^( FIELDDEF KEYWORD ^(~ FNDECL ( . )* ) )
 					{
 					match(input,FIELDDEF,FOLLOW_FIELDDEF_in_varDeclaration442); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
@@ -772,7 +777,7 @@ public class Def extends TreeFilter {
 					}
 					if ( input.LA(1)==Token.DOWN ) {
 						match(input, Token.DOWN, null); if (state.failed) return;
-						// /Users/eli/dev/Sneakers-Java/Def.g:141:40: ( . )*
+						// /Users/eli/dev/Sneakers-Java/Def.g:146:40: ( . )*
 						loop6:
 						while (true) {
 							int alt6=2;
@@ -786,7 +791,7 @@ public class Def extends TreeFilter {
 
 							switch (alt6) {
 							case 1 :
-								// /Users/eli/dev/Sneakers-Java/Def.g:141:40: .
+								// /Users/eli/dev/Sneakers-Java/Def.g:146:40: .
 								{
 								matchAny(input); if (state.failed) return;
 								}
@@ -803,7 +808,7 @@ public class Def extends TreeFilter {
 					match(input, Token.UP, null); if (state.failed) return;
 
 					if ( state.backtracking==1 ) {
-					        	System.out.println("class var line "+KEYWORD6.getLine()+": def "+(KEYWORD6!=null?KEYWORD6.getText():null));
+					        	print("class var line "+KEYWORD6.getLine()+": def "+(KEYWORD6!=null?KEYWORD6.getText():null));
 					        	
 					        	String text = (KEYWORD6!=null?KEYWORD6.getText():null).substring(1);
 						        VariableSymbol vs = new VariableSymbol(text, null);
@@ -816,14 +821,14 @@ public class Def extends TreeFilter {
 					}
 					break;
 				case 5 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:153:11: ^( FIELDDEF KEYWORD ^( FNDECL ( . )+ ) )
+					// /Users/eli/dev/Sneakers-Java/Def.g:158:11: ^( FIELDDEF KEYWORD ^( FNDECL ( . )+ ) )
 					{
 					match(input,FIELDDEF,FOLLOW_FIELDDEF_in_varDeclaration476); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
 					KEYWORD7=(SneakersAST)match(input,KEYWORD,FOLLOW_KEYWORD_in_varDeclaration478); if (state.failed) return;
 					match(input,FNDECL,FOLLOW_FNDECL_in_varDeclaration481); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
-					// /Users/eli/dev/Sneakers-Java/Def.g:153:39: ( . )+
+					// /Users/eli/dev/Sneakers-Java/Def.g:158:39: ( . )+
 					int cnt7=0;
 					loop7:
 					while (true) {
@@ -838,7 +843,7 @@ public class Def extends TreeFilter {
 
 						switch (alt7) {
 						case 1 :
-							// /Users/eli/dev/Sneakers-Java/Def.g:153:39: .
+							// /Users/eli/dev/Sneakers-Java/Def.g:158:39: .
 							{
 							matchAny(input); if (state.failed) return;
 							}
@@ -858,7 +863,7 @@ public class Def extends TreeFilter {
 					match(input, Token.UP, null); if (state.failed) return;
 
 					if ( state.backtracking==1 ) {
-					        	System.out.println("class method line "+KEYWORD7.getLine()+": def "+(KEYWORD7!=null?KEYWORD7.getText():null));
+					        	print("class method line "+KEYWORD7.getLine()+": def "+(KEYWORD7!=null?KEYWORD7.getText():null));
 					        	
 					        	String text = (KEYWORD7!=null?KEYWORD7.getText():null).substring(1);
 					        	MethodSymbol ms = new MethodSymbol(text,null,currentScope);
@@ -868,7 +873,7 @@ public class Def extends TreeFilter {
 						        KEYWORD7.symbol = ms;         // track in AST
 					        	currentScope.define(ms);
 					        	
-					        	System.out.println("PUSH SCOPE");
+					        	print("PUSH SCOPE");
 						        currentScope = ms;
 					        }
 					}
