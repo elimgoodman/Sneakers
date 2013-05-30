@@ -1,0 +1,12 @@
+from ejs import render
+from web import server, Request, Response, ErrorResponse
+
+<web.server.start! port:80 onRequest: @(req:Request):Response [
+	return req.url.match {
+		"/" => @(req) [
+			file_contents = <slurp! "home.ejs">?;
+			return ErrorResponse.withBody (render file_contents {});
+		],
+		:default => (ErrorResponse)
+	};
+]>;
