@@ -155,7 +155,7 @@ varDeclaration // global, parameter, or local variable
 	        $KEYWORD.symbol = vs;         // track in AST
         	currentScope.define(vs);
         }
-        |	^(FIELDDEF KEYWORD ^(FNDECL .+))
+        |	^(METHODDEF KEYWORD ^(FNDECL .+))
         {
         	print("class method line "+$KEYWORD.getLine()+": def "+$KEYWORD.text);
         	

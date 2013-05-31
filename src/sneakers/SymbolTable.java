@@ -36,8 +36,8 @@ public class SymbolTable {
 
     public static Symbol resolveID(SneakersAST idAST) {
         Symbol s = idAST.scope.resolve(idAST.getText());
-        System.out.println("line "+idAST.getLine()+": resolve "+
-                           idAST.getText()+" to "+s);
+        //System.out.println("line "+idAST.getLine()+": resolve "+
+        //                   idAST.getText()+" to "+s);
         if ( s.def==null ) return s; // must be predefined symbol
         // if resolves to local or global symbol, token index of definition
         // must be before token index of reference

@@ -22,6 +22,7 @@ tokens {
 	DICT;
 	ANONFN;
 	FIELDDEF;
+	METHODDEF;
 	ASSIGN='=';
 	CLASSDEF='class';
 	EXPR;
@@ -77,13 +78,10 @@ assignment
 	;
 
 
-defable	:	paramtype
-	|	fndecl
-	|	mutdecl
-	;
-
 fielddef	
-	:	KEYWORD '=>' defable -> ^(FIELDDEF KEYWORD defable)
+	:	KEYWORD '=>' paramtype -> ^(FIELDDEF KEYWORD paramtype)
+	|	KEYWORD '=>' fndecl -> ^(METHODDEF KEYWORD fndecl)
+	|	KEYWORD '=>' mutdecl -> ^(METHODDEF KEYWORD mutdecl)
 	;
 
 
@@ -136,7 +134,8 @@ expr	:	index_expr
 	;
 
 standalone_fncall
-	:	'(' fncall ')' -> fncall
+	:	'(' nested_id ')' -> ^(FNCALL nested_id)
+	|	'(' fncall ')' -> fncall
 	;
 
 mutcall	:	'<' nested_id '>' -> nested_id

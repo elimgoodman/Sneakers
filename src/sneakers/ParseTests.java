@@ -301,6 +301,7 @@ public class ParseTests {
 	}
     
 	ParseResult result = getNodes(text);
+	printTree(result.tree, 4);
 	JS js = new JS(result.stream);
 	js.setTemplateLib(templates);
 	JS.compilationUnit_return ret;
@@ -311,12 +312,17 @@ public class ParseTests {
 	    e.printStackTrace();
 	    return null;
 	}
+    p(ret.getTemplate().toString());
 	return ret.getTemplate().toString();
+    }
+    
+    public String strip(String text) {
+	return text.replace("\n", "").replace("\t", "");
     }
     
     public void assertJS(String js, String sneakers) {
 	String realJS =  "(function() {\n\t" + js + "\n})();";
-	assertEquals(realJS, getJS(sneakers));
+	assertEquals(strip(realJS), strip(getJS(sneakers)));
     }
     
     @Test
@@ -326,8 +332,45 @@ public class ParseTests {
     
     @Test
     public void testJSMultiAssign() {
-	assertJS("var c = 1;\n\tvar b = 2;", "c = 1;b = 2;");
+	assertJS("var c = 1;var b = 2;", "c = 1;b = 2;");
     }
+    
+    @Test
+    public void testJSFn() {
+	assertJS("var f = function() {};", "f = #():None [pass;];");
+    }
+    
+    @Test
+    public void testJSFnStats() {
+	assertJS("var f = function() {var a = 1;var b = 2;};", "f = #():None [a = 1; b = 2;];");
+    }
+    
+    @Test
+    public void testJSFnParams() {
+	assertJS("var f = function(a,b,c) {\n\t};", "f = #(a:Int, b:Int, c:Int):None [pass;];");
+    }
+    
+    @Test
+    public void testJSFnCallNoParams() {
+	assertJS("var a = do_something();", "a = (do_something);");
+    }
+    
+    @Test
+    public void testJSFnCallParams() {
+	assertJS("var a = do_something(a,b);", "a = do_something a b;");
+    }
+    
+    @Test
+    @Ignore //strip the :'s from the keywords, assignments in constructor
+    public void testJSClassOnlyAttrs() {
+	assertJS("var a = do_something(a,b);", "Person = class {:a => Int};");
+    }
+    
+    @Test
+    public void testJSClassOnlyMethods() {
+	assertJS("var a = do_something(a,b);", "Person = class {:a => #(x:Int):None [pass;]};");
+    }
+    
     public void printTree(CommonTree t, int indent) {
         if ( t != null ) {
             StringBuffer sb = new StringBuffer(indent);

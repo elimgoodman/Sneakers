@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Def.g 2013-05-28 22:47:04
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Def.g 2013-05-31 17:44:16
  package sneakers; 
 
 import org.antlr.runtime.*;
@@ -14,14 +14,13 @@ public class Def extends TreeFilter {
 	public static final String[] tokenNames = new String[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ANONFN", "ANONVAR", "ARRAY", 
 		"ASSIGN", "BLOCK", "BLOCKDECL", "CLASSDEF", "DICT", "EXPR", "FIELDDEF", 
-		"FNCALL", "FNDECL", "FNPARAM", "ID", "INT", "KEYWORD", "MUTDECL", "MUTID", 
-		"PARAM", "PARAMTYPEFN", "PARAMTYPEMUT", "RET", "STRING", "TYPEID", "WS", 
-		"'#'", "'('", "')'", "','", "'.'", "':'", "';'", "'<'", "'=>'", "'>'", 
-		"'@'", "'['", "']'", "'else'", "'elseif'", "'extend'", "'if'", "'pass'", 
-		"'return'", "'{'", "'}'", "'this'"
+		"FNCALL", "FNDECL", "FNPARAM", "ID", "INT", "KEYWORD", "METHODDEF", "MUTDECL", 
+		"MUTID", "PARAM", "PARAMTYPEFN", "PARAMTYPEMUT", "RET", "STRING", "TYPEID", 
+		"WS", "'#'", "'('", "')'", "','", "'.'", "':'", "';'", "'<'", "'=>'", 
+		"'>'", "'@'", "'['", "']'", "'else'", "'elseif'", "'extend'", "'if'", 
+		"'pass'", "'return'", "'{'", "'}'", "'this'"
 	};
 	public static final int EOF=-1;
-	public static final int T__29=29;
 	public static final int T__30=30;
 	public static final int T__31=31;
 	public static final int T__32=32;
@@ -42,6 +41,7 @@ public class Def extends TreeFilter {
 	public static final int T__47=47;
 	public static final int T__48=48;
 	public static final int T__49=49;
+	public static final int T__50=50;
 	public static final int ANONFN=4;
 	public static final int ANONVAR=5;
 	public static final int ARRAY=6;
@@ -58,16 +58,17 @@ public class Def extends TreeFilter {
 	public static final int ID=17;
 	public static final int INT=18;
 	public static final int KEYWORD=19;
-	public static final int MUTDECL=20;
-	public static final int MUTID=21;
-	public static final int PARAM=22;
-	public static final int PARAMTYPEFN=23;
-	public static final int PARAMTYPEMUT=24;
-	public static final int RET=25;
-	public static final int STRING=26;
-	public static final int TYPEID=27;
-	public static final int WS=28;
-	public static final int T__50=50;
+	public static final int METHODDEF=20;
+	public static final int MUTDECL=21;
+	public static final int MUTID=22;
+	public static final int PARAM=23;
+	public static final int PARAMTYPEFN=24;
+	public static final int PARAMTYPEMUT=25;
+	public static final int RET=26;
+	public static final int STRING=27;
+	public static final int TYPEID=28;
+	public static final int WS=29;
+	public static final int T__51=51;
 
 	// delegates
 	public TreeFilter[] getDelegates() {
@@ -123,13 +124,14 @@ public class Def extends TreeFilter {
 			case ASSIGN:
 			case FIELDDEF:
 			case FNPARAM:
+			case METHODDEF:
 				{
 				alt1=3;
 				}
 				break;
 			case ID:
 			case TYPEID:
-			case 50:
+			case 51:
 				{
 				alt1=4;
 				}
@@ -337,7 +339,7 @@ public class Def extends TreeFilter {
 			while (true) {
 				int alt3=2;
 				int LA3_0 = input.LA(1);
-				if ( ((LA3_0 >= ANONFN && LA3_0 <= 50)) ) {
+				if ( ((LA3_0 >= ANONFN && LA3_0 <= 51)) ) {
 					alt3=1;
 				}
 				else if ( (LA3_0==UP) ) {
@@ -455,7 +457,7 @@ public class Def extends TreeFilter {
 				if (state.backtracking>0) {state.failed=true; return;}
 				throw new FailedPredicateException(input, "atoms", "t.hasAncestor(EXPR)||t.hasAncestor(ASSIGN)");
 			}
-			if ( input.LA(1)==ID||input.LA(1)==TYPEID||input.LA(1)==50 ) {
+			if ( input.LA(1)==ID||input.LA(1)==TYPEID||input.LA(1)==51 ) {
 				input.consume();
 				state.errorRecovery=false;
 				state.failed=false;
@@ -482,7 +484,7 @@ public class Def extends TreeFilter {
 
 
 	// $ANTLR start "varDeclaration"
-	// /Users/eli/dev/Sneakers-Java/Def.g:109:1: varDeclaration : ( ^( '=' ID ^( FNDECL TYPEID ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) | ^( FNPARAM ID TYPEID ) | ^( FIELDDEF KEYWORD ^(~ FNDECL ( . )* ) ) | ^( FIELDDEF KEYWORD ^( FNDECL ( . )+ ) ) );
+	// /Users/eli/dev/Sneakers-Java/Def.g:109:1: varDeclaration : ( ^( '=' ID ^( FNDECL TYPEID ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) | ^( FNPARAM ID TYPEID ) | ^( FIELDDEF KEYWORD ^(~ FNDECL ( . )* ) ) | ^( METHODDEF KEYWORD ^( FNDECL ( . )+ ) ) );
 	public final void varDeclaration() throws RecognitionException {
 		SneakersAST ID1=null;
 		SneakersAST TYPEID2=null;
@@ -493,20 +495,20 @@ public class Def extends TreeFilter {
 		SneakersAST KEYWORD7=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/Def.g:110:2: ( ^( '=' ID ^( FNDECL TYPEID ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) | ^( FNPARAM ID TYPEID ) | ^( FIELDDEF KEYWORD ^(~ FNDECL ( . )* ) ) | ^( FIELDDEF KEYWORD ^( FNDECL ( . )+ ) ) )
+			// /Users/eli/dev/Sneakers-Java/Def.g:110:2: ( ^( '=' ID ^( FNDECL TYPEID ( . )* ) ) | ^( '=' ID (~ ( FNDECL ) )* ) | ^( FNPARAM ID TYPEID ) | ^( FIELDDEF KEYWORD ^(~ FNDECL ( . )* ) ) | ^( METHODDEF KEYWORD ^( FNDECL ( . )+ ) ) )
 			int alt8=5;
 			switch ( input.LA(1) ) {
 			case ASSIGN:
 				{
 				int LA8_1 = input.LA(2);
 				if ( (LA8_1==DOWN) ) {
-					int LA8_4 = input.LA(3);
-					if ( (LA8_4==ID) ) {
+					int LA8_5 = input.LA(3);
+					if ( (LA8_5==ID) ) {
 						int LA8_6 = input.LA(4);
 						if ( (LA8_6==FNDECL) ) {
 							alt8=1;
 						}
-						else if ( ((LA8_6 >= UP && LA8_6 <= FNCALL)||(LA8_6 >= FNPARAM && LA8_6 <= 50)) ) {
+						else if ( ((LA8_6 >= UP && LA8_6 <= FNCALL)||(LA8_6 >= FNPARAM && LA8_6 <= 51)) ) {
 							alt8=2;
 						}
 
@@ -519,74 +521,6 @@ public class Def extends TreeFilter {
 								}
 								NoViableAltException nvae =
 									new NoViableAltException("", 8, 6, input);
-								throw nvae;
-							} finally {
-								input.rewind(nvaeMark);
-							}
-						}
-
-					}
-
-					else {
-						if (state.backtracking>0) {state.failed=true; return;}
-						int nvaeMark = input.mark();
-						try {
-							for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++) {
-								input.consume();
-							}
-							NoViableAltException nvae =
-								new NoViableAltException("", 8, 4, input);
-							throw nvae;
-						} finally {
-							input.rewind(nvaeMark);
-						}
-					}
-
-				}
-
-				else {
-					if (state.backtracking>0) {state.failed=true; return;}
-					int nvaeMark = input.mark();
-					try {
-						input.consume();
-						NoViableAltException nvae =
-							new NoViableAltException("", 8, 1, input);
-						throw nvae;
-					} finally {
-						input.rewind(nvaeMark);
-					}
-				}
-
-				}
-				break;
-			case FNPARAM:
-				{
-				alt8=3;
-				}
-				break;
-			case FIELDDEF:
-				{
-				int LA8_3 = input.LA(2);
-				if ( (LA8_3==DOWN) ) {
-					int LA8_5 = input.LA(3);
-					if ( (LA8_5==KEYWORD) ) {
-						int LA8_7 = input.LA(4);
-						if ( ((LA8_7 >= ANONFN && LA8_7 <= FNCALL)||(LA8_7 >= FNPARAM && LA8_7 <= 50)) ) {
-							alt8=4;
-						}
-						else if ( (LA8_7==FNDECL) ) {
-							alt8=5;
-						}
-
-						else {
-							if (state.backtracking>0) {state.failed=true; return;}
-							int nvaeMark = input.mark();
-							try {
-								for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++) {
-									input.consume();
-								}
-								NoViableAltException nvae =
-									new NoViableAltException("", 8, 7, input);
 								throw nvae;
 							} finally {
 								input.rewind(nvaeMark);
@@ -618,13 +552,28 @@ public class Def extends TreeFilter {
 					try {
 						input.consume();
 						NoViableAltException nvae =
-							new NoViableAltException("", 8, 3, input);
+							new NoViableAltException("", 8, 1, input);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
 					}
 				}
 
+				}
+				break;
+			case FNPARAM:
+				{
+				alt8=3;
+				}
+				break;
+			case FIELDDEF:
+				{
+				alt8=4;
+				}
+				break;
+			case METHODDEF:
+				{
+				alt8=5;
 				}
 				break;
 			default:
@@ -648,7 +597,7 @@ public class Def extends TreeFilter {
 					while (true) {
 						int alt4=2;
 						int LA4_0 = input.LA(1);
-						if ( ((LA4_0 >= ANONFN && LA4_0 <= 50)) ) {
+						if ( ((LA4_0 >= ANONFN && LA4_0 <= 51)) ) {
 							alt4=1;
 						}
 						else if ( (LA4_0==UP) ) {
@@ -698,7 +647,7 @@ public class Def extends TreeFilter {
 					while (true) {
 						int alt5=2;
 						int LA5_0 = input.LA(1);
-						if ( ((LA5_0 >= ANONFN && LA5_0 <= FNCALL)||(LA5_0 >= FNPARAM && LA5_0 <= 50)) ) {
+						if ( ((LA5_0 >= ANONFN && LA5_0 <= FNCALL)||(LA5_0 >= FNPARAM && LA5_0 <= 51)) ) {
 							alt5=1;
 						}
 
@@ -706,7 +655,7 @@ public class Def extends TreeFilter {
 						case 1 :
 							// /Users/eli/dev/Sneakers-Java/Def.g:
 							{
-							if ( (input.LA(1) >= ANONFN && input.LA(1) <= FNCALL)||(input.LA(1) >= FNPARAM && input.LA(1) <= 50) ) {
+							if ( (input.LA(1) >= ANONFN && input.LA(1) <= FNCALL)||(input.LA(1) >= FNPARAM && input.LA(1) <= 51) ) {
 								input.consume();
 								state.errorRecovery=false;
 								state.failed=false;
@@ -765,7 +714,7 @@ public class Def extends TreeFilter {
 					match(input,FIELDDEF,FOLLOW_FIELDDEF_in_varDeclaration442); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
 					KEYWORD6=(SneakersAST)match(input,KEYWORD,FOLLOW_KEYWORD_in_varDeclaration444); if (state.failed) return;
-					if ( (input.LA(1) >= ANONFN && input.LA(1) <= FNCALL)||(input.LA(1) >= FNPARAM && input.LA(1) <= 50) ) {
+					if ( (input.LA(1) >= ANONFN && input.LA(1) <= FNCALL)||(input.LA(1) >= FNPARAM && input.LA(1) <= 51) ) {
 						input.consume();
 						state.errorRecovery=false;
 						state.failed=false;
@@ -782,7 +731,7 @@ public class Def extends TreeFilter {
 						while (true) {
 							int alt6=2;
 							int LA6_0 = input.LA(1);
-							if ( ((LA6_0 >= ANONFN && LA6_0 <= 50)) ) {
+							if ( ((LA6_0 >= ANONFN && LA6_0 <= 51)) ) {
 								alt6=1;
 							}
 							else if ( (LA6_0==UP) ) {
@@ -821,20 +770,20 @@ public class Def extends TreeFilter {
 					}
 					break;
 				case 5 :
-					// /Users/eli/dev/Sneakers-Java/Def.g:158:11: ^( FIELDDEF KEYWORD ^( FNDECL ( . )+ ) )
+					// /Users/eli/dev/Sneakers-Java/Def.g:158:11: ^( METHODDEF KEYWORD ^( FNDECL ( . )+ ) )
 					{
-					match(input,FIELDDEF,FOLLOW_FIELDDEF_in_varDeclaration476); if (state.failed) return;
+					match(input,METHODDEF,FOLLOW_METHODDEF_in_varDeclaration476); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
 					KEYWORD7=(SneakersAST)match(input,KEYWORD,FOLLOW_KEYWORD_in_varDeclaration478); if (state.failed) return;
 					match(input,FNDECL,FOLLOW_FNDECL_in_varDeclaration481); if (state.failed) return;
 					match(input, Token.DOWN, null); if (state.failed) return;
-					// /Users/eli/dev/Sneakers-Java/Def.g:158:39: ( . )+
+					// /Users/eli/dev/Sneakers-Java/Def.g:158:40: ( . )+
 					int cnt7=0;
 					loop7:
 					while (true) {
 						int alt7=2;
 						int LA7_0 = input.LA(1);
-						if ( ((LA7_0 >= ANONFN && LA7_0 <= 50)) ) {
+						if ( ((LA7_0 >= ANONFN && LA7_0 <= 51)) ) {
 							alt7=1;
 						}
 						else if ( (LA7_0==UP) ) {
@@ -843,7 +792,7 @@ public class Def extends TreeFilter {
 
 						switch (alt7) {
 						case 1 :
-							// /Users/eli/dev/Sneakers-Java/Def.g:158:39: .
+							// /Users/eli/dev/Sneakers-Java/Def.g:158:40: .
 							{
 							matchAny(input); if (state.failed) return;
 							}
@@ -905,23 +854,23 @@ public class Def extends TreeFilter {
 	public static final BitSet FOLLOW_BLOCK_in_enterBlock156 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_BLOCK_in_exitBlock183 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_CLASSDEF_in_enterClass214 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPEID_in_enterClass218 = new BitSet(new long[]{0x0007FFFFFFFFFFF8L});
+	public static final BitSet FOLLOW_TYPEID_in_enterClass218 = new BitSet(new long[]{0x000FFFFFFFFFFFF8L});
 	public static final BitSet FOLLOW_CLASSDEF_in_exitClass252 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_FNDECL_in_exitMethod282 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_set_in_atoms320 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_ASSIGN_in_varDeclaration353 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_ID_in_varDeclaration355 = new BitSet(new long[]{0x0000000000008000L});
 	public static final BitSet FOLLOW_FNDECL_in_varDeclaration358 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPEID_in_varDeclaration360 = new BitSet(new long[]{0x0007FFFFFFFFFFF8L});
+	public static final BitSet FOLLOW_TYPEID_in_varDeclaration360 = new BitSet(new long[]{0x000FFFFFFFFFFFF8L});
 	public static final BitSet FOLLOW_ASSIGN_in_varDeclaration381 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_varDeclaration383 = new BitSet(new long[]{0x0007FFFFFFFF7FF8L});
+	public static final BitSet FOLLOW_ID_in_varDeclaration383 = new BitSet(new long[]{0x000FFFFFFFFF7FF8L});
 	public static final BitSet FOLLOW_FNPARAM_in_varDeclaration414 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_varDeclaration416 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_ID_in_varDeclaration416 = new BitSet(new long[]{0x0000000010000000L});
 	public static final BitSet FOLLOW_TYPEID_in_varDeclaration418 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_FIELDDEF_in_varDeclaration442 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_KEYWORD_in_varDeclaration444 = new BitSet(new long[]{0x0007FFFFFFFF7FF0L});
+	public static final BitSet FOLLOW_KEYWORD_in_varDeclaration444 = new BitSet(new long[]{0x000FFFFFFFFF7FF0L});
 	public static final BitSet FOLLOW_set_in_varDeclaration447 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_FIELDDEF_in_varDeclaration476 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_METHODDEF_in_varDeclaration476 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_KEYWORD_in_varDeclaration478 = new BitSet(new long[]{0x0000000000008000L});
 	public static final BitSet FOLLOW_FNDECL_in_varDeclaration481 = new BitSet(new long[]{0x0000000000000004L});
 }

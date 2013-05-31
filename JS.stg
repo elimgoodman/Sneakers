@@ -13,3 +13,35 @@ file(stats) ::= <<
 assignment(name, value) ::= <<
 var <name> = <value>;
 >>
+
+fndecl(params, stats) ::= <<
+function(<params; separator=",">) {
+	<stats; separator="\n">
+}
+>>
+
+identity(o) ::= <<
+<o>
+>>
+
+pass() ::= ""
+
+fncall(name, params) ::= <<
+<name>(<params; separator=",">)
+>>
+
+classdef(name, fields) ::= <<
+var <name> = function(<fields; separator=",">) {
+
+};
+
+<name>.__prototype__ = {
+	<members; separator=",">
+};
+>>
+
+method(name, params, stats) ::= <<
+<name>: function(<params; separator=",">) {
+	<stats; separator="/n">
+}
+>>
