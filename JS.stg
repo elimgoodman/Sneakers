@@ -1,6 +1,15 @@
 group JS;
 
-// START: file
+temp() ::= <<
+	foo
+>>
+
 file(stats) ::= <<
-<stats; separator="\n">
+(function() {
+	<stats; separator="\n">
+})();
+>>
+
+assignment(name, value) ::= <<
+var <name> = <value>;
 >>

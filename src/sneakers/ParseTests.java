@@ -2,6 +2,10 @@ package sneakers;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
@@ -15,8 +19,10 @@ import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeAdaptor;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 import org.antlr.runtime.tree.TreeAdaptor;
+import org.antlr.stringtemplate.StringTemplateGroup;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.stringtemplate.v4.gui.JTreeScopeStackModel.StringTree;
 
 import sneakers.SneakersParser.prog_return;
 import sneakers.SneakersParser.returnstat_return;
@@ -276,6 +282,52 @@ public class ParseTests {
         this.getTree("a = ");
     }  
     
+    public String getJS(String text) {
+	FileReader fr;
+	try {
+	    fr = new FileReader("JS.stg");
+	} catch (FileNotFoundException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	    return null;
+	} 
+	StringTemplateGroup templates = new StringTemplateGroup(fr); 
+	try {
+	    fr.close();
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	    return null;
+	}
+    
+	ParseResult result = getNodes(text);
+	JS js = new JS(result.stream);
+	js.setTemplateLib(templates);
+	JS.compilationUnit_return ret;
+	try {
+	    ret = js.compilationUnit();
+	} catch (RecognitionException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	    return null;
+	}
+	return ret.getTemplate().toString();
+    }
+    
+    public void assertJS(String js, String sneakers) {
+	String realJS =  "(function() {\n\t" + js + "\n})();";
+	assertEquals(realJS, getJS(sneakers));
+    }
+    
+    @Test
+    public void testJSAssign() {
+	assertJS("var a = 1;", "a = 1;");
+    }
+    
+    @Test
+    public void testJSMultiAssign() {
+	assertJS("var c = 1;\n\tvar b = 2;", "c = 1;b = 2;");
+    }
     public void printTree(CommonTree t, int indent) {
         if ( t != null ) {
             StringBuffer sb = new StringBuffer(indent);

@@ -1,12 +1,40 @@
 from ejs import render
-from web import server, Request, Response, ErrorResponse
+from web import Server, Request, Response, ErrorResponse, 404, 500
+from logger import Logger
 
-<web.server.start! port:80 onRequest: @(req:Request):Response [
-	return req.url.match {
-		"/" => @(req) [
-			file_contents = <slurp! "home.ejs">?;
-			return ErrorResponse.withBody (render file_contents {});
-		],
-		:default => (ErrorResponse)
-	};
-]>;
+logger = Logger "output.log"
+
+Name = type String;
+Age = type Int;
+Email = type String;
+Password = type String;
+
+User = object {
+	:name => Name,
+	:age => Age,
+	:email => Email,
+	:password => Password
+}
+
+@users = List[User];
+
+s = web.Server {
+	:port => 8080,
+	:onRequest => @(req:Request):Response [
+		return req.url.match {
+			"/" => @(req) [
+				file_contents = <slurp! "home.ejs">?;
+				return ErrorResponse.withBody (render file_contents {});
+			],
+			:default => 404
+		};
+	]
+};
+
+log_error = @(e:Exception):None [
+	<logger.write! e>;
+];
+
+<s.start! except: {
+	FileNotFound => log_error
+}>;

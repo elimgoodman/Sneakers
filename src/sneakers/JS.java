@@ -1,4 +1,7 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/JS.g 2013-05-29 15:25:35
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/JS.g 2013-05-31 13:40:06
+
+	package sneakers;
+
 
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
@@ -114,18 +117,20 @@ public class JS extends TreeParser {
 
 
 	// $ANTLR start "compilationUnit"
-	// /Users/eli/dev/Sneakers-Java/JS.g:9:1: compilationUnit : (d+= assignment )+ -> file(stats=$d);
+	// /Users/eli/dev/Sneakers-Java/JS.g:17:1: compilationUnit : ^( BLOCK (stats+= stat )+ ) -> file(stats=$stats);
 	public final JS.compilationUnit_return compilationUnit() throws RecognitionException {
 		JS.compilationUnit_return retval = new JS.compilationUnit_return();
 		retval.start = input.LT(1);
 
-		List<Object> list_d=null;
-		RuleReturnScope d = null;
+		List<Object> list_stats=null;
+		RuleReturnScope stats = null;
 		try {
-			// /Users/eli/dev/Sneakers-Java/JS.g:10:5: ( (d+= assignment )+ -> file(stats=$d))
-			// /Users/eli/dev/Sneakers-Java/JS.g:10:9: (d+= assignment )+
+			// /Users/eli/dev/Sneakers-Java/JS.g:18:2: ( ^( BLOCK (stats+= stat )+ ) -> file(stats=$stats))
+			// /Users/eli/dev/Sneakers-Java/JS.g:18:4: ^( BLOCK (stats+= stat )+ )
 			{
-			// /Users/eli/dev/Sneakers-Java/JS.g:10:9: (d+= assignment )+
+			match(input,BLOCK,FOLLOW_BLOCK_in_compilationUnit56); 
+			match(input, Token.DOWN, null); 
+			// /Users/eli/dev/Sneakers-Java/JS.g:18:17: (stats+= stat )+
 			int cnt1=0;
 			loop1:
 			while (true) {
@@ -137,14 +142,14 @@ public class JS extends TreeParser {
 
 				switch (alt1) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/JS.g:10:11: d+= assignment
+					// /Users/eli/dev/Sneakers-Java/JS.g:18:17: stats+= stat
 					{
-					pushFollow(FOLLOW_assignment_in_compilationUnit54);
-					d=assignment();
+					pushFollow(FOLLOW_stat_in_compilationUnit60);
+					stats=stat();
 					state._fsp--;
 
-					if (list_d==null) list_d=new ArrayList<Object>();
-					list_d.add(d.getTemplate());
+					if (list_stats==null) list_stats=new ArrayList<Object>();
+					list_stats.add(stats.getTemplate());
 					}
 					break;
 
@@ -156,10 +161,12 @@ public class JS extends TreeParser {
 				cnt1++;
 			}
 
+			match(input, Token.UP, null); 
+
 			// TEMPLATE REWRITE
-			// 11:9: -> file(stats=$d)
+			// 18:26: -> file(stats=$stats)
 			{
-				retval.st = templateLib.getInstanceOf("file",new STAttrMap().put("stats", list_d));
+				retval.st = templateLib.getInstanceOf("file",new STAttrMap().put("stats", list_stats));
 			}
 
 
@@ -179,37 +186,37 @@ public class JS extends TreeParser {
 	// $ANTLR end "compilationUnit"
 
 
-	public static class assignment_return extends TreeRuleReturnScope {
+	public static class stat_return extends TreeRuleReturnScope {
 		public StringTemplate st;
 		public Object getTemplate() { return st; }
 		public String toString() { return st==null?null:st.toString(); }
 	};
 
 
-	// $ANTLR start "assignment"
-	// /Users/eli/dev/Sneakers-Java/JS.g:14:1: assignment : ^( '=' name= ID value= . ) -> assignment(name=$name.textvalue=$value.text);
-	public final JS.assignment_return assignment() throws RecognitionException {
-		JS.assignment_return retval = new JS.assignment_return();
+	// $ANTLR start "stat"
+	// /Users/eli/dev/Sneakers-Java/JS.g:21:1: stat : ^( '=' name= ID value= . ) -> assignment(name=$namevalue=$value);
+	public final JS.stat_return stat() throws RecognitionException {
+		JS.stat_return retval = new JS.stat_return();
 		retval.start = input.LT(1);
 
 		SneakersAST name=null;
 		SneakersAST value=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/JS.g:15:2: ( ^( '=' name= ID value= . ) -> assignment(name=$name.textvalue=$value.text))
-			// /Users/eli/dev/Sneakers-Java/JS.g:15:4: ^( '=' name= ID value= . )
+			// /Users/eli/dev/Sneakers-Java/JS.g:22:2: ( ^( '=' name= ID value= . ) -> assignment(name=$namevalue=$value))
+			// /Users/eli/dev/Sneakers-Java/JS.g:22:4: ^( '=' name= ID value= . )
 			{
-			match(input,ASSIGN,FOLLOW_ASSIGN_in_assignment88); 
+			match(input,ASSIGN,FOLLOW_ASSIGN_in_stat84); 
 			match(input, Token.DOWN, null); 
-			name=(SneakersAST)match(input,ID,FOLLOW_ID_in_assignment92); 
+			name=(SneakersAST)match(input,ID,FOLLOW_ID_in_stat88); 
 			value=(SneakersAST)input.LT(1);
 			matchAny(input); 
 			match(input, Token.UP, null); 
 
 			// TEMPLATE REWRITE
-			// 16:3: -> assignment(name=$name.textvalue=$value.text)
+			// 23:3: -> assignment(name=$namevalue=$value)
 			{
-				retval.st = templateLib.getInstanceOf("assignment",new STAttrMap().put("name", (name!=null?name.getText():null)).put("value", value.text));
+				retval.st = templateLib.getInstanceOf("assignment",new STAttrMap().put("name", name).put("value", value));
 			}
 
 
@@ -226,13 +233,14 @@ public class JS extends TreeParser {
 		}
 		return retval;
 	}
-	// $ANTLR end "assignment"
+	// $ANTLR end "stat"
 
 	// Delegated rules
 
 
 
-	public static final BitSet FOLLOW_assignment_in_compilationUnit54 = new BitSet(new long[]{0x0000000000000082L});
-	public static final BitSet FOLLOW_ASSIGN_in_assignment88 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_assignment92 = new BitSet(new long[]{0x0003FFFFFFFFFFF0L});
+	public static final BitSet FOLLOW_BLOCK_in_compilationUnit56 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_stat_in_compilationUnit60 = new BitSet(new long[]{0x0000000000000088L});
+	public static final BitSet FOLLOW_ASSIGN_in_stat84 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_ID_in_stat88 = new BitSet(new long[]{0x0003FFFFFFFFFFF0L});
 }

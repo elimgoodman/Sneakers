@@ -6,12 +6,19 @@ options {
   output = template;
 }
 
-compilationUnit
-    :   ( d+=assignment)+
-        -> file(stats={$d})
-    ;
+@header {
+	package sneakers;
+}
 
-assignment
+/*compilationUnit
+	: ^(BLOCK stats+=stat+) -> file(stats={$stats})
+	;*/
+	
+compilationUnit
+	: ^(BLOCK stats+=stat+) -> file(stats={$stats})
+	;
+
+stat	
 	:	^('=' name=ID value=.) 
-		-> assignment(name={$name.text}, value={$value.text})
+		-> assignment(name={$name}, value={$value})
 	;
