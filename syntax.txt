@@ -10,10 +10,10 @@ Email = type String;
 Password = type String;
 
 User = object {
-	:name => Name,
-	:age => Age,
-	:email => Email,
-	:password => Password
+	name => Name,
+	age => Age,
+	email => Email,
+	password => Password
 }
 
 @users = List[User];

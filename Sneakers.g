@@ -20,12 +20,14 @@ tokens {
 	PARAMTYPEMUT;
 	ARRAY;
 	DICT;
+	DICT_PAIR;
 	ANONFN;
 	FIELDDEF;
 	METHODDEF;
 	ASSIGN='=';
 	CLASSDEF='class';
 	EXPR;
+	INSTANCE;
 }
 
 @parser::header { package sneakers; }
@@ -79,9 +81,9 @@ assignment
 
 
 fielddef	
-	:	KEYWORD '=>' paramtype -> ^(FIELDDEF KEYWORD paramtype)
-	|	KEYWORD '=>' fndecl -> ^(METHODDEF KEYWORD fndecl)
-	|	KEYWORD '=>' mutdecl -> ^(METHODDEF KEYWORD mutdecl)
+	:	ID '=>' paramtype -> ^(FIELDDEF ID paramtype)
+	|	ID '=>' fndecl -> ^(METHODDEF ID fndecl)
+	|	ID '=>' mutdecl -> ^(METHODDEF ID mutdecl)
 	;
 
 
@@ -125,7 +127,12 @@ fndecl	:	'#' blockdecl -> ^(FNDECL blockdecl)
 mutdecl	:	'@' blockdecl -> ^(MUTDECL blockdecl)
 	;
 
-expr	:	index_expr
+instance
+	:	'new' TYPEID dict -> ^(INSTANCE TYPEID dict)
+	;
+
+expr	:	instance
+	|	index_expr
 	|	dict
 	|	fndecl
 	|	mutdecl
@@ -151,7 +158,7 @@ index_expr
 	;
 
 dict_pair 
-	:	index_expr '=>' expr -> index_expr expr
+	:	index_expr '=>' expr -> ^(DICT_PAIR index_expr expr)
 	;
 
 dict	:	'{' (dict_pair)? (',' dict_pair)* '}' -> ^(DICT dict_pair*)

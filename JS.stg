@@ -30,18 +30,24 @@ fncall(name, params) ::= <<
 <name>(<params; separator=",">)
 >>
 
-classdef(name, fields) ::= <<
-var <name> = function(<fields; separator=",">) {
-
-};
-
-<name>.__prototype__ = {
-	<members; separator=",">
-};
+classdef(name, fields, methods) ::= <<
+var <name> = new Sneakers.Class([<if(fields)>"<fields; separator="\",\"">"<endif>], {
+	<methods; separator=",">	
+});
 >>
 
 method(name, params, stats) ::= <<
 <name>: function(<params; separator=",">) {
 	<stats; separator="/n">
 }
+>>
+
+instance(type, attrs) ::= <<
+<type>.new({
+	<attrs; separator=",\n">
+})
+>>
+
+dict_pair(key, value) ::= <<
+<key>: <value>
 >>
