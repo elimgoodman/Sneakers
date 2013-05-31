@@ -24,6 +24,7 @@ stat
 	|	^(CLASSDEF name=TYPEID (methods+=method | fields+=field)* ) 
 		-> classdef(name={$name}, fields={$fields}, methods={$methods})
 	|	'pass' -> pass()
+	|	^(RET e=expr) -> return(expr={$e.st})
 	;
 
 field	:	^(FIELDDEF name=ID type=TYPEID) -> identity(o={$name})

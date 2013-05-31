@@ -16,17 +16,15 @@ User = object {
 	password => Password
 }
 
-@users = List[User];
-
-s = web.Server {
-	:port => 8080,
-	:onRequest => @(req:Request):Response [
+s = new web.Server {
+	port => 8080,
+	onRequest => @(req:Request):Response [
 		return req.url.match {
 			"/" => @(req) [
 				file_contents = <slurp! "home.ejs">?;
 				return ErrorResponse.withBody (render file_contents {});
 			],
-			:default => 404
+			default => 404
 		};
 	]
 };

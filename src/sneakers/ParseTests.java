@@ -383,6 +383,11 @@ public class ParseTests {
 	assertJS("var p = Person.new({age: 27,weight: 160});", "p = new Person {age => 27, weight => 160};");
     }
     
+    @Test
+    public void testJSReturn() {
+	assertJS("var f = function() {return 1;};", "f = #():None [return 1;];");
+    }
+    
     public void printTree(CommonTree t, int indent) {
         if ( t != null ) {
             StringBuffer sb = new StringBuffer(indent);

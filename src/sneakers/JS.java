@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/JS.g 2013-05-31 19:27:39
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/JS.g 2013-05-31 19:39:07
 
 package sneakers;
 
@@ -140,7 +140,7 @@ public class JS extends TreeParser {
 			while (true) {
 				int alt1=2;
 				int LA1_0 = input.LA(1);
-				if ( (LA1_0==ASSIGN||LA1_0==CLASSDEF||LA1_0==50) ) {
+				if ( (LA1_0==ASSIGN||LA1_0==CLASSDEF||LA1_0==RET||LA1_0==50) ) {
 					alt1=1;
 				}
 
@@ -198,7 +198,7 @@ public class JS extends TreeParser {
 
 
 	// $ANTLR start "stat"
-	// /Users/eli/dev/Sneakers-Java/JS.g:21:1: stat : ( ^( '=' name= ID value= expr ) -> assignment(name=$namevalue=$value.st)| ^( CLASSDEF name= TYPEID (methods+= method |fields+= field )* ) -> classdef(name=$namefields=$fieldsmethods=$methods)| 'pass' -> pass();
+	// /Users/eli/dev/Sneakers-Java/JS.g:21:1: stat : ( ^( '=' name= ID value= expr ) -> assignment(name=$namevalue=$value.st)| ^( CLASSDEF name= TYPEID (methods+= method |fields+= field )* ) -> classdef(name=$namefields=$fieldsmethods=$methods)| 'pass' -> pass(| ^( RET e= expr ) -> return(expr=$e.st));
 	public final JS.stat_return stat() throws RecognitionException {
 		JS.stat_return retval = new JS.stat_return();
 		retval.start = input.LT(1);
@@ -207,11 +207,12 @@ public class JS extends TreeParser {
 		List<Object> list_methods=null;
 		List<Object> list_fields=null;
 		TreeRuleReturnScope value =null;
+		TreeRuleReturnScope e =null;
 		RuleReturnScope methods = null;
 		RuleReturnScope fields = null;
 		try {
-			// /Users/eli/dev/Sneakers-Java/JS.g:22:2: ( ^( '=' name= ID value= expr ) -> assignment(name=$namevalue=$value.st)| ^( CLASSDEF name= TYPEID (methods+= method |fields+= field )* ) -> classdef(name=$namefields=$fieldsmethods=$methods)| 'pass' -> pass()
-			int alt3=3;
+			// /Users/eli/dev/Sneakers-Java/JS.g:22:2: ( ^( '=' name= ID value= expr ) -> assignment(name=$namevalue=$value.st)| ^( CLASSDEF name= TYPEID (methods+= method |fields+= field )* ) -> classdef(name=$namefields=$fieldsmethods=$methods)| 'pass' -> pass(| ^( RET e= expr ) -> return(expr=$e.st))
+			int alt3=4;
 			switch ( input.LA(1) ) {
 			case ASSIGN:
 				{
@@ -226,6 +227,11 @@ public class JS extends TreeParser {
 			case 50:
 				{
 				alt3=3;
+				}
+				break;
+			case RET:
+				{
+				alt3=4;
 				}
 				break;
 			default:
@@ -329,6 +335,27 @@ public class JS extends TreeParser {
 
 					}
 					break;
+				case 4 :
+					// /Users/eli/dev/Sneakers-Java/JS.g:27:4: ^( RET e= expr )
+					{
+					match(input,RET,FOLLOW_RET_in_stat174); 
+					match(input, Token.DOWN, null); 
+					pushFollow(FOLLOW_expr_in_stat178);
+					e=expr();
+					state._fsp--;
+
+					match(input, Token.UP, null); 
+
+					// TEMPLATE REWRITE
+					// 27:18: -> return(expr=$e.st)
+					{
+						retval.st = templateLib.getInstanceOf("return",new STAttrMap().put("expr", (e!=null?((StringTemplate)e.getTemplate()):null)));
+					}
+
+
+
+					}
+					break;
 
 			}
 		}
@@ -352,7 +379,7 @@ public class JS extends TreeParser {
 
 
 	// $ANTLR start "field"
-	// /Users/eli/dev/Sneakers-Java/JS.g:29:1: field : ^( FIELDDEF name= ID type= TYPEID ) -> identity(o=$name);
+	// /Users/eli/dev/Sneakers-Java/JS.g:30:1: field : ^( FIELDDEF name= ID type= TYPEID ) -> identity(o=$name);
 	public final JS.field_return field() throws RecognitionException {
 		JS.field_return retval = new JS.field_return();
 		retval.start = input.LT(1);
@@ -361,17 +388,17 @@ public class JS extends TreeParser {
 		SneakersAST type=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/JS.g:29:7: ( ^( FIELDDEF name= ID type= TYPEID ) -> identity(o=$name))
-			// /Users/eli/dev/Sneakers-Java/JS.g:29:9: ^( FIELDDEF name= ID type= TYPEID )
+			// /Users/eli/dev/Sneakers-Java/JS.g:30:7: ( ^( FIELDDEF name= ID type= TYPEID ) -> identity(o=$name))
+			// /Users/eli/dev/Sneakers-Java/JS.g:30:9: ^( FIELDDEF name= ID type= TYPEID )
 			{
-			match(input,FIELDDEF,FOLLOW_FIELDDEF_in_field179); 
+			match(input,FIELDDEF,FOLLOW_FIELDDEF_in_field199); 
 			match(input, Token.DOWN, null); 
-			name=(SneakersAST)match(input,ID,FOLLOW_ID_in_field183); 
-			type=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_field187); 
+			name=(SneakersAST)match(input,ID,FOLLOW_ID_in_field203); 
+			type=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_field207); 
 			match(input, Token.UP, null); 
 
 			// TEMPLATE REWRITE
-			// 29:41: -> identity(o=$name)
+			// 30:41: -> identity(o=$name)
 			{
 				retval.st = templateLib.getInstanceOf("identity",new STAttrMap().put("o", name));
 			}
@@ -401,7 +428,7 @@ public class JS extends TreeParser {
 
 
 	// $ANTLR start "method"
-	// /Users/eli/dev/Sneakers-Java/JS.g:32:1: method : ^( METHODDEF name= ID ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) ) ) -> method(name=$nameparams=$paramsstats=$stats);
+	// /Users/eli/dev/Sneakers-Java/JS.g:33:1: method : ^( METHODDEF name= ID ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) ) ) -> method(name=$nameparams=$paramsstats=$stats);
 	public final JS.method_return method() throws RecognitionException {
 		JS.method_return retval = new JS.method_return();
 		retval.start = input.LT(1);
@@ -413,16 +440,16 @@ public class JS extends TreeParser {
 		RuleReturnScope params = null;
 		RuleReturnScope stats = null;
 		try {
-			// /Users/eli/dev/Sneakers-Java/JS.g:32:8: ( ^( METHODDEF name= ID ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) ) ) -> method(name=$nameparams=$paramsstats=$stats))
-			// /Users/eli/dev/Sneakers-Java/JS.g:32:10: ^( METHODDEF name= ID ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) ) )
+			// /Users/eli/dev/Sneakers-Java/JS.g:33:8: ( ^( METHODDEF name= ID ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) ) ) -> method(name=$nameparams=$paramsstats=$stats))
+			// /Users/eli/dev/Sneakers-Java/JS.g:33:10: ^( METHODDEF name= ID ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) ) )
 			{
-			match(input,METHODDEF,FOLLOW_METHODDEF_in_method208); 
+			match(input,METHODDEF,FOLLOW_METHODDEF_in_method228); 
 			match(input, Token.DOWN, null); 
-			name=(SneakersAST)match(input,ID,FOLLOW_ID_in_method212); 
-			match(input,FNDECL,FOLLOW_FNDECL_in_method215); 
+			name=(SneakersAST)match(input,ID,FOLLOW_ID_in_method232); 
+			match(input,FNDECL,FOLLOW_FNDECL_in_method235); 
 			match(input, Token.DOWN, null); 
-			ret=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_method219); 
-			// /Users/eli/dev/Sneakers-Java/JS.g:32:56: (params+= param )*
+			ret=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_method239); 
+			// /Users/eli/dev/Sneakers-Java/JS.g:33:56: (params+= param )*
 			loop4:
 			while (true) {
 				int alt4=2;
@@ -433,9 +460,9 @@ public class JS extends TreeParser {
 
 				switch (alt4) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/JS.g:32:56: params+= param
+					// /Users/eli/dev/Sneakers-Java/JS.g:33:56: params+= param
 					{
-					pushFollow(FOLLOW_param_in_method223);
+					pushFollow(FOLLOW_param_in_method243);
 					params=param();
 					state._fsp--;
 
@@ -449,23 +476,23 @@ public class JS extends TreeParser {
 				}
 			}
 
-			match(input,BLOCK,FOLLOW_BLOCK_in_method227); 
+			match(input,BLOCK,FOLLOW_BLOCK_in_method247); 
 			match(input, Token.DOWN, null); 
-			// /Users/eli/dev/Sneakers-Java/JS.g:32:78: (stats+= stat )+
+			// /Users/eli/dev/Sneakers-Java/JS.g:33:78: (stats+= stat )+
 			int cnt5=0;
 			loop5:
 			while (true) {
 				int alt5=2;
 				int LA5_0 = input.LA(1);
-				if ( (LA5_0==ASSIGN||LA5_0==CLASSDEF||LA5_0==50) ) {
+				if ( (LA5_0==ASSIGN||LA5_0==CLASSDEF||LA5_0==RET||LA5_0==50) ) {
 					alt5=1;
 				}
 
 				switch (alt5) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/JS.g:32:78: stats+= stat
+					// /Users/eli/dev/Sneakers-Java/JS.g:33:78: stats+= stat
 					{
-					pushFollow(FOLLOW_stat_in_method231);
+					pushFollow(FOLLOW_stat_in_method251);
 					stats=stat();
 					state._fsp--;
 
@@ -489,7 +516,7 @@ public class JS extends TreeParser {
 			match(input, Token.UP, null); 
 
 			// TEMPLATE REWRITE
-			// 33:3: -> method(name=$nameparams=$paramsstats=$stats)
+			// 34:3: -> method(name=$nameparams=$paramsstats=$stats)
 			{
 				retval.st = templateLib.getInstanceOf("method",new STAttrMap().put("name", name).put("params", list_params).put("stats", list_stats));
 			}
@@ -519,7 +546,7 @@ public class JS extends TreeParser {
 
 
 	// $ANTLR start "expr"
-	// /Users/eli/dev/Sneakers-Java/JS.g:36:1: expr : ( ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) ) -> fndecl(params=$paramsstats=$stats)| ^( FNCALL name= ID (params+= expr )* ) -> fncall(name=$nameparams=$params)| ^( PARAM name= ID ) -> identity(o=$name)| ^( INSTANCE type= TYPEID ^( DICT (attrs+= dict_pair )+ ) ) -> instance(type=$typeattrs=$attrs)|i= INT -> identity(o=$i));
+	// /Users/eli/dev/Sneakers-Java/JS.g:37:1: expr : ( ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) ) -> fndecl(params=$paramsstats=$stats)| ^( FNCALL name= ID (params+= expr )* ) -> fncall(name=$nameparams=$params)| ^( PARAM name= ID ) -> identity(o=$name)| ^( INSTANCE type= TYPEID ^( DICT (attrs+= dict_pair )+ ) ) -> instance(type=$typeattrs=$attrs)|i= INT -> identity(o=$i));
 	public final JS.expr_return expr() throws RecognitionException {
 		JS.expr_return retval = new JS.expr_return();
 		retval.start = input.LT(1);
@@ -535,7 +562,7 @@ public class JS extends TreeParser {
 		RuleReturnScope stats = null;
 		RuleReturnScope attrs = null;
 		try {
-			// /Users/eli/dev/Sneakers-Java/JS.g:36:6: ( ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) ) -> fndecl(params=$paramsstats=$stats)| ^( FNCALL name= ID (params+= expr )* ) -> fncall(name=$nameparams=$params)| ^( PARAM name= ID ) -> identity(o=$name)| ^( INSTANCE type= TYPEID ^( DICT (attrs+= dict_pair )+ ) ) -> instance(type=$typeattrs=$attrs)|i= INT -> identity(o=$i))
+			// /Users/eli/dev/Sneakers-Java/JS.g:37:6: ( ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) ) -> fndecl(params=$paramsstats=$stats)| ^( FNCALL name= ID (params+= expr )* ) -> fncall(name=$nameparams=$params)| ^( PARAM name= ID ) -> identity(o=$name)| ^( INSTANCE type= TYPEID ^( DICT (attrs+= dict_pair )+ ) ) -> instance(type=$typeattrs=$attrs)|i= INT -> identity(o=$i))
 			int alt10=5;
 			switch ( input.LA(1) ) {
 			case FNDECL:
@@ -570,12 +597,12 @@ public class JS extends TreeParser {
 			}
 			switch (alt10) {
 				case 1 :
-					// /Users/eli/dev/Sneakers-Java/JS.g:36:8: ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) )
+					// /Users/eli/dev/Sneakers-Java/JS.g:37:8: ^( FNDECL ret= TYPEID (params+= param )* ^( BLOCK (stats+= stat )+ ) )
 					{
-					match(input,FNDECL,FOLLOW_FNDECL_in_expr268); 
+					match(input,FNDECL,FOLLOW_FNDECL_in_expr288); 
 					match(input, Token.DOWN, null); 
-					ret=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_expr272); 
-					// /Users/eli/dev/Sneakers-Java/JS.g:36:34: (params+= param )*
+					ret=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_expr292); 
+					// /Users/eli/dev/Sneakers-Java/JS.g:37:34: (params+= param )*
 					loop6:
 					while (true) {
 						int alt6=2;
@@ -586,9 +613,9 @@ public class JS extends TreeParser {
 
 						switch (alt6) {
 						case 1 :
-							// /Users/eli/dev/Sneakers-Java/JS.g:36:34: params+= param
+							// /Users/eli/dev/Sneakers-Java/JS.g:37:34: params+= param
 							{
-							pushFollow(FOLLOW_param_in_expr276);
+							pushFollow(FOLLOW_param_in_expr296);
 							params=param();
 							state._fsp--;
 
@@ -602,23 +629,23 @@ public class JS extends TreeParser {
 						}
 					}
 
-					match(input,BLOCK,FOLLOW_BLOCK_in_expr280); 
+					match(input,BLOCK,FOLLOW_BLOCK_in_expr300); 
 					match(input, Token.DOWN, null); 
-					// /Users/eli/dev/Sneakers-Java/JS.g:36:56: (stats+= stat )+
+					// /Users/eli/dev/Sneakers-Java/JS.g:37:56: (stats+= stat )+
 					int cnt7=0;
 					loop7:
 					while (true) {
 						int alt7=2;
 						int LA7_0 = input.LA(1);
-						if ( (LA7_0==ASSIGN||LA7_0==CLASSDEF||LA7_0==50) ) {
+						if ( (LA7_0==ASSIGN||LA7_0==CLASSDEF||LA7_0==RET||LA7_0==50) ) {
 							alt7=1;
 						}
 
 						switch (alt7) {
 						case 1 :
-							// /Users/eli/dev/Sneakers-Java/JS.g:36:56: stats+= stat
+							// /Users/eli/dev/Sneakers-Java/JS.g:37:56: stats+= stat
 							{
-							pushFollow(FOLLOW_stat_in_expr284);
+							pushFollow(FOLLOW_stat_in_expr304);
 							stats=stat();
 							state._fsp--;
 
@@ -640,7 +667,7 @@ public class JS extends TreeParser {
 					match(input, Token.UP, null); 
 
 					// TEMPLATE REWRITE
-					// 37:3: -> fndecl(params=$paramsstats=$stats)
+					// 38:3: -> fndecl(params=$paramsstats=$stats)
 					{
 						retval.st = templateLib.getInstanceOf("fndecl",new STAttrMap().put("params", list_params).put("stats", list_stats));
 					}
@@ -650,12 +677,12 @@ public class JS extends TreeParser {
 					}
 					break;
 				case 2 :
-					// /Users/eli/dev/Sneakers-Java/JS.g:38:4: ^( FNCALL name= ID (params+= expr )* )
+					// /Users/eli/dev/Sneakers-Java/JS.g:39:4: ^( FNCALL name= ID (params+= expr )* )
 					{
-					match(input,FNCALL,FOLLOW_FNCALL_in_expr310); 
+					match(input,FNCALL,FOLLOW_FNCALL_in_expr330); 
 					match(input, Token.DOWN, null); 
-					name=(SneakersAST)match(input,ID,FOLLOW_ID_in_expr314); 
-					// /Users/eli/dev/Sneakers-Java/JS.g:38:27: (params+= expr )*
+					name=(SneakersAST)match(input,ID,FOLLOW_ID_in_expr334); 
+					// /Users/eli/dev/Sneakers-Java/JS.g:39:27: (params+= expr )*
 					loop8:
 					while (true) {
 						int alt8=2;
@@ -666,9 +693,9 @@ public class JS extends TreeParser {
 
 						switch (alt8) {
 						case 1 :
-							// /Users/eli/dev/Sneakers-Java/JS.g:38:27: params+= expr
+							// /Users/eli/dev/Sneakers-Java/JS.g:39:27: params+= expr
 							{
-							pushFollow(FOLLOW_expr_in_expr318);
+							pushFollow(FOLLOW_expr_in_expr338);
 							params=expr();
 							state._fsp--;
 
@@ -685,7 +712,7 @@ public class JS extends TreeParser {
 					match(input, Token.UP, null); 
 
 					// TEMPLATE REWRITE
-					// 38:36: -> fncall(name=$nameparams=$params)
+					// 39:36: -> fncall(name=$nameparams=$params)
 					{
 						retval.st = templateLib.getInstanceOf("fncall",new STAttrMap().put("name", name).put("params", list_params));
 					}
@@ -695,15 +722,15 @@ public class JS extends TreeParser {
 					}
 					break;
 				case 3 :
-					// /Users/eli/dev/Sneakers-Java/JS.g:39:4: ^( PARAM name= ID )
+					// /Users/eli/dev/Sneakers-Java/JS.g:40:4: ^( PARAM name= ID )
 					{
-					match(input,PARAM,FOLLOW_PARAM_in_expr339); 
+					match(input,PARAM,FOLLOW_PARAM_in_expr359); 
 					match(input, Token.DOWN, null); 
-					name=(SneakersAST)match(input,ID,FOLLOW_ID_in_expr343); 
+					name=(SneakersAST)match(input,ID,FOLLOW_ID_in_expr363); 
 					match(input, Token.UP, null); 
 
 					// TEMPLATE REWRITE
-					// 39:21: -> identity(o=$name)
+					// 40:21: -> identity(o=$name)
 					{
 						retval.st = templateLib.getInstanceOf("identity",new STAttrMap().put("o", name));
 					}
@@ -713,14 +740,14 @@ public class JS extends TreeParser {
 					}
 					break;
 				case 4 :
-					// /Users/eli/dev/Sneakers-Java/JS.g:40:4: ^( INSTANCE type= TYPEID ^( DICT (attrs+= dict_pair )+ ) )
+					// /Users/eli/dev/Sneakers-Java/JS.g:41:4: ^( INSTANCE type= TYPEID ^( DICT (attrs+= dict_pair )+ ) )
 					{
-					match(input,INSTANCE,FOLLOW_INSTANCE_in_expr359); 
+					match(input,INSTANCE,FOLLOW_INSTANCE_in_expr379); 
 					match(input, Token.DOWN, null); 
-					type=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_expr363); 
-					match(input,DICT,FOLLOW_DICT_in_expr366); 
+					type=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_expr383); 
+					match(input,DICT,FOLLOW_DICT_in_expr386); 
 					match(input, Token.DOWN, null); 
-					// /Users/eli/dev/Sneakers-Java/JS.g:40:39: (attrs+= dict_pair )+
+					// /Users/eli/dev/Sneakers-Java/JS.g:41:39: (attrs+= dict_pair )+
 					int cnt9=0;
 					loop9:
 					while (true) {
@@ -732,9 +759,9 @@ public class JS extends TreeParser {
 
 						switch (alt9) {
 						case 1 :
-							// /Users/eli/dev/Sneakers-Java/JS.g:40:39: attrs+= dict_pair
+							// /Users/eli/dev/Sneakers-Java/JS.g:41:39: attrs+= dict_pair
 							{
-							pushFollow(FOLLOW_dict_pair_in_expr370);
+							pushFollow(FOLLOW_dict_pair_in_expr390);
 							attrs=dict_pair();
 							state._fsp--;
 
@@ -756,7 +783,7 @@ public class JS extends TreeParser {
 					match(input, Token.UP, null); 
 
 					// TEMPLATE REWRITE
-					// 41:3: -> instance(type=$typeattrs=$attrs)
+					// 42:3: -> instance(type=$typeattrs=$attrs)
 					{
 						retval.st = templateLib.getInstanceOf("instance",new STAttrMap().put("type", type).put("attrs", list_attrs));
 					}
@@ -766,11 +793,11 @@ public class JS extends TreeParser {
 					}
 					break;
 				case 5 :
-					// /Users/eli/dev/Sneakers-Java/JS.g:42:4: i= INT
+					// /Users/eli/dev/Sneakers-Java/JS.g:43:4: i= INT
 					{
-					i=(SneakersAST)match(input,INT,FOLLOW_INT_in_expr396); 
+					i=(SneakersAST)match(input,INT,FOLLOW_INT_in_expr416); 
 					// TEMPLATE REWRITE
-					// 42:10: -> identity(o=$i)
+					// 43:10: -> identity(o=$i)
 					{
 						retval.st = templateLib.getInstanceOf("identity",new STAttrMap().put("o", i));
 					}
@@ -802,7 +829,7 @@ public class JS extends TreeParser {
 
 
 	// $ANTLR start "dict_pair"
-	// /Users/eli/dev/Sneakers-Java/JS.g:45:1: dict_pair : ^( DICT_PAIR key= . value= . ) -> dict_pair(key=$keyvalue=$value);
+	// /Users/eli/dev/Sneakers-Java/JS.g:46:1: dict_pair : ^( DICT_PAIR key= . value= . ) -> dict_pair(key=$keyvalue=$value);
 	public final JS.dict_pair_return dict_pair() throws RecognitionException {
 		JS.dict_pair_return retval = new JS.dict_pair_return();
 		retval.start = input.LT(1);
@@ -811,10 +838,10 @@ public class JS extends TreeParser {
 		SneakersAST value=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/JS.g:45:10: ( ^( DICT_PAIR key= . value= . ) -> dict_pair(key=$keyvalue=$value))
-			// /Users/eli/dev/Sneakers-Java/JS.g:45:12: ^( DICT_PAIR key= . value= . )
+			// /Users/eli/dev/Sneakers-Java/JS.g:46:10: ( ^( DICT_PAIR key= . value= . ) -> dict_pair(key=$keyvalue=$value))
+			// /Users/eli/dev/Sneakers-Java/JS.g:46:12: ^( DICT_PAIR key= . value= . )
 			{
-			match(input,DICT_PAIR,FOLLOW_DICT_PAIR_in_dict_pair415); 
+			match(input,DICT_PAIR,FOLLOW_DICT_PAIR_in_dict_pair435); 
 			match(input, Token.DOWN, null); 
 			key=(SneakersAST)input.LT(1);
 			matchAny(input); 
@@ -823,7 +850,7 @@ public class JS extends TreeParser {
 			match(input, Token.UP, null); 
 
 			// TEMPLATE REWRITE
-			// 45:39: -> dict_pair(key=$keyvalue=$value)
+			// 46:39: -> dict_pair(key=$keyvalue=$value)
 			{
 				retval.st = templateLib.getInstanceOf("dict_pair",new STAttrMap().put("key", key).put("value", value));
 			}
@@ -853,7 +880,7 @@ public class JS extends TreeParser {
 
 
 	// $ANTLR start "param"
-	// /Users/eli/dev/Sneakers-Java/JS.g:48:1: param : ^( FNPARAM name= ID type= TYPEID ) -> identity(o=$name);
+	// /Users/eli/dev/Sneakers-Java/JS.g:49:1: param : ^( FNPARAM name= ID type= TYPEID ) -> identity(o=$name);
 	public final JS.param_return param() throws RecognitionException {
 		JS.param_return retval = new JS.param_return();
 		retval.start = input.LT(1);
@@ -862,17 +889,17 @@ public class JS extends TreeParser {
 		SneakersAST type=null;
 
 		try {
-			// /Users/eli/dev/Sneakers-Java/JS.g:48:7: ( ^( FNPARAM name= ID type= TYPEID ) -> identity(o=$name))
-			// /Users/eli/dev/Sneakers-Java/JS.g:48:9: ^( FNPARAM name= ID type= TYPEID )
+			// /Users/eli/dev/Sneakers-Java/JS.g:49:7: ( ^( FNPARAM name= ID type= TYPEID ) -> identity(o=$name))
+			// /Users/eli/dev/Sneakers-Java/JS.g:49:9: ^( FNPARAM name= ID type= TYPEID )
 			{
-			match(input,FNPARAM,FOLLOW_FNPARAM_in_param449); 
+			match(input,FNPARAM,FOLLOW_FNPARAM_in_param469); 
 			match(input, Token.DOWN, null); 
-			name=(SneakersAST)match(input,ID,FOLLOW_ID_in_param453); 
-			type=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_param457); 
+			name=(SneakersAST)match(input,ID,FOLLOW_ID_in_param473); 
+			type=(SneakersAST)match(input,TYPEID,FOLLOW_TYPEID_in_param477); 
 			match(input, Token.UP, null); 
 
 			// TEMPLATE REWRITE
-			// 48:40: -> identity(o=$name)
+			// 49:40: -> identity(o=$name)
 			{
 				retval.st = templateLib.getInstanceOf("identity",new STAttrMap().put("o", name));
 			}
@@ -898,7 +925,7 @@ public class JS extends TreeParser {
 
 
 	public static final BitSet FOLLOW_BLOCK_in_compilationUnit56 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_stat_in_compilationUnit60 = new BitSet(new long[]{0x0004000000000488L});
+	public static final BitSet FOLLOW_stat_in_compilationUnit60 = new BitSet(new long[]{0x0004000010000488L});
 	public static final BitSet FOLLOW_ASSIGN_in_stat84 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_ID_in_stat88 = new BitSet(new long[]{0x0000000002198000L});
 	public static final BitSet FOLLOW_expr_in_stat92 = new BitSet(new long[]{0x0000000000000008L});
@@ -907,33 +934,35 @@ public class JS extends TreeParser {
 	public static final BitSet FOLLOW_method_in_stat125 = new BitSet(new long[]{0x0000000000404008L});
 	public static final BitSet FOLLOW_field_in_stat131 = new BitSet(new long[]{0x0000000000404008L});
 	public static final BitSet FOLLOW_50_in_stat162 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FIELDDEF_in_field179 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_field183 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_TYPEID_in_field187 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_METHODDEF_in_method208 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_method212 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_FNDECL_in_method215 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPEID_in_method219 = new BitSet(new long[]{0x0000000000020100L});
-	public static final BitSet FOLLOW_param_in_method223 = new BitSet(new long[]{0x0000000000020100L});
-	public static final BitSet FOLLOW_BLOCK_in_method227 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_stat_in_method231 = new BitSet(new long[]{0x0004000000000488L});
-	public static final BitSet FOLLOW_FNDECL_in_expr268 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPEID_in_expr272 = new BitSet(new long[]{0x0000000000020100L});
-	public static final BitSet FOLLOW_param_in_expr276 = new BitSet(new long[]{0x0000000000020100L});
-	public static final BitSet FOLLOW_BLOCK_in_expr280 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_stat_in_expr284 = new BitSet(new long[]{0x0004000000000488L});
-	public static final BitSet FOLLOW_FNCALL_in_expr310 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_expr314 = new BitSet(new long[]{0x0000000002198008L});
-	public static final BitSet FOLLOW_expr_in_expr318 = new BitSet(new long[]{0x0000000002198008L});
-	public static final BitSet FOLLOW_PARAM_in_expr339 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_expr343 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_INSTANCE_in_expr359 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPEID_in_expr363 = new BitSet(new long[]{0x0000000000000800L});
-	public static final BitSet FOLLOW_DICT_in_expr366 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_dict_pair_in_expr370 = new BitSet(new long[]{0x0000000000001008L});
-	public static final BitSet FOLLOW_INT_in_expr396 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DICT_PAIR_in_dict_pair415 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_FNPARAM_in_param449 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_ID_in_param453 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_TYPEID_in_param457 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_RET_in_stat174 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expr_in_stat178 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_FIELDDEF_in_field199 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_ID_in_field203 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_TYPEID_in_field207 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_METHODDEF_in_method228 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_ID_in_method232 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_FNDECL_in_method235 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPEID_in_method239 = new BitSet(new long[]{0x0000000000020100L});
+	public static final BitSet FOLLOW_param_in_method243 = new BitSet(new long[]{0x0000000000020100L});
+	public static final BitSet FOLLOW_BLOCK_in_method247 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_stat_in_method251 = new BitSet(new long[]{0x0004000010000488L});
+	public static final BitSet FOLLOW_FNDECL_in_expr288 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPEID_in_expr292 = new BitSet(new long[]{0x0000000000020100L});
+	public static final BitSet FOLLOW_param_in_expr296 = new BitSet(new long[]{0x0000000000020100L});
+	public static final BitSet FOLLOW_BLOCK_in_expr300 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_stat_in_expr304 = new BitSet(new long[]{0x0004000010000488L});
+	public static final BitSet FOLLOW_FNCALL_in_expr330 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_ID_in_expr334 = new BitSet(new long[]{0x0000000002198008L});
+	public static final BitSet FOLLOW_expr_in_expr338 = new BitSet(new long[]{0x0000000002198008L});
+	public static final BitSet FOLLOW_PARAM_in_expr359 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_ID_in_expr363 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_INSTANCE_in_expr379 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPEID_in_expr383 = new BitSet(new long[]{0x0000000000000800L});
+	public static final BitSet FOLLOW_DICT_in_expr386 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_dict_pair_in_expr390 = new BitSet(new long[]{0x0000000000001008L});
+	public static final BitSet FOLLOW_INT_in_expr416 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DICT_PAIR_in_dict_pair435 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_FNPARAM_in_param469 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_ID_in_param473 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_TYPEID_in_param477 = new BitSet(new long[]{0x0000000000000008L});
 }

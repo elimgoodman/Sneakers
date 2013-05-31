@@ -51,3 +51,7 @@ instance(type, attrs) ::= <<
 dict_pair(key, value) ::= <<
 <key>: <value>
 >>
+
+return(expr) ::= <<
+return <expr>;
+>>
