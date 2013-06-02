@@ -128,11 +128,12 @@ mutdecl	:	'@' blockdecl -> ^(MUTDECL blockdecl)
 	;
 
 instance
-	:	'new' TYPEID dict -> ^(INSTANCE TYPEID dict)
+	:	'new' nested_id dict -> ^(INSTANCE nested_id dict)
 	;
 
 expr	:	instance
 	|	index_expr
+	|	mutcall
 	|	dict
 	|	fndecl
 	|	mutdecl
@@ -178,7 +179,7 @@ ANONVAR	:	'$' INT?
 KEYWORD	:	':' ID
 	;
 
-ID  :	('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'| '_'|'-' | '!' | '?' | '=' | '>' | '<')*
+ID  :	('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'| '_'|'-' | '!' | '?')*
     ;
 
 TYPEID	:	('A'..'Z') ('a'..'z' | 'A'..'Z')*
@@ -202,6 +203,10 @@ WS	:	(' ' | '\t' | '\n') {skip();}
 
 STRING
     :  '"' ~('"')* '"'
+    ;
+
+SL_COMMENT
+    :   '//' ~('\r'|'\n')* {$channel=HIDDEN;}
     ;
 
 /*TODO:

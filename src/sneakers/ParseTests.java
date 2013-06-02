@@ -160,7 +160,7 @@ public class ParseTests {
     @Test
     public void testClassInstance() {
         SneakersAST tree = this.getTree("p = new Person {age => 26, weight => 160};");
-        printTree(tree, 4);
+        //printTree(tree, 4);
     }
     
     
@@ -301,22 +301,6 @@ public class ParseTests {
     @Test
     public void testJSReturn() {
 	assertJS("var f = function() {return 1;};", "f = #():None [return 1;];");
-    }
-    
-    public void printTree(CommonTree t, int indent) {
-        if ( t != null ) {
-            StringBuffer sb = new StringBuffer(indent);
-
-            if (t.getParent() == null){
-                System.out.println(sb.toString() + t.getText().toString());
-            }
-            for ( int i = 0; i < indent; i++ )
-                sb = sb.append("   ");
-            for ( int i = 0; i < t.getChildCount(); i++ ) {
-                System.out.println(sb.toString() + t.getChild(i).toString());
-                printTree((CommonTree)t.getChild(i), indent+1);
-            }
-        }
     }
 
 }

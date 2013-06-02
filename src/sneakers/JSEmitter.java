@@ -19,6 +19,10 @@ import org.antlr.stringtemplate.StringTemplateGroup;
 
 public class JSEmitter {
     public String getJS(String text) {
+	return getJS(text, false);
+    }
+    
+    public String getJS(String text, Boolean debugTree) {
 	FileReader fr;
 	try {
 	    fr = new FileReader("JS.stg");
@@ -37,6 +41,11 @@ public class JSEmitter {
 	}
     
 	ParseResult result = getNodes(text);
+	
+	if(debugTree) {
+	    printTree(result.tree, 4);
+	}
+	
 	JS js = new JS(result.stream);
 	js.setTemplateLib(templates);
 	JS.compilationUnit_return ret;
@@ -88,4 +97,19 @@ public class JSEmitter {
         nodes.setTokenStream(tokens);
         return new ParseResult(nodes, t);
     }
-}
+    
+    public void printTree(CommonTree t, int indent) {
+        if ( t != null ) {
+            StringBuffer sb = new StringBuffer(indent);
+
+            if (t.getParent() == null){
+                System.out.println(sb.toString() + t.getText().toString());
+            }
+            for ( int i = 0; i < indent; i++ )
+                sb = sb.append("   ");
+            for ( int i = 0; i < t.getChildCount(); i++ ) {
+                System.out.println(sb.toString() + t.getChild(i).toString());
+                printTree((CommonTree)t.getChild(i), indent+1);
+            }
+        }
+    }}
