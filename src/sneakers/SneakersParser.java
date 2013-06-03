@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Sneakers.g 2013-06-02 10:07:34
+// $ANTLR 3.5 /Users/eli/dev/Sneakers-Java/Sneakers.g 2013-06-02 21:31:19
  package sneakers; 
 
 import org.antlr.runtime.*;
@@ -108,9 +108,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class prog_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -120,7 +120,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.prog_return retval = new SneakersParser.prog_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		ParserRuleReturnScope block1 =null;
 
@@ -129,7 +129,7 @@ public class SneakersParser extends Parser {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:50:6: ( block )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:50:8: block
 			{
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 
 
 			pushFollow(FOLLOW_block_in_prog153);
@@ -142,14 +142,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -160,9 +160,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class block_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -172,12 +172,12 @@ public class SneakersParser extends Parser {
 		SneakersParser.block_return retval = new SneakersParser.block_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal3=null;
 		ParserRuleReturnScope stat2 =null;
 
-		SneakersAST char_literal3_tree=null;
+		CommonTree char_literal3_tree=null;
 		RewriteRuleTokenStream stream_39=new RewriteRuleTokenStream(adaptor,"token 39");
 		RewriteRuleSubtreeStream stream_stat=new RewriteRuleSubtreeStream(adaptor,"rule stat");
 
@@ -228,13 +228,13 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 53:22: -> ^( BLOCK ( stat )+ )
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:53:25: ^( BLOCK ( stat )+ )
 				{
-				SneakersAST root_1 = (SneakersAST)adaptor.nil();
-				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(BLOCK, "BLOCK"), root_1);
+				CommonTree root_1 = (CommonTree)adaptor.nil();
+				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(BLOCK, "BLOCK"), root_1);
 				if ( !(stream_stat.hasNext()) ) {
 					throw new RewriteEarlyExitException();
 				}
@@ -255,14 +255,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -273,9 +273,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class stat_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -285,7 +285,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.stat_return retval = new SneakersParser.stat_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token string_literal8=null;
 		ParserRuleReturnScope assignment4 =null;
@@ -293,7 +293,7 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope returnstat6 =null;
 		ParserRuleReturnScope mutcall7 =null;
 
-		SneakersAST string_literal8_tree=null;
+		CommonTree string_literal8_tree=null;
 
 		try {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:55:6: ( assignment | ifstat | returnstat | mutcall | 'pass' )
@@ -335,7 +335,7 @@ public class SneakersParser extends Parser {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:55:8: assignment
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_assignment_in_stat186);
@@ -349,7 +349,7 @@ public class SneakersParser extends Parser {
 				case 2 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:56:4: ifstat
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_ifstat_in_stat191);
@@ -363,7 +363,7 @@ public class SneakersParser extends Parser {
 				case 3 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:57:4: returnstat
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_returnstat_in_stat196);
@@ -377,7 +377,7 @@ public class SneakersParser extends Parser {
 				case 4 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:58:4: mutcall
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_mutcall_in_stat201);
@@ -391,11 +391,11 @@ public class SneakersParser extends Parser {
 				case 5 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:59:4: 'pass'
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					string_literal8=(Token)match(input,51,FOLLOW_51_in_stat206); 
-					string_literal8_tree = (SneakersAST)adaptor.create(string_literal8);
+					string_literal8_tree = (CommonTree)adaptor.create(string_literal8);
 					adaptor.addChild(root_0, string_literal8_tree);
 
 					}
@@ -404,14 +404,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -422,9 +422,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class returnstat_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -434,15 +434,15 @@ public class SneakersParser extends Parser {
 		SneakersParser.returnstat_return retval = new SneakersParser.returnstat_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token string_literal9=null;
 		Token string_literal11=null;
 		ParserRuleReturnScope fncall10 =null;
 		ParserRuleReturnScope expr12 =null;
 
-		SneakersAST string_literal9_tree=null;
-		SneakersAST string_literal11_tree=null;
+		CommonTree string_literal9_tree=null;
+		CommonTree string_literal11_tree=null;
 		RewriteRuleTokenStream stream_52=new RewriteRuleTokenStream(adaptor,"token 52");
 		RewriteRuleSubtreeStream stream_fncall=new RewriteRuleSubtreeStream(adaptor,"rule fncall");
 		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,"rule expr");
@@ -473,13 +473,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 63:20: -> ^( RET fncall )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:63:23: ^( RET fncall )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(RET, "RET"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(RET, "RET"), root_1);
 						adaptor.addChild(root_1, stream_fncall.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -512,13 +512,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 64:18: -> ^( RET expr )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:64:21: ^( RET expr )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(RET, "RET"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(RET, "RET"), root_1);
 						adaptor.addChild(root_1, stream_expr.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -534,14 +534,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -552,9 +552,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class ifstat_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -564,7 +564,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.ifstat_return retval = new SneakersParser.ifstat_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token string_literal13=null;
 		Token string_literal14=null;
@@ -576,9 +576,9 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope elseblock =null;
 		RuleReturnScope elifexpr = null;
 		RuleReturnScope elifblock = null;
-		SneakersAST string_literal13_tree=null;
-		SneakersAST string_literal14_tree=null;
-		SneakersAST string_literal15_tree=null;
+		CommonTree string_literal13_tree=null;
+		CommonTree string_literal14_tree=null;
+		CommonTree string_literal15_tree=null;
 		RewriteRuleTokenStream stream_49=new RewriteRuleTokenStream(adaptor,"token 49");
 		RewriteRuleTokenStream stream_47=new RewriteRuleTokenStream(adaptor,"token 47");
 		RewriteRuleTokenStream stream_46=new RewriteRuleTokenStream(adaptor,"token 46");
@@ -664,7 +664,7 @@ public class SneakersParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: 49, elifblock, elseblock, ifexpr, elifexpr, ifblock
+			// elements: elifblock, ifblock, 49, elseblock, ifexpr, elifexpr
 			// token labels: 
 			// rule labels: ifblock, retval, ifexpr, elseblock
 			// token list labels: 
@@ -677,13 +677,13 @@ public class SneakersParser extends Parser {
 			RewriteRuleSubtreeStream stream_elseblock=new RewriteRuleSubtreeStream(adaptor,"rule elseblock",elseblock!=null?elseblock.getTree():null);
 			RewriteRuleSubtreeStream stream_elifblock=new RewriteRuleSubtreeStream(adaptor,"token elifblock",list_elifblock);
 			RewriteRuleSubtreeStream stream_elifexpr=new RewriteRuleSubtreeStream(adaptor,"token elifexpr",list_elifexpr);
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 70:3: -> ^( 'if' $ifexpr $ifblock ( $elifexpr $elifblock)* ( $elseblock)? )
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:6: ^( 'if' $ifexpr $ifblock ( $elifexpr $elifblock)* ( $elseblock)? )
 				{
-				SneakersAST root_1 = (SneakersAST)adaptor.nil();
-				root_1 = (SneakersAST)adaptor.becomeRoot(stream_49.nextNode(), root_1);
+				CommonTree root_1 = (CommonTree)adaptor.nil();
+				root_1 = (CommonTree)adaptor.becomeRoot(stream_49.nextNode(), root_1);
 				adaptor.addChild(root_1, stream_ifexpr.nextTree());
 				adaptor.addChild(root_1, stream_ifblock.nextTree());
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:70:30: ( $elifexpr $elifblock)*
@@ -712,14 +712,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -730,9 +730,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class classdef_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -742,7 +742,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.classdef_return retval = new SneakersParser.classdef_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal16=null;
 		Token char_literal18=null;
@@ -750,9 +750,9 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope fielddef17 =null;
 		ParserRuleReturnScope fielddef19 =null;
 
-		SneakersAST char_literal16_tree=null;
-		SneakersAST char_literal18_tree=null;
-		SneakersAST char_literal20_tree=null;
+		CommonTree char_literal16_tree=null;
+		CommonTree char_literal18_tree=null;
+		CommonTree char_literal20_tree=null;
 		RewriteRuleTokenStream stream_36=new RewriteRuleTokenStream(adaptor,"token 36");
 		RewriteRuleTokenStream stream_53=new RewriteRuleTokenStream(adaptor,"token 53");
 		RewriteRuleTokenStream stream_54=new RewriteRuleTokenStream(adaptor,"token 54");
@@ -827,7 +827,7 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 72:47: -> ( fielddef )*
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:72:50: ( fielddef )*
@@ -845,14 +845,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -863,9 +863,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class assignment_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -875,7 +875,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.assignment_return retval = new SneakersParser.assignment_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token newclass=null;
 		Token oldclass=null;
@@ -894,16 +894,16 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope any_id32 =null;
 		ParserRuleReturnScope fncall34 =null;
 
-		SneakersAST newclass_tree=null;
-		SneakersAST oldclass_tree=null;
-		SneakersAST TYPEID21_tree=null;
-		SneakersAST char_literal22_tree=null;
-		SneakersAST string_literal23_tree=null;
-		SneakersAST char_literal25_tree=null;
-		SneakersAST char_literal26_tree=null;
-		SneakersAST string_literal27_tree=null;
-		SneakersAST char_literal30_tree=null;
-		SneakersAST char_literal33_tree=null;
+		CommonTree newclass_tree=null;
+		CommonTree oldclass_tree=null;
+		CommonTree TYPEID21_tree=null;
+		CommonTree char_literal22_tree=null;
+		CommonTree string_literal23_tree=null;
+		CommonTree char_literal25_tree=null;
+		CommonTree char_literal26_tree=null;
+		CommonTree string_literal27_tree=null;
+		CommonTree char_literal30_tree=null;
+		CommonTree char_literal33_tree=null;
 		RewriteRuleTokenStream stream_48=new RewriteRuleTokenStream(adaptor,"token 48");
 		RewriteRuleTokenStream stream_CLASSDEF=new RewriteRuleTokenStream(adaptor,"token CLASSDEF");
 		RewriteRuleTokenStream stream_37=new RewriteRuleTokenStream(adaptor,"token 37");
@@ -937,7 +937,7 @@ public class SneakersParser extends Parser {
 
 					stream_classdef.add(classdef24.getTree());
 					// AST REWRITE
-					// elements: CLASSDEF, TYPEID, classdef
+					// elements: TYPEID, CLASSDEF, classdef
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -946,13 +946,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 76:32: -> ^( 'class' TYPEID classdef )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:76:35: ^( 'class' TYPEID classdef )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot(stream_CLASSDEF.nextNode(), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot(stream_CLASSDEF.nextNode(), root_1);
 						adaptor.addChild(root_1, stream_TYPEID.nextNode());
 						adaptor.addChild(root_1, stream_classdef.nextTree());
 						adaptor.addChild(root_0, root_1);
@@ -989,7 +989,7 @@ public class SneakersParser extends Parser {
 
 					stream_classdef.add(classdef28.getTree());
 					// AST REWRITE
-					// elements: oldclass, 48, classdef, newclass
+					// elements: classdef, newclass, oldclass, 48
 					// token labels: oldclass, newclass
 					// rule labels: retval
 					// token list labels: 
@@ -1000,13 +1000,13 @@ public class SneakersParser extends Parser {
 					RewriteRuleTokenStream stream_newclass=new RewriteRuleTokenStream(adaptor,"token newclass",newclass);
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 77:62: -> ^( 'extend' $newclass $oldclass classdef )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:77:65: ^( 'extend' $newclass $oldclass classdef )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot(stream_48.nextNode(), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot(stream_48.nextNode(), root_1);
 						adaptor.addChild(root_1, stream_newclass.nextNode());
 						adaptor.addChild(root_1, stream_oldclass.nextNode());
 						adaptor.addChild(root_1, stream_classdef.nextTree());
@@ -1037,7 +1037,7 @@ public class SneakersParser extends Parser {
 
 					stream_expr.add(expr31.getTree());
 					// AST REWRITE
-					// elements: any_id, ASSIGN, expr
+					// elements: expr, any_id, ASSIGN
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1046,13 +1046,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 78:20: -> ^( '=' any_id expr )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:78:23: ^( '=' any_id expr )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot(stream_ASSIGN.nextNode(), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot(stream_ASSIGN.nextNode(), root_1);
 						adaptor.addChild(root_1, stream_any_id.nextTree());
 						adaptor.addChild(root_1, stream_expr.nextTree());
 						adaptor.addChild(root_0, root_1);
@@ -1082,7 +1082,7 @@ public class SneakersParser extends Parser {
 
 					stream_fncall.add(fncall34.getTree());
 					// AST REWRITE
-					// elements: any_id, fncall, ASSIGN
+					// elements: ASSIGN, fncall, any_id
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1091,13 +1091,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 79:22: -> ^( '=' any_id fncall )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:79:25: ^( '=' any_id fncall )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot(stream_ASSIGN.nextNode(), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot(stream_ASSIGN.nextNode(), root_1);
 						adaptor.addChild(root_1, stream_any_id.nextTree());
 						adaptor.addChild(root_1, stream_fncall.nextTree());
 						adaptor.addChild(root_0, root_1);
@@ -1114,14 +1114,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -1132,9 +1132,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class fielddef_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -1144,7 +1144,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.fielddef_return retval = new SneakersParser.fielddef_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token ID35=null;
 		Token string_literal36=null;
@@ -1156,12 +1156,12 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope fndecl40 =null;
 		ParserRuleReturnScope mutdecl43 =null;
 
-		SneakersAST ID35_tree=null;
-		SneakersAST string_literal36_tree=null;
-		SneakersAST ID38_tree=null;
-		SneakersAST string_literal39_tree=null;
-		SneakersAST ID41_tree=null;
-		SneakersAST string_literal42_tree=null;
+		CommonTree ID35_tree=null;
+		CommonTree string_literal36_tree=null;
+		CommonTree ID38_tree=null;
+		CommonTree string_literal39_tree=null;
+		CommonTree ID41_tree=null;
+		CommonTree string_literal42_tree=null;
 		RewriteRuleTokenStream stream_41=new RewriteRuleTokenStream(adaptor,"token 41");
 		RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 		RewriteRuleSubtreeStream stream_mutdecl=new RewriteRuleSubtreeStream(adaptor,"rule mutdecl");
@@ -1457,13 +1457,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 84:22: -> ^( FIELDDEF ID paramtype )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:84:25: ^( FIELDDEF ID paramtype )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(FIELDDEF, "FIELDDEF"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(FIELDDEF, "FIELDDEF"), root_1);
 						adaptor.addChild(root_1, stream_ID.nextNode());
 						adaptor.addChild(root_1, stream_paramtype.nextTree());
 						adaptor.addChild(root_0, root_1);
@@ -1491,7 +1491,7 @@ public class SneakersParser extends Parser {
 
 					stream_fndecl.add(fndecl40.getTree());
 					// AST REWRITE
-					// elements: fndecl, ID
+					// elements: ID, fndecl
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1500,13 +1500,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 85:19: -> ^( METHODDEF ID fndecl )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:85:22: ^( METHODDEF ID fndecl )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(METHODDEF, "METHODDEF"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(METHODDEF, "METHODDEF"), root_1);
 						adaptor.addChild(root_1, stream_ID.nextNode());
 						adaptor.addChild(root_1, stream_fndecl.nextTree());
 						adaptor.addChild(root_0, root_1);
@@ -1543,13 +1543,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 86:20: -> ^( METHODDEF ID mutdecl )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:86:23: ^( METHODDEF ID mutdecl )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(METHODDEF, "METHODDEF"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(METHODDEF, "METHODDEF"), root_1);
 						adaptor.addChild(root_1, stream_ID.nextNode());
 						adaptor.addChild(root_1, stream_mutdecl.nextTree());
 						adaptor.addChild(root_0, root_1);
@@ -1566,14 +1566,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -1584,9 +1584,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class nested_id_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -1596,7 +1596,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.nested_id_return retval = new SneakersParser.nested_id_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token ANONVAR44=null;
 		Token char_literal45=null;
@@ -1605,9 +1605,9 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope any_id47 =null;
 		ParserRuleReturnScope any_id49 =null;
 
-		SneakersAST ANONVAR44_tree=null;
-		SneakersAST char_literal45_tree=null;
-		SneakersAST char_literal48_tree=null;
+		CommonTree ANONVAR44_tree=null;
+		CommonTree char_literal45_tree=null;
+		CommonTree char_literal48_tree=null;
 		RewriteRuleTokenStream stream_ANONVAR=new RewriteRuleTokenStream(adaptor,"token ANONVAR");
 		RewriteRuleTokenStream stream_37=new RewriteRuleTokenStream(adaptor,"token 37");
 		RewriteRuleSubtreeStream stream_any_id=new RewriteRuleSubtreeStream(adaptor,"rule any_id");
@@ -1675,7 +1675,7 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 91:26: -> ANONVAR ( any_id )*
 					{
 						adaptor.addChild(root_0, stream_ANONVAR.nextNode());
@@ -1739,7 +1739,7 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 92:25: -> ( any_id )*
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:92:28: ( any_id )*
@@ -1759,14 +1759,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -1777,9 +1777,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class fncall_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -1789,14 +1789,14 @@ public class SneakersParser extends Parser {
 		SneakersParser.fncall_return retval = new SneakersParser.fncall_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal52=null;
 		ParserRuleReturnScope nested_id50 =null;
 		ParserRuleReturnScope param51 =null;
 		ParserRuleReturnScope param53 =null;
 
-		SneakersAST char_literal52_tree=null;
+		CommonTree char_literal52_tree=null;
 		RewriteRuleTokenStream stream_36=new RewriteRuleTokenStream(adaptor,"token 36");
 		RewriteRuleSubtreeStream stream_param=new RewriteRuleSubtreeStream(adaptor,"rule param");
 		RewriteRuleSubtreeStream stream_nested_id=new RewriteRuleSubtreeStream(adaptor,"rule nested_id");
@@ -1860,7 +1860,7 @@ public class SneakersParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: nested_id, param
+			// elements: param, nested_id
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1869,13 +1869,13 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 95:40: -> ^( FNCALL nested_id ( param )* )
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:43: ^( FNCALL nested_id ( param )* )
 				{
-				SneakersAST root_1 = (SneakersAST)adaptor.nil();
-				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(FNCALL, "FNCALL"), root_1);
+				CommonTree root_1 = (CommonTree)adaptor.nil();
+				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(FNCALL, "FNCALL"), root_1);
 				adaptor.addChild(root_1, stream_nested_id.nextTree());
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:95:62: ( param )*
 				while ( stream_param.hasNext() ) {
@@ -1895,14 +1895,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -1913,9 +1913,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class param_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -1925,15 +1925,15 @@ public class SneakersParser extends Parser {
 		SneakersParser.param_return retval = new SneakersParser.param_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token ID54=null;
 		Token char_literal55=null;
 		ParserRuleReturnScope expr56 =null;
 		ParserRuleReturnScope expr57 =null;
 
-		SneakersAST ID54_tree=null;
-		SneakersAST char_literal55_tree=null;
+		CommonTree ID54_tree=null;
+		CommonTree char_literal55_tree=null;
 		RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 		RewriteRuleTokenStream stream_38=new RewriteRuleTokenStream(adaptor,"token 38");
 		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,"rule expr");
@@ -1990,7 +1990,7 @@ public class SneakersParser extends Parser {
 
 					stream_expr.add(expr56.getTree());
 					// AST REWRITE
-					// elements: expr, ID
+					// elements: ID, expr
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1999,13 +1999,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 98:21: -> ^( PARAM ID expr )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:98:24: ^( PARAM ID expr )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(PARAM, "PARAM"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(PARAM, "PARAM"), root_1);
 						adaptor.addChild(root_1, stream_ID.nextNode());
 						adaptor.addChild(root_1, stream_expr.nextTree());
 						adaptor.addChild(root_0, root_1);
@@ -2036,13 +2036,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 99:9: -> ^( PARAM expr )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:99:12: ^( PARAM expr )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(PARAM, "PARAM"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(PARAM, "PARAM"), root_1);
 						adaptor.addChild(root_1, stream_expr.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -2058,14 +2058,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -2076,9 +2076,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class blockparamtype_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -2088,7 +2088,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.blockparamtype_return retval = new SneakersParser.blockparamtype_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal58=null;
 		Token TYPEID59=null;
@@ -2102,17 +2102,17 @@ public class SneakersParser extends Parser {
 		Token char_literal67=null;
 		Token TYPEID68=null;
 
-		SneakersAST char_literal58_tree=null;
-		SneakersAST TYPEID59_tree=null;
-		SneakersAST char_literal60_tree=null;
-		SneakersAST TYPEID61_tree=null;
-		SneakersAST char_literal62_tree=null;
-		SneakersAST char_literal63_tree=null;
-		SneakersAST TYPEID64_tree=null;
-		SneakersAST char_literal65_tree=null;
-		SneakersAST char_literal66_tree=null;
-		SneakersAST char_literal67_tree=null;
-		SneakersAST TYPEID68_tree=null;
+		CommonTree char_literal58_tree=null;
+		CommonTree TYPEID59_tree=null;
+		CommonTree char_literal60_tree=null;
+		CommonTree TYPEID61_tree=null;
+		CommonTree char_literal62_tree=null;
+		CommonTree char_literal63_tree=null;
+		CommonTree TYPEID64_tree=null;
+		CommonTree char_literal65_tree=null;
+		CommonTree char_literal66_tree=null;
+		CommonTree char_literal67_tree=null;
+		CommonTree TYPEID68_tree=null;
 		RewriteRuleTokenStream stream_35=new RewriteRuleTokenStream(adaptor,"token 35");
 		RewriteRuleTokenStream stream_36=new RewriteRuleTokenStream(adaptor,"token 36");
 		RewriteRuleTokenStream stream_34=new RewriteRuleTokenStream(adaptor,"token 34");
@@ -2208,7 +2208,7 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 103:44: -> ( TYPEID )+
 					{
 						if ( !(stream_TYPEID.hasNext()) ) {
@@ -2251,7 +2251,7 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 104:23: -> TYPEID
 					{
 						adaptor.addChild(root_0, stream_TYPEID.nextNode());
@@ -2266,14 +2266,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -2284,9 +2284,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class paramtype_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -2296,7 +2296,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.paramtype_return retval = new SneakersParser.paramtype_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token TYPEID69=null;
 		Token char_literal70=null;
@@ -2304,9 +2304,9 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope blockparamtype71 =null;
 		ParserRuleReturnScope blockparamtype73 =null;
 
-		SneakersAST TYPEID69_tree=null;
-		SneakersAST char_literal70_tree=null;
-		SneakersAST char_literal72_tree=null;
+		CommonTree TYPEID69_tree=null;
+		CommonTree char_literal70_tree=null;
+		CommonTree char_literal72_tree=null;
 		RewriteRuleTokenStream stream_43=new RewriteRuleTokenStream(adaptor,"token 43");
 		RewriteRuleTokenStream stream_33=new RewriteRuleTokenStream(adaptor,"token 33");
 		RewriteRuleSubtreeStream stream_blockparamtype=new RewriteRuleSubtreeStream(adaptor,"rule blockparamtype");
@@ -2339,11 +2339,11 @@ public class SneakersParser extends Parser {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:107:14: TYPEID
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					TYPEID69=(Token)match(input,TYPEID,FOLLOW_TYPEID_in_paramtype674); 
-					TYPEID69_tree = (SneakersAST)adaptor.create(TYPEID69);
+					TYPEID69_tree = (CommonTree)adaptor.create(TYPEID69);
 					adaptor.addChild(root_0, TYPEID69_tree);
 
 					}
@@ -2369,13 +2369,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 108:23: -> ^( PARAMTYPEFN blockparamtype )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:108:26: ^( PARAMTYPEFN blockparamtype )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(PARAMTYPEFN, "PARAMTYPEFN"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(PARAMTYPEFN, "PARAMTYPEFN"), root_1);
 						adaptor.addChild(root_1, stream_blockparamtype.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -2408,13 +2408,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 109:23: -> ^( PARAMTYPEMUT blockparamtype )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:109:26: ^( PARAMTYPEMUT blockparamtype )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(PARAMTYPEMUT, "PARAMTYPEMUT"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(PARAMTYPEMUT, "PARAMTYPEMUT"), root_1);
 						adaptor.addChild(root_1, stream_blockparamtype.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -2430,14 +2430,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -2448,9 +2448,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class fnparam_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -2460,14 +2460,14 @@ public class SneakersParser extends Parser {
 		SneakersParser.fnparam_return retval = new SneakersParser.fnparam_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token ID74=null;
 		Token char_literal75=null;
 		ParserRuleReturnScope paramtype76 =null;
 
-		SneakersAST ID74_tree=null;
-		SneakersAST char_literal75_tree=null;
+		CommonTree ID74_tree=null;
+		CommonTree char_literal75_tree=null;
 		RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 		RewriteRuleTokenStream stream_38=new RewriteRuleTokenStream(adaptor,"token 38");
 		RewriteRuleSubtreeStream stream_paramtype=new RewriteRuleSubtreeStream(adaptor,"rule paramtype");
@@ -2497,13 +2497,13 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 112:28: -> ^( FNPARAM ID paramtype )
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:112:31: ^( FNPARAM ID paramtype )
 				{
-				SneakersAST root_1 = (SneakersAST)adaptor.nil();
-				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(FNPARAM, "FNPARAM"), root_1);
+				CommonTree root_1 = (CommonTree)adaptor.nil();
+				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(FNPARAM, "FNPARAM"), root_1);
 				adaptor.addChild(root_1, stream_ID.nextNode());
 				adaptor.addChild(root_1, stream_paramtype.nextTree());
 				adaptor.addChild(root_0, root_1);
@@ -2518,14 +2518,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -2536,9 +2536,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class anonfn_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -2548,7 +2548,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.anonfn_return retval = new SneakersParser.anonfn_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal77=null;
 		Token char_literal78=null;
@@ -2559,12 +2559,12 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope fncall79 =null;
 		ParserRuleReturnScope nested_id83 =null;
 
-		SneakersAST char_literal77_tree=null;
-		SneakersAST char_literal78_tree=null;
-		SneakersAST char_literal80_tree=null;
-		SneakersAST char_literal81_tree=null;
-		SneakersAST char_literal82_tree=null;
-		SneakersAST char_literal84_tree=null;
+		CommonTree char_literal77_tree=null;
+		CommonTree char_literal78_tree=null;
+		CommonTree char_literal80_tree=null;
+		CommonTree char_literal81_tree=null;
+		CommonTree char_literal82_tree=null;
+		CommonTree char_literal84_tree=null;
 		RewriteRuleTokenStream stream_45=new RewriteRuleTokenStream(adaptor,"token 45");
 		RewriteRuleTokenStream stream_44=new RewriteRuleTokenStream(adaptor,"token 44");
 		RewriteRuleTokenStream stream_33=new RewriteRuleTokenStream(adaptor,"token 33");
@@ -2603,13 +2603,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 115:29: -> ^( ANONFN fncall )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:115:32: ^( ANONFN fncall )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(ANONFN, "ANONFN"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(ANONFN, "ANONFN"), root_1);
 						adaptor.addChild(root_1, stream_fncall.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -2648,13 +2648,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 116:26: -> ^( ANONFN nested_id )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:116:29: ^( ANONFN nested_id )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(ANONFN, "ANONFN"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(ANONFN, "ANONFN"), root_1);
 						adaptor.addChild(root_1, stream_nested_id.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -2670,14 +2670,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -2688,9 +2688,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class blockdecl_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -2700,7 +2700,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.blockdecl_return retval = new SneakersParser.blockdecl_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal85=null;
 		Token char_literal86=null;
@@ -2716,15 +2716,15 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope fnparam93 =null;
 		ParserRuleReturnScope contained_block97 =null;
 
-		SneakersAST char_literal85_tree=null;
-		SneakersAST char_literal86_tree=null;
-		SneakersAST char_literal87_tree=null;
-		SneakersAST TYPEID88_tree=null;
-		SneakersAST char_literal90_tree=null;
-		SneakersAST char_literal92_tree=null;
-		SneakersAST char_literal94_tree=null;
-		SneakersAST char_literal95_tree=null;
-		SneakersAST TYPEID96_tree=null;
+		CommonTree char_literal85_tree=null;
+		CommonTree char_literal86_tree=null;
+		CommonTree char_literal87_tree=null;
+		CommonTree TYPEID88_tree=null;
+		CommonTree char_literal90_tree=null;
+		CommonTree char_literal92_tree=null;
+		CommonTree char_literal94_tree=null;
+		CommonTree char_literal95_tree=null;
+		CommonTree TYPEID96_tree=null;
 		RewriteRuleTokenStream stream_35=new RewriteRuleTokenStream(adaptor,"token 35");
 		RewriteRuleTokenStream stream_36=new RewriteRuleTokenStream(adaptor,"token 36");
 		RewriteRuleTokenStream stream_34=new RewriteRuleTokenStream(adaptor,"token 34");
@@ -2797,7 +2797,7 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 120:39: -> TYPEID contained_block
 					{
 						adaptor.addChild(root_0, stream_TYPEID.nextNode());
@@ -2879,7 +2879,7 @@ public class SneakersParser extends Parser {
 
 					stream_contained_block.add(contained_block97.getTree());
 					// AST REWRITE
-					// elements: TYPEID, fnparam, contained_block
+					// elements: fnparam, contained_block, TYPEID
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -2888,7 +2888,7 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 121:63: -> TYPEID ( fnparam )* contained_block
 					{
 						adaptor.addChild(root_0, stream_TYPEID.nextNode());
@@ -2910,14 +2910,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -2928,9 +2928,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class fndecl_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -2940,12 +2940,12 @@ public class SneakersParser extends Parser {
 		SneakersParser.fndecl_return retval = new SneakersParser.fndecl_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal98=null;
 		ParserRuleReturnScope blockdecl99 =null;
 
-		SneakersAST char_literal98_tree=null;
+		CommonTree char_literal98_tree=null;
 		RewriteRuleTokenStream stream_33=new RewriteRuleTokenStream(adaptor,"token 33");
 		RewriteRuleSubtreeStream stream_blockdecl=new RewriteRuleSubtreeStream(adaptor,"rule blockdecl");
 
@@ -2971,13 +2971,13 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 124:24: -> ^( FNDECL blockdecl )
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:124:27: ^( FNDECL blockdecl )
 				{
-				SneakersAST root_1 = (SneakersAST)adaptor.nil();
-				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(FNDECL, "FNDECL"), root_1);
+				CommonTree root_1 = (CommonTree)adaptor.nil();
+				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(FNDECL, "FNDECL"), root_1);
 				adaptor.addChild(root_1, stream_blockdecl.nextTree());
 				adaptor.addChild(root_0, root_1);
 				}
@@ -2991,14 +2991,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -3009,9 +3009,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class mutdecl_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -3021,12 +3021,12 @@ public class SneakersParser extends Parser {
 		SneakersParser.mutdecl_return retval = new SneakersParser.mutdecl_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal100=null;
 		ParserRuleReturnScope blockdecl101 =null;
 
-		SneakersAST char_literal100_tree=null;
+		CommonTree char_literal100_tree=null;
 		RewriteRuleTokenStream stream_43=new RewriteRuleTokenStream(adaptor,"token 43");
 		RewriteRuleSubtreeStream stream_blockdecl=new RewriteRuleSubtreeStream(adaptor,"rule blockdecl");
 
@@ -3052,13 +3052,13 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 127:25: -> ^( MUTDECL blockdecl )
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:127:28: ^( MUTDECL blockdecl )
 				{
-				SneakersAST root_1 = (SneakersAST)adaptor.nil();
-				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(MUTDECL, "MUTDECL"), root_1);
+				CommonTree root_1 = (CommonTree)adaptor.nil();
+				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(MUTDECL, "MUTDECL"), root_1);
 				adaptor.addChild(root_1, stream_blockdecl.nextTree());
 				adaptor.addChild(root_0, root_1);
 				}
@@ -3072,14 +3072,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -3090,9 +3090,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class instance_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -3102,13 +3102,13 @@ public class SneakersParser extends Parser {
 		SneakersParser.instance_return retval = new SneakersParser.instance_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token string_literal102=null;
 		ParserRuleReturnScope nested_id103 =null;
 		ParserRuleReturnScope dict104 =null;
 
-		SneakersAST string_literal102_tree=null;
+		CommonTree string_literal102_tree=null;
 		RewriteRuleTokenStream stream_50=new RewriteRuleTokenStream(adaptor,"token 50");
 		RewriteRuleSubtreeStream stream_dict=new RewriteRuleSubtreeStream(adaptor,"rule dict");
 		RewriteRuleSubtreeStream stream_nested_id=new RewriteRuleSubtreeStream(adaptor,"rule nested_id");
@@ -3140,13 +3140,13 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 131:25: -> ^( INSTANCE nested_id dict )
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:131:28: ^( INSTANCE nested_id dict )
 				{
-				SneakersAST root_1 = (SneakersAST)adaptor.nil();
-				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(INSTANCE, "INSTANCE"), root_1);
+				CommonTree root_1 = (CommonTree)adaptor.nil();
+				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(INSTANCE, "INSTANCE"), root_1);
 				adaptor.addChild(root_1, stream_nested_id.nextTree());
 				adaptor.addChild(root_1, stream_dict.nextTree());
 				adaptor.addChild(root_0, root_1);
@@ -3161,14 +3161,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -3179,9 +3179,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class expr_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -3191,7 +3191,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.expr_return retval = new SneakersParser.expr_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		ParserRuleReturnScope instance105 =null;
 		ParserRuleReturnScope index_expr106 =null;
@@ -3277,7 +3277,7 @@ public class SneakersParser extends Parser {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:134:8: instance
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_instance_in_expr904);
@@ -3291,7 +3291,7 @@ public class SneakersParser extends Parser {
 				case 2 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:135:4: index_expr
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_index_expr_in_expr909);
@@ -3305,7 +3305,7 @@ public class SneakersParser extends Parser {
 				case 3 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:136:4: mutcall
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_mutcall_in_expr914);
@@ -3319,7 +3319,7 @@ public class SneakersParser extends Parser {
 				case 4 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:137:4: dict
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_dict_in_expr919);
@@ -3333,7 +3333,7 @@ public class SneakersParser extends Parser {
 				case 5 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:138:4: fndecl
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_fndecl_in_expr924);
@@ -3347,7 +3347,7 @@ public class SneakersParser extends Parser {
 				case 6 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:139:4: mutdecl
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_mutdecl_in_expr929);
@@ -3361,7 +3361,7 @@ public class SneakersParser extends Parser {
 				case 7 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:140:4: anonfn
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_anonfn_in_expr934);
@@ -3375,7 +3375,7 @@ public class SneakersParser extends Parser {
 				case 8 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:141:4: array
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_array_in_expr939);
@@ -3390,14 +3390,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -3408,9 +3408,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class standalone_fncall_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -3420,7 +3420,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.standalone_fncall_return retval = new SneakersParser.standalone_fncall_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal113=null;
 		Token char_literal115=null;
@@ -3429,10 +3429,10 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope nested_id114 =null;
 		ParserRuleReturnScope fncall117 =null;
 
-		SneakersAST char_literal113_tree=null;
-		SneakersAST char_literal115_tree=null;
-		SneakersAST char_literal116_tree=null;
-		SneakersAST char_literal118_tree=null;
+		CommonTree char_literal113_tree=null;
+		CommonTree char_literal115_tree=null;
+		CommonTree char_literal116_tree=null;
+		CommonTree char_literal118_tree=null;
 		RewriteRuleTokenStream stream_35=new RewriteRuleTokenStream(adaptor,"token 35");
 		RewriteRuleTokenStream stream_34=new RewriteRuleTokenStream(adaptor,"token 34");
 		RewriteRuleSubtreeStream stream_fncall=new RewriteRuleSubtreeStream(adaptor,"rule fncall");
@@ -3467,13 +3467,13 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 145:22: -> ^( FNCALL nested_id )
 					{
 						// /Users/eli/dev/Sneakers-Java/Sneakers.g:145:25: ^( FNCALL nested_id )
 						{
-						SneakersAST root_1 = (SneakersAST)adaptor.nil();
-						root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(FNCALL, "FNCALL"), root_1);
+						CommonTree root_1 = (CommonTree)adaptor.nil();
+						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(FNCALL, "FNCALL"), root_1);
 						adaptor.addChild(root_1, stream_nested_id.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -3509,7 +3509,7 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 146:19: -> fncall
 					{
 						adaptor.addChild(root_0, stream_fncall.nextTree());
@@ -3524,14 +3524,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -3542,9 +3542,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class mutcall_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -3554,7 +3554,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.mutcall_return retval = new SneakersParser.mutcall_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal119=null;
 		Token char_literal121=null;
@@ -3563,10 +3563,10 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope nested_id120 =null;
 		ParserRuleReturnScope fncall123 =null;
 
-		SneakersAST char_literal119_tree=null;
-		SneakersAST char_literal121_tree=null;
-		SneakersAST char_literal122_tree=null;
-		SneakersAST char_literal124_tree=null;
+		CommonTree char_literal119_tree=null;
+		CommonTree char_literal121_tree=null;
+		CommonTree char_literal122_tree=null;
+		CommonTree char_literal124_tree=null;
 		RewriteRuleTokenStream stream_42=new RewriteRuleTokenStream(adaptor,"token 42");
 		RewriteRuleTokenStream stream_40=new RewriteRuleTokenStream(adaptor,"token 40");
 		RewriteRuleSubtreeStream stream_fncall=new RewriteRuleSubtreeStream(adaptor,"rule fncall");
@@ -3601,7 +3601,7 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 149:29: -> nested_id
 					{
 						adaptor.addChild(root_0, stream_nested_id.nextTree());
@@ -3636,7 +3636,7 @@ public class SneakersParser extends Parser {
 					retval.tree = root_0;
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 					// 150:19: -> fncall
 					{
 						adaptor.addChild(root_0, stream_fncall.nextTree());
@@ -3651,14 +3651,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -3669,9 +3669,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class index_expr_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -3681,7 +3681,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.index_expr_return retval = new SneakersParser.index_expr_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token KEYWORD125=null;
 		Token INT126=null;
@@ -3689,9 +3689,9 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope nested_id128 =null;
 		ParserRuleReturnScope standalone_fncall129 =null;
 
-		SneakersAST KEYWORD125_tree=null;
-		SneakersAST INT126_tree=null;
-		SneakersAST STRING127_tree=null;
+		CommonTree KEYWORD125_tree=null;
+		CommonTree INT126_tree=null;
+		CommonTree STRING127_tree=null;
 
 		try {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:154:2: ( KEYWORD | INT | STRING | nested_id | standalone_fncall )
@@ -3734,11 +3734,11 @@ public class SneakersParser extends Parser {
 				case 1 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:154:4: KEYWORD
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					KEYWORD125=(Token)match(input,KEYWORD,FOLLOW_KEYWORD_in_index_expr1017); 
-					KEYWORD125_tree = (SneakersAST)adaptor.create(KEYWORD125);
+					KEYWORD125_tree = (CommonTree)adaptor.create(KEYWORD125);
 					adaptor.addChild(root_0, KEYWORD125_tree);
 
 					}
@@ -3746,11 +3746,11 @@ public class SneakersParser extends Parser {
 				case 2 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:155:4: INT
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					INT126=(Token)match(input,INT,FOLLOW_INT_in_index_expr1022); 
-					INT126_tree = (SneakersAST)adaptor.create(INT126);
+					INT126_tree = (CommonTree)adaptor.create(INT126);
 					adaptor.addChild(root_0, INT126_tree);
 
 					}
@@ -3758,11 +3758,11 @@ public class SneakersParser extends Parser {
 				case 3 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:156:4: STRING
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					STRING127=(Token)match(input,STRING,FOLLOW_STRING_in_index_expr1027); 
-					STRING127_tree = (SneakersAST)adaptor.create(STRING127);
+					STRING127_tree = (CommonTree)adaptor.create(STRING127);
 					adaptor.addChild(root_0, STRING127_tree);
 
 					}
@@ -3770,7 +3770,7 @@ public class SneakersParser extends Parser {
 				case 4 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:157:4: nested_id
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_nested_id_in_index_expr1032);
@@ -3784,7 +3784,7 @@ public class SneakersParser extends Parser {
 				case 5 :
 					// /Users/eli/dev/Sneakers-Java/Sneakers.g:158:4: standalone_fncall
 					{
-					root_0 = (SneakersAST)adaptor.nil();
+					root_0 = (CommonTree)adaptor.nil();
 
 
 					pushFollow(FOLLOW_standalone_fncall_in_index_expr1037);
@@ -3799,14 +3799,14 @@ public class SneakersParser extends Parser {
 			}
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -3817,9 +3817,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class dict_pair_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -3829,13 +3829,13 @@ public class SneakersParser extends Parser {
 		SneakersParser.dict_pair_return retval = new SneakersParser.dict_pair_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token string_literal131=null;
 		ParserRuleReturnScope index_expr130 =null;
 		ParserRuleReturnScope expr132 =null;
 
-		SneakersAST string_literal131_tree=null;
+		CommonTree string_literal131_tree=null;
 		RewriteRuleTokenStream stream_41=new RewriteRuleTokenStream(adaptor,"token 41");
 		RewriteRuleSubtreeStream stream_index_expr=new RewriteRuleSubtreeStream(adaptor,"rule index_expr");
 		RewriteRuleSubtreeStream stream_expr=new RewriteRuleSubtreeStream(adaptor,"rule expr");
@@ -3867,13 +3867,13 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 162:25: -> ^( DICT_PAIR index_expr expr )
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:162:28: ^( DICT_PAIR index_expr expr )
 				{
-				SneakersAST root_1 = (SneakersAST)adaptor.nil();
-				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(DICT_PAIR, "DICT_PAIR"), root_1);
+				CommonTree root_1 = (CommonTree)adaptor.nil();
+				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(DICT_PAIR, "DICT_PAIR"), root_1);
 				adaptor.addChild(root_1, stream_index_expr.nextTree());
 				adaptor.addChild(root_1, stream_expr.nextTree());
 				adaptor.addChild(root_0, root_1);
@@ -3888,14 +3888,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -3906,9 +3906,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class dict_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -3918,7 +3918,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.dict_return retval = new SneakersParser.dict_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal133=null;
 		Token char_literal135=null;
@@ -3926,9 +3926,9 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope dict_pair134 =null;
 		ParserRuleReturnScope dict_pair136 =null;
 
-		SneakersAST char_literal133_tree=null;
-		SneakersAST char_literal135_tree=null;
-		SneakersAST char_literal137_tree=null;
+		CommonTree char_literal133_tree=null;
+		CommonTree char_literal135_tree=null;
+		CommonTree char_literal137_tree=null;
 		RewriteRuleTokenStream stream_36=new RewriteRuleTokenStream(adaptor,"token 36");
 		RewriteRuleTokenStream stream_53=new RewriteRuleTokenStream(adaptor,"token 53");
 		RewriteRuleTokenStream stream_54=new RewriteRuleTokenStream(adaptor,"token 54");
@@ -4003,13 +4003,13 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 165:46: -> ^( DICT ( dict_pair )* )
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:49: ^( DICT ( dict_pair )* )
 				{
-				SneakersAST root_1 = (SneakersAST)adaptor.nil();
-				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(DICT, "DICT"), root_1);
+				CommonTree root_1 = (CommonTree)adaptor.nil();
+				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(DICT, "DICT"), root_1);
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:165:56: ( dict_pair )*
 				while ( stream_dict_pair.hasNext() ) {
 					adaptor.addChild(root_1, stream_dict_pair.nextTree());
@@ -4028,14 +4028,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -4046,9 +4046,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class contained_block_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -4058,14 +4058,14 @@ public class SneakersParser extends Parser {
 		SneakersParser.contained_block_return retval = new SneakersParser.contained_block_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal138=null;
 		Token char_literal140=null;
 		ParserRuleReturnScope block139 =null;
 
-		SneakersAST char_literal138_tree=null;
-		SneakersAST char_literal140_tree=null;
+		CommonTree char_literal138_tree=null;
+		CommonTree char_literal140_tree=null;
 		RewriteRuleTokenStream stream_45=new RewriteRuleTokenStream(adaptor,"token 45");
 		RewriteRuleTokenStream stream_44=new RewriteRuleTokenStream(adaptor,"token 44");
 		RewriteRuleSubtreeStream stream_block=new RewriteRuleSubtreeStream(adaptor,"rule block");
@@ -4095,7 +4095,7 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 169:18: -> block
 			{
 				adaptor.addChild(root_0, stream_block.nextTree());
@@ -4108,14 +4108,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -4126,9 +4126,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class array_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -4138,7 +4138,7 @@ public class SneakersParser extends Parser {
 		SneakersParser.array_return retval = new SneakersParser.array_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token char_literal141=null;
 		Token char_literal143=null;
@@ -4146,9 +4146,9 @@ public class SneakersParser extends Parser {
 		ParserRuleReturnScope expr142 =null;
 		ParserRuleReturnScope expr144 =null;
 
-		SneakersAST char_literal141_tree=null;
-		SneakersAST char_literal143_tree=null;
-		SneakersAST char_literal145_tree=null;
+		CommonTree char_literal141_tree=null;
+		CommonTree char_literal143_tree=null;
+		CommonTree char_literal145_tree=null;
 		RewriteRuleTokenStream stream_45=new RewriteRuleTokenStream(adaptor,"token 45");
 		RewriteRuleTokenStream stream_44=new RewriteRuleTokenStream(adaptor,"token 44");
 		RewriteRuleTokenStream stream_36=new RewriteRuleTokenStream(adaptor,"token 36");
@@ -4223,13 +4223,13 @@ public class SneakersParser extends Parser {
 			retval.tree = root_0;
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 			// 172:35: -> ^( ARRAY ( expr )* )
 			{
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:172:38: ^( ARRAY ( expr )* )
 				{
-				SneakersAST root_1 = (SneakersAST)adaptor.nil();
-				root_1 = (SneakersAST)adaptor.becomeRoot((SneakersAST)adaptor.create(ARRAY, "ARRAY"), root_1);
+				CommonTree root_1 = (CommonTree)adaptor.nil();
+				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(ARRAY, "ARRAY"), root_1);
 				// /Users/eli/dev/Sneakers-Java/Sneakers.g:172:46: ( expr )*
 				while ( stream_expr.hasNext() ) {
 					adaptor.addChild(root_1, stream_expr.nextTree());
@@ -4248,14 +4248,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving
@@ -4266,9 +4266,9 @@ public class SneakersParser extends Parser {
 
 
 	public static class any_id_return extends ParserRuleReturnScope {
-		SneakersAST tree;
+		CommonTree tree;
 		@Override
-		public SneakersAST getTree() { return tree; }
+		public CommonTree getTree() { return tree; }
 	};
 
 
@@ -4278,23 +4278,23 @@ public class SneakersParser extends Parser {
 		SneakersParser.any_id_return retval = new SneakersParser.any_id_return();
 		retval.start = input.LT(1);
 
-		SneakersAST root_0 = null;
+		CommonTree root_0 = null;
 
 		Token set146=null;
 
-		SneakersAST set146_tree=null;
+		CommonTree set146_tree=null;
 
 		try {
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:192:2: ( ID | MUTID | TYPEID )
 			// /Users/eli/dev/Sneakers-Java/Sneakers.g:
 			{
-			root_0 = (SneakersAST)adaptor.nil();
+			root_0 = (CommonTree)adaptor.nil();
 
 
 			set146=input.LT(1);
 			if ( input.LA(1)==ID||input.LA(1)==MUTID||input.LA(1)==TYPEID ) {
 				input.consume();
-				adaptor.addChild(root_0, (SneakersAST)adaptor.create(set146));
+				adaptor.addChild(root_0, (CommonTree)adaptor.create(set146));
 				state.errorRecovery=false;
 			}
 			else {
@@ -4305,14 +4305,14 @@ public class SneakersParser extends Parser {
 
 			retval.stop = input.LT(-1);
 
-			retval.tree = (SneakersAST)adaptor.rulePostProcessing(root_0);
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
 			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 		}
 		catch (RecognitionException re) {
 			reportError(re);
 			recover(input,re);
-			retval.tree = (SneakersAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
 		}
 		finally {
 			// do for sure before leaving

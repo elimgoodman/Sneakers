@@ -41,7 +41,7 @@ public class ParseTests {
     
     public String getJS(String text) {
 	JSEmitter emitter = new JSEmitter();
-	return emitter.getJS(text);
+	return emitter.getJS(text, true);
     }
     
     @Test
@@ -163,6 +163,16 @@ public class ParseTests {
         //printTree(tree, 4);
     }
     
+    @Test
+    public void testMultipleFnCallParams() {
+        SneakersAST tree = this.getTree("a = do_something a b c;");
+        printTree(tree);
+    }
+    
+    public void printTree(CommonTree t) {
+	JSEmitter emitter = new JSEmitter();
+	emitter.printTree(t, 4);
+    }
     
     public void p(Object o) {
 	System.out.println(o);
@@ -280,7 +290,7 @@ public class ParseTests {
     
     @Test
     public void testJSFnCallParams() {
-	assertJS("var a = do_something(a,b);", "a = do_something a b;");
+	assertJS("var a = do_something(a,b,c);", "a = do_something a b c;");
     }
     
     @Test
@@ -302,5 +312,34 @@ public class ParseTests {
     public void testJSReturn() {
 	assertJS("var f = function() {return 1;};", "f = #():None [return 1;];");
     }
+    
+    @Test
+    public void testJSDottedMethod() {
+	assertJS("var x = math.sqrt(25);", "x = math.sqrt 25;");
+    }
+    
+    @Test
+    public void testJSNewDotted() {
+	assertJS("var x = pkg.Foo.new({a: 1});", "x = new pkg.Foo {a => 1};");
+    }
+    
+    @Test
+    public void testJSString() {
+	assertJS("var x = \"Hello\";", "x = \"Hello\";");
+    }
+    
+    @Test
+    public void testJSDict() {
+	assertJS("var x = {\"foo\": 2,\"bar\": \"hi\"};", "x = {\"foo\" => 2, \"bar\" => \"hi\"};");
+    }
 
+    @Test
+    public void testJSArray() {
+	assertJS("var x = [1,2,3];", "x = [1, 2, 3];");
+    }
+    
+    @Test
+    public void testJSMutDecl() {
+	assertJS("var m = function() {};", "m = @():None [pass;];");
+    }
 }

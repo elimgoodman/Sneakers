@@ -26,8 +26,8 @@ identity(o) ::= <<
 
 pass() ::= ""
 
-fncall(name, params) ::= <<
-<name>(<params; separator=",">)
+fncall(names, params) ::= <<
+<names; separator=".">(<params; separator=",">)
 >>
 
 classdef(name, fields, methods) ::= <<
@@ -43,9 +43,17 @@ method(name, params, stats) ::= <<
 >>
 
 instance(type, attrs) ::= <<
-<type>.new({
+<types; separator=".">.new(<attrs>)
+>>
+
+dict(attrs) ::= <<
+{
 	<attrs; separator=",\n">
-})
+}
+>>
+
+array(exs) ::= <<
+[<exs; separator=",">]
 >>
 
 dict_pair(key, value) ::= <<

@@ -17,6 +17,4 @@ s = new web.Server {
 //	<logger.write! e>;
 //];
 
-<s.start! except: {
-	FileNotFound => log_error
-}>;
+<s.start!>;
