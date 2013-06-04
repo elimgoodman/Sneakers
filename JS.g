@@ -19,7 +19,7 @@ compilationUnit
 	;
 
 stat	
-	:	^('=' name=ID value=expr) 
+	:	^('=' name=(ID | MUTID) value=expr) 
 		-> assignment(name={$name}, value={$value.st})
 	|	^(CLASSDEF name=TYPEID (methods+=method | fields+=field)* ) 
 		-> classdef(name={$name}, fields={$fields}, methods={$methods})
@@ -36,7 +36,7 @@ method	:	^(METHODDEF name=ID ^(FNDECL ret=TYPEID params+=param* ^(BLOCK stats+=s
 
 expr	:	^((FNDECL | MUTDECL) ret=TYPEID params+=param* ^(BLOCK stats+=stat+)) 
 			-> fndecl(params={$params}, stats={$stats})
-	|	^(FNCALL names+=ID+ params+=fncallparam*) -> fncall(names={$names},params={$params})
+	|	^(FNCALL names+=any_id+ params+=fncallparam*) -> fncall(names={$names},params={$params})
 	|	^(INSTANCE types+=any_id+ d=dict)
 			-> instance(types={$types}, attrs={$d.st})
 	|	i=INT -> identity(o={$i})
@@ -49,7 +49,7 @@ expr	:	^((FNDECL | MUTDECL) ret=TYPEID params+=param* ^(BLOCK stats+=stat+))
 dict	:	^(DICT attrs+=dict_pair*) -> dict(attrs={$attrs})
 	;
 
-dict_pair:	^(DICT_PAIR key=. value=.) -> dict_pair(key={$key}, value={$value})
+dict_pair:	^(DICT_PAIR key=expr value=expr) -> dict_pair(key={$key.st}, value={$value.st})
 	;
 
 fncallparam

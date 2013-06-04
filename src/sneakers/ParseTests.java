@@ -342,4 +342,21 @@ public class ParseTests {
     public void testJSMutDecl() {
 	assertJS("var m = function() {};", "m = @():None [pass;];");
     }
+    
+    @Test
+    public void testJSStaticMethod() {
+	assertJS("var m = Foo.bar(1,2);", "m = Foo.bar 1 2;");
+    }
+    
+    @Test
+    //TODO: should strip the @
+    public void testJSMutable() {
+	assertJS("var @m = {};", "@m = {};");
+    }
+    
+    @Test
+    //TODO: should strip the @
+    public void testJSMutDeclInDict() {
+	assertJS("var x = {\"f\": function() {}};", "x = {\"f\" => @():None[pass;]};");
+    }
 }
